@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/home", "destination": "/index.html" },
+    { "source": "/emberquit", "destination": "/project-details/emberquit.html" },
+    { "source": "/f1-dashboard", "destination": "/project-details/f1_dashboard.html" },
+    { "source": "/f1_dashboard", "destination": "/project-details/f1_dashboard.html" },
+    { "source": "/restease", "destination": "/project-details/restease.html" },
+    { "source": "/honee", "destination": "/project-details/honee.html" }
+  ]
+}
