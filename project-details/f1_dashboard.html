@@ -1,0 +1,714 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Dashboard — Case Study &amp; Prototype</title>
+    <meta name="description" content="Case study and interactive desktop prototype for F1 Live Telemetry, a telemetry racing cockpit dashboard tracking speeds, tire wear, and driver status in real-time.">
+    <link rel="stylesheet" href="css/project-detail.css">
+    <style>
+        /* Custom Flowchart styling */
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: var(--space-md) auto;
+            width: 100%;
+            max-width: 600px;
+        }
+        .flowchart-node {
+            background-color: var(--brand-card-bg);
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            color: var(--brand-text);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            font-size: 0.85rem;
+        }
+        .flowchart-node:hover {
+            border-color: var(--brand-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(225, 6, 0, 0.2);
+        }
+        .flowchart-node.source {
+            background-color: #e10600;
+            color: #ffffff;
+            border-color: #e10600;
+        }
+        .flowchart-node.source:hover {
+            box-shadow: 0 6px 20px rgba(225, 6, 0, 0.4);
+        }
+        .flowchart-row {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            gap: var(--space-md);
+            position: relative;
+        }
+        .flowchart-arrow-down {
+            width: 2px;
+            height: 15px;
+            background-color: var(--brand-border);
+            position: relative;
+        }
+        .flowchart-arrow-down::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: -3px;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--brand-border);
+            border-bottom: 2px solid var(--brand-border);
+            transform: rotate(45deg);
+        }
+        .flowchart-label {
+            font-family: monospace;
+            font-size: 0.65rem;
+            color: var(--brand-text-sub);
+            margin: 2px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        /* Comparison Table styling */
+        .f1-compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-md) 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        .f1-compare-table th {
+            background-color: rgba(9, 9, 11, 0.03);
+            border-bottom: 2px solid var(--brand-border);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--brand-text);
+        }
+        .f1-compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--brand-border);
+            color: var(--brand-text-sub);
+            vertical-align: top;
+            line-height: 1.4;
+        }
+        .f1-compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        .f1-compare-table tr:hover td {
+            background-color: rgba(9, 9, 11, 0.01);
+            color: var(--brand-text);
+        }
+        .highlight-col {
+            border-left: 2px solid var(--brand-accent);
+        }
+
+        /* Wireframe preview styling */
+        .wireframe-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: auto repeat(2, 1fr);
+            gap: 8px;
+            background-color: rgba(9, 9, 11, 0.02);
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            font-family: monospace;
+            width: 100%;
+            max-width: 500px;
+            margin: var(--space-md) auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+        .wireframe-header {
+            grid-column: span 8;
+            background-color: rgba(9, 9, 11, 0.05);
+            border: 1px dashed var(--brand-border);
+            padding: 6px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--brand-text);
+        }
+        .wireframe-widget {
+            background-color: rgba(9, 9, 11, 0.03);
+            border: 1px solid var(--brand-border);
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 0.6rem;
+            color: var(--brand-text-sub);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+        .wireframe-widget:hover {
+            border-color: var(--brand-accent);
+            background-color: rgba(225, 6, 0, 0.03);
+            color: var(--brand-text);
+        }
+        .wireframe-widget h5 {
+            margin: 0;
+            font-size: 0.65rem;
+            color: var(--brand-text);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+        .wireframe-w1 { grid-column: span 3; }
+        .wireframe-w2 { grid-column: span 5; }
+        .wireframe-w3 { grid-column: span 4; }
+        .wireframe-w4 { grid-column: span 4; }
+        
+        /* Second Screen Paradigm Styles */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            position: relative;
+        }
+        .scenario-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background-color: var(--brand-border);
+            transform: translateX(-50%);
+        }
+        @media (max-width: 768px) {
+            .compare-grid, .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+            .scenario-divider {
+                display: none;
+            }
+            .scenario-col-left {
+                padding-right: 0 !important;
+                padding-bottom: var(--space-md);
+                border-bottom: 1px dashed var(--brand-border);
+            }
+            .scenario-col-right {
+                padding-left: 0 !important;
+                padding-top: var(--space-md);
+            }
+        }
+        
+        /* F1 Deck Card Vertical Layout (Top Image, Bottom Text) */
+        .f1-deck-card-content {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
+            padding: var(--space-md) !important;
+            background-color: var(--brand-card-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            border-radius: var(--radius-lg) !important;
+            box-sizing: border-box !important;
+            gap: 16px !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
+        }
+        .f1-deck-card-image-wrap {
+            width: 100% !important;
+            height: 350px !important;
+            border-radius: var(--radius-md) !important;
+            overflow: hidden !important;
+            border: 1px solid var(--brand-border) !important;
+            background-color: rgba(9, 9, 11, 0.02) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+            flex-shrink: 0 !important;
+        }
+        .f1-deck-card-image-wrap iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+            border-radius: var(--radius-md) !important;
+            background-color: #030303 !important;
+        }
+        .f1-deck-card-image-wrap img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .f1-deck-card-image-wrap img.f1-moodboard-logo {
+            width: auto !important;
+            height: 38px !important;
+            object-fit: contain !important;
+            border-radius: 0 !important;
+            display: block !important;
+        }
+        .f1-deck-card-text {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 6px !important;
+            padding: 0 var(--space-xs) !important;
+            text-align: left !important;
+        }
+        @media (max-width: 992px) {
+            .f1-deck-card-image-wrap {
+                height: auto !important;
+                aspect-ratio: 16/9 !important;
+            }
+        }
+    </style>
+</head>
+<body class="theme-brand" data-brand-bg="#ffffff" data-brand-text="#09090b" data-brand-text-sub="#52525b" data-brand-accent="#e10600" data-brand-card-bg="#f4f4f5" data-brand-border="rgba(9, 9, 11, 0.08)" style="--brand-bg: #ffffff; --brand-text: #09090b; --brand-text-sub: #52525b; --brand-accent: #e10600; --brand-card-bg: #f4f4f5; --brand-border: rgba(9, 9, 11, 0.08); --brand-grid-color: rgba(9, 9, 11, 0.05); --brand-sketch-fill: #f4f4f5; --brand-nav-bg: rgba(255, 255, 255, 0.85); --brand-nav-border: rgba(9, 9, 11, 0.08);">
+
+    <!-- Grid blueprint background -->
+    <div class="pattern-bg"></div>
+
+    <!-- Interactive Canvas backdrop -->
+    <canvas id="project-canvas"></canvas>
+    
+    <!-- Floating Parallax Shapes -->
+    <div class="parallax-shape shape-1" style="position: absolute; top: 12%; right: 5%; width: 60px; height: 60px; border: 2px dashed rgba(10, 17, 40, 0.06); border-radius: 50%; pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-2" style="position: absolute; top: 48%; left: 3%; width: 80px; height: 80px; border: 2px dashed rgba(10, 17, 40, 0.06); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-3" style="position: absolute; top: 80%; right: 7%; width: 100px; height: 100px; border: 2px dashed rgba(10, 17, 40, 0.06); pointer-events: none; z-index: -1; transform: rotate(15deg);"></div>
+
+    <!-- Header navigation (Floating Island Navbar) -->
+    <header class="floating-header">
+        <div class="container nav-wrapper" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="../index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <style>
+                        @keyframes kf_Frame_8_transform_0 {
+                          0% {
+                            animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+                            transform: translate(757px, 643.5px) rotate(6.283rad) translate(-757px, -643.5px);
+                          }
+                          100% {
+                            transform: translate(757px, 643.5px) rotate(-6.283rad) translate(-757px, -643.5px);
+                          }
+                        }
+                        #Frame_8 {
+                          transform-origin: 0 0;
+                          animation: kf_Frame_8_transform_0 1.074199s linear infinite;
+                        }
+                        </style>
+                        <g id="Frame_8">
+                        <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                        <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                        <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </g>
+                    </svg>
+                </a>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: rgba(9, 9, 11, 0.05); border: 1px solid rgba(9, 9, 11, 0.1); color: var(--text-main); border-radius: 50px;">F1 TELEMETRY</span>
+            </div>
+            
+            <nav style="display: flex; align-items: center; gap: var(--space-md);">
+                <a href="../index.html#projects" class="back-link" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main);">← Back to Works</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="narrative-wrapper">
+
+        <!-- Chapter 1: The Hook (Hero) -->
+        <section class="story-chapter chapter-hero">
+            <div class="chapter-hero-bg" style="background: linear-gradient(135deg, rgba(225, 6, 0, 0.08) 0%, rgba(225, 6, 0, 0.03) 100%);"></div>
+            <div class="container hero-content">
+                <div class="hero-text-block">
+                    <span class="label-pill brand-accent-badge">CASE STUDY 03 //</span>
+                    <h1 class="gsap-split-header brand-hero-title">F1 TELEMETRY</h1>
+                    <p class="brand-hero-subtitle" style="max-width: 800px;">Formula 1 Interactive Telemetry &amp; Second-Screen Companion</p>
+                </div>
+                <div class="project-meta-bar">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-val">Interactive Dashboard</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-val">5 Weeks</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+                    <button class="scroll-indicator-arrow" aria-label="Scroll down" onclick="document.querySelector('.chapter-narrative').scrollIntoView({ behavior: 'smooth' });">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: Understanding F1 Telemetry (Scroll 1) -->
+        <section class="story-chapter chapter-narrative">
+            <div class="container narrative-grid">
+                <div class="narrative-content-left">
+                    <div class="narrative-block">
+                        <span class="mono brand-accent-color">01 / UNDERSTANDING TELEMETRY</span>
+                        <h2>Data Science at 300+ km/h</h2>
+                        <p>
+                            Formula 1 is as much a data science competition as it is a physical sport. Every modern F1 car is equipped with <strong>over 300 physical sensors</strong> that collect and transmit data in real-time. This transmission from the moving car to the garage via radio waves is known as <strong>telemetry</strong>.
+                        </p>
+                        <p style="margin-top: 10px;">
+                            This data streams driver inputs (throttle, brake, gear), car dynamics (speed, RPM, G-forces), and component health (tyre carcass temperatures, ERS state of charge) instantly.
+                        </p>
+                    </div>
+                    <div class="narrative-block" style="margin-top: var(--space-lg);">
+                        <span class="mono brand-accent-color">ROLE IN THE VIEWING EXPERIENCE</span>
+                        <h2>Deconstructing Driver Skill</h2>
+                        <p>
+                            Today, telemetry has transitioned from a secretive engineering tool to a core component of how fans consume the sport. It allows viewers to deconstruct driver skill (comparing exit traction and late-braking thresholds), predict pit stop strategies by observing tyre degradation curves, and analyze lock-ups or mechanical incidents immediately.
+                        </p>
+                    </div>
+                </div>
+                <div class="narrative-content-right" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="brand-metric-card" style="width: 100%; padding: 0; overflow: hidden; border: 1px solid var(--brand-border); border-radius: var(--radius-md); box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                        <img src="../Projects/F1 Dashboard/f1_race_action.jpg" alt="Formula 1 Racing Action" style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Enhanced Fan Viewing Experience (Scroll 2) -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0; height: auto; display: block;">
+            <div class="container">
+                <span class="mono brand-accent-color">02 / THE FAN VIEWING PARADIGM</span>
+                <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">Anatomy of a Race Moment</h2>
+                <p style="color: var(--text-sub); margin: 0 0 var(--space-lg) 0; font-size: 0.95rem;">How telemetry data reveals the hidden physics of a Monaco GP battle that TV broadcasts miss.</p>
+                
+                <div class="compare-grid">
+                    <!-- Left: TV Broadcast Card -->
+                    <div class="bento-card" style="margin: 0; background-color: var(--brand-card-bg); border-color: var(--brand-border); display: flex; flex-direction: column; justify-content: space-between; padding: var(--space-md) var(--space-lg);">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: var(--space-md);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-text); opacity: 0.85;">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                                <h3 style="font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--brand-text); margin: 0; font-size: 1.2rem;">Passive TV Broadcast</h3>
+                            </div>
+                            <div style="aspect-ratio: 16/9; border: 1px solid var(--brand-border); border-radius: var(--radius-sm); margin-bottom: var(--space-md); overflow: hidden; position: relative;">
+                                <img src="../Projects/F1 Dashboard/tv_broadcast_mockup.jpg" alt="TV Broadcast Feed" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                                <li style="font-size: 0.88rem; color: var(--brand-text-sub); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start;">
+                                    <span style="color: var(--brand-accent); font-weight: bold; margin-top: 1px;">•</span>
+                                    <span><strong>Linear View:</strong> Displays only what the broadcast director chooses to show on screen. Midfield battles are completely bypassed.</span>
+                                </li>
+                                <li style="font-size: 0.88rem; color: var(--brand-text-sub); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start;">
+                                    <span style="color: var(--brand-accent); font-weight: bold; margin-top: 1px;">•</span>
+                                    <span><strong>Qualitative Commentary:</strong> Commentators speculate on tyre degradation, grip losses, or engine maps based on visual guesses.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right: Second-Screen Telemetry Card -->
+                    <div class="bento-card" style="margin: 0; background-color: var(--brand-card-bg); border-color: rgba(225, 6, 0, 0.15); display: flex; flex-direction: column; justify-content: space-between; padding: var(--space-md) var(--space-lg); box-shadow: 0 10px 30px rgba(225, 6, 0, 0.02);">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: var(--space-md);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--brand-accent);">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                                <h3 style="font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--brand-text); margin: 0; font-size: 1.2rem;">Second-Screen Companion</h3>
+                            </div>
+                            <div style="aspect-ratio: 16/9; border: 1px solid rgba(225, 6, 0, 0.15); border-radius: var(--radius-sm); margin-bottom: var(--space-md); overflow: hidden; position: relative;">
+                                <img src="../Projects/F1 Dashboard/dashboard_full.png" alt="Second-Screen Telemetry Dashboard" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                                <li style="font-size: 0.88rem; color: var(--brand-text-sub); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start;">
+                                    <span style="color: var(--brand-accent); font-weight: bold; margin-top: 1px;">•</span>
+                                    <span><strong>Global Live Map:</strong> Track the exact physical positions, gaps, and retired statuses of all 20 cars simultaneously.</span>
+                                </li>
+                                <li style="font-size: 0.88rem; color: var(--brand-text-sub); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start;">
+                                    <span style="color: var(--brand-accent); font-weight: bold; margin-top: 1px;">•</span>
+                                    <span><strong>Quantitative Physics:</strong> Inspect live tyre heat curves, braking thresholds, throttle traces, and ERS battery charge states.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario Case Study Box -->
+                <div class="bento-card" style="margin: 0; padding: var(--space-md) var(--space-lg); border-color: var(--brand-border); background-color: var(--brand-card-bg);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--brand-border); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="mono" style="font-size: 0.75rem; background: rgba(9, 9, 11, 0.05); color: var(--brand-text); padding: 3px 8px; border-radius: 4px; font-weight: 700;">MONACO GP CASE SCENARIO</span>
+                            <span style="font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--brand-text); font-size: 0.95rem;">Anatomy of a Lap 18 Defense</span>
+                        </div>
+                        <span class="mono" style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 700;">LECLERC vs. PIASTRI</span>
+                    </div>
+                    
+                    <div class="scenario-grid">
+                        <!-- Divider Line -->
+                        <div class="scenario-divider"></div>
+                        
+                        <!-- Left Column: What TV Shows -->
+                        <div class="scenario-col-left" style="padding-right: var(--space-md);">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-text-sub); display: block; margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; text-transform: uppercase;">On the Television Feed</span>
+                            <p style="font-size: 0.85rem; line-height: 1.5; color: var(--brand-text-sub); margin: 0;">
+                                Leclerc's pace drops significantly as he defends Oscar Piastri into the harbour chicane. The TV commentators deduce that Leclerc's hard tyres are hitting a degradation "cliff" early, giving the chasing McLaren car the leverage to make a move.
+                            </p>
+                        </div>
+                        
+                        <!-- Right Column: What Telemetry Reveals -->
+                        <div class="scenario-col-right" style="padding-left: var(--space-md);">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-accent); display: block; margin-bottom: 6px; letter-spacing: 0.05em; font-weight: 700; text-transform: uppercase;">What the Telemetry Reveals</span>
+                            <p style="font-size: 0.85rem; line-height: 1.5; color: var(--brand-text-sub); margin: 0;">
+                                The dashboard shows Leclerc is deliberately driving slow entry lines to manage his ERS battery state (recovering to 80% charge) to secure a high-speed exit, while Piastri's front-left tyre temp has spiked to 118°C from running in dirty air.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: Project Concept (Scroll 3) -->
+        <section class="story-chapter" style="height: auto; padding: var(--space-xl) 0;">
+            <div class="container" style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                <div class="narrative-header" style="max-width: 800px; margin-bottom: var(--space-xs);">
+                    <span class="mono brand-accent-color">03 / PROJECT CONCEPT</span>
+                    <h2>The Customizable Telemetry Dashboard</h2>
+                    <p style="font-size: 1.05rem; line-height: 1.6; color: var(--text-sub); margin-top: var(--space-xs);">
+                        Designed as a high-fidelity <strong>second-screen companion</strong>, this cockpit is built to run side-by-side with the live race broadcast. It feeds enthusiasts the granular G-force data, relative gap timings, and tyre degradation profiles that enrich the main video feed, turning any standard screen setup into an interactive engineering wall.
+                    </p>
+                </div>
+                
+                <div class="concept-layout-split" style="margin-bottom: var(--space-md);">
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="bento-card" style="margin: 0; background-color: var(--brand-card-bg) !important; border-color: var(--brand-border) !important; padding: 20px;">
+                            <h4 style="font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--brand-text); margin: 0 0 8px 0; font-size: 1.05rem;">Modular Grid Environment</h4>
+                            <p style="font-size: 0.82rem; color: var(--brand-text-sub); line-height: 1.45; margin: 0;">Built on a strict 12-row by 8-column layout, users can drag, drop, and resize components dynamically.</p>
+                        </div>
+                        <div class="bento-card" style="margin: 0; background-color: var(--brand-card-bg) !important; border-color: var(--brand-border) !important; padding: 20px;">
+                            <h4 style="font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--brand-text); margin: 0 0 8px 0; font-size: 1.05rem;">Strict Boundary Solver</h4>
+                            <p style="font-size: 0.82rem; color: var(--brand-text-sub); line-height: 1.45; margin: 0;">A custom packing algorithm keeps widgets strictly within the screen height and width—preventing scrollbars or layout overrides.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
+                        <div class="brand-metric-card" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: transparent; border: none; padding: 0;">
+                            <h4 style="font-family: 'Quicksand', sans-serif; font-size: 1rem; font-weight: 700; color: var(--brand-text); margin: 0 0 12px 0; text-align: center;">Interactive Dynamic Grid Wireframe</h4>
+                            <div class="wireframe-iframe-wrapper" style="width: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                                <iframe src="../Projects/F1%20Dashboard/standalone%20grid.html" style="width: 720px; height: 550px; border: none; overflow: hidden;" scrolling="no" title="Interactive Grid Wireframe"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subsection: Data Pipeline & Synchronization -->
+                <div style="margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--brand-border); width: 100%;">
+                    <span class="mono brand-accent-color" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">TECHNICAL ARCHITECTURE</span>
+                    <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 12px 0; font-size: 1.3rem; font-weight: 700;">Data Pipeline &amp; Live Synchronization</h3>
+                    
+                    <p style="font-size: 0.88rem; line-height: 1.55; color: var(--brand-text-sub); margin-bottom: var(--space-md); max-width: 900px;">
+                        The dashboard pre-compiles real-world telemetry from the 2024 Monaco Grand Prix. The pipeline cleans timing outliers (like the 30-minute Perez/Magnussen red-flag stoppage on Lap 1), synthesizes fractional lap progression and cornering G-forces, and pipes the state into a global Zustand store for unified, low-latency UI rendering.
+                    </p>
+
+                    <!-- Flowchart -->
+                    <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: var(--space-md);">
+                        <div style="flex: 1; min-width: 180px; padding: 16px; background: rgba(225, 6, 0, 0.04); border: 1px solid rgba(225, 6, 0, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 12px; text-align: center; box-shadow: 0 8px 32px 0 rgba(225, 6, 0, 0.04); transition: transform 0.3s ease, border-color 0.3s ease;">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-accent); display: block; margin-bottom: 4px; font-weight: 700;">STEP 01</span>
+                            <h5 style="margin: 0 0 4px 0; color: var(--brand-text); font-size: 0.85rem; font-weight: 700;">Raw F1 API</h5>
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--brand-text-sub); line-height: 1.4;">Jolpica/Ergast API timing and results metadata.</p>
+                        </div>
+                        
+                        <div class="flow-arrow" style="color: rgba(225, 6, 0, 0.4); font-weight: bold;">→</div>
+
+                        <div style="flex: 1; min-width: 180px; padding: 16px; background: rgba(225, 6, 0, 0.04); border: 1px solid rgba(225, 6, 0, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 12px; text-align: center; box-shadow: 0 8px 32px 0 rgba(225, 6, 0, 0.04); transition: transform 0.3s ease, border-color 0.3s ease;">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-accent); display: block; margin-bottom: 4px; font-weight: 700;">STEP 02</span>
+                            <h5 style="margin: 0 0 4px 0; color: var(--brand-text); font-size: 0.85rem; font-weight: 700;">Timeline Cleaning</h5>
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--brand-text-sub); line-height: 1.4;">Removes Lap 1 outliers and adds grid stagger offsets.</p>
+                        </div>
+
+                        <div class="flow-arrow" style="color: rgba(225, 6, 0, 0.4); font-weight: bold;">→</div>
+
+                        <div style="flex: 1; min-width: 180px; padding: 16px; background: rgba(225, 6, 0, 0.04); border: 1px solid rgba(225, 6, 0, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 12px; text-align: center; box-shadow: 0 8px 32px 0 rgba(225, 6, 0, 0.04); transition: transform 0.3s ease, border-color 0.3s ease;">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-accent); display: block; margin-bottom: 4px; font-weight: 700;">STEP 03</span>
+                            <h5 style="margin: 0 0 4px 0; color: var(--brand-text); font-size: 0.85rem; font-weight: 700;">Frame Synthesis</h5>
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--brand-text-sub); line-height: 1.4;">Generates 2 FPS telemetry (speed, brake, throttle).</p>
+                        </div>
+
+                        <div class="flow-arrow" style="color: rgba(225, 6, 0, 0.4); font-weight: bold;">→</div>
+
+                        <div style="flex: 1; min-width: 180px; padding: 16px; background: rgba(225, 6, 0, 0.04); border: 1px solid rgba(225, 6, 0, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 12px; text-align: center; box-shadow: 0 8px 32px 0 rgba(225, 6, 0, 0.04); transition: transform 0.3s ease, border-color 0.3s ease;">
+                            <span class="mono" style="font-size: 0.65rem; color: var(--brand-accent); display: block; margin-bottom: 4px; font-weight: 700;">STEP 04</span>
+                            <h5 style="margin: 0 0 4px 0; color: var(--brand-text); font-size: 0.85rem; font-weight: 700;">Zustand Sync</h5>
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--brand-text-sub); line-height: 1.4;">Pipes unified frame state to active React widgets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Chapter 5: Dashboard Features & Implementation Details (Scrolls 4) -->
+        <section class="story-chapter chapter-deck-pin">
+            <div class="deck-grid-container">
+                <div class="deck-info-panel">
+                    <span class="mono brand-accent-color">04 / IMPLEMENTATION DETAILS</span>
+                    <h2>Dashboard Modules</h2>
+                    <p>The system relies on modular cockpit components designed to match professional motorsport analytical rigs, ensuring clear information architecture and enabling data-informed design.</p>
+                </div>
+                
+                <div class="stacked-deck-wrapper">
+                    <!-- Card 1: 3D Track Model & Replay Engine -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="f1-deck-card-content">
+                            <div class="f1-deck-card-image-wrap">
+                                <iframe src="../Projects/F1_Dashboard.html?widget=liveReplay" scrolling="no" title="3D Monaco Viewport"></iframe>
+                            </div>
+                            <div class="f1-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">01 / REPLAY ENGINE</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">3D Monaco Viewport</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    Features a WebGL-powered 3D visualization of the Monaco circuit centerline, elevation, and curves. Colored circular car dots trace coordinates down to the millisecond, synced to play, pause, speed multipliers (0.5x to 4.0x), and scrub timelines.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Card 2: Telemetry Gauges -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="f1-deck-card-content">
+                            <div class="f1-deck-card-image-wrap">
+                                <iframe src="../Projects/F1_Dashboard.html?widget=telemetry" scrolling="no" title="Cockpit Gauges"></iframe>
+                            </div>
+                            <div class="f1-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">02 / DIALS &amp; INPUTS</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Cockpit Gauges</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    A circular radial gauge charts live vehicle speed (km/h), complemented by an active tyre compound indicator, dynamic green throttle and red brake bar inputs, and a bold gear selection readout.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Card 3: Comparisons and Battles -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="f1-deck-card-content">
+                            <div class="f1-deck-card-image-wrap">
+                                <iframe src="../Projects/F1_Dashboard.html?widget=driverHeadToHead" scrolling="no" title="Driver Battles"></iframe>
+                            </div>
+                            <div class="f1-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">03 / COMPARISONS</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Driver Battles</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    Displays real-time head-to-head comparison telemetry including current speed (km/h), throttle application, brake pressure, and gear selection across three adjacent drivers, synced with live track gaps and lap times.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: F1 Graphics and Styling -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="f1-deck-card-content">
+                            <div class="f1-deck-card-image-wrap" style="background: #0b0b0f !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; padding: 12px; box-sizing: border-box;">
+                                <div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box;">
+                                    <!-- Top Box: F1 Logo -->
+                                    <div style="flex: 1.8; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 6px;">
+                                        <img src="img/f1-logo.png" alt="F1 Logo" class="f1-moodboard-logo" style="filter: drop-shadow(0 0 6px rgba(225,6,0,0.45));">
+                                    </div>
+                                    
+                                    <!-- Middle Row: Red, Black, White -->
+                                    <div style="flex: 1.2; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                                        <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: #e10600; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                            <span style="font-family: 'Quicksand', sans-serif; font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em;">Red</span>
+                                            <span style="font-family: monospace; font-size: 0.55rem; color: rgba(255,255,255,0.7); margin-top: 2px;">#E10600</span>
+                                        </div>
+                                        <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: #030303; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                            <span style="font-family: 'Quicksand', sans-serif; font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em;">Black</span>
+                                            <span style="font-family: monospace; font-size: 0.55rem; color: rgba(255,255,255,0.4); margin-top: 2px;">#09090B</span>
+                                        </div>
+                                        <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                                            <span style="font-family: 'Quicksand', sans-serif; font-size: 0.75rem; font-weight: 700; color: #09090b; letter-spacing: 0.02em;">White</span>
+                                            <span style="font-family: monospace; font-size: 0.55rem; color: rgba(9,9,11,0.5); margin-top: 2px;">#FFFFFF</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bottom Row: Team Graphics, Icons -->
+                                    <div style="flex: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                        <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px; gap: 4px;">
+                                            <span style="font-family: 'Quicksand', sans-serif; font-size: 0.7rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; margin-bottom: 2px;">Team Graphics</span>
+                                            <div style="display: flex; gap: 4px; flex-wrap: wrap; justify-content: center;">
+                                                <span style="font-family: monospace; font-size: 0.52rem; color: #DC2626; border: 1px solid rgba(220, 38, 38, 0.2); padding: 1px 3px; border-radius: 3px; background: rgba(220, 38, 38, 0.05);">Ferrari</span>
+                                                <span style="font-family: monospace; font-size: 0.52rem; color: #F97316; border: 1px solid rgba(249, 115, 22, 0.2); padding: 1px 3px; border-radius: 3px; background: rgba(249, 115, 22, 0.05);">McLaren</span>
+                                                <span style="font-family: monospace; font-size: 0.52rem; color: #06B6D4; border: 1px solid rgba(6, 182, 212, 0.2); padding: 1px 3px; border-radius: 3px; background: rgba(6, 182, 212, 0.05);">Mercedes</span>
+                                            </div>
+                                        </div>
+                                        <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px; gap: 6px;">
+                                            <span style="font-family: 'Quicksand', sans-serif; font-size: 0.7rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; margin-bottom: 2px;">Icons</span>
+                                            <div style="display: flex; gap: 10px; align-items: center; justify-content: center; color: rgba(255,255,255,0.75);">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Gauge"><path d="m12 14 4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg>
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Trophy"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path><path d="M12 2a7.7 7.7 0 0 1 7.54 8H4.46A7.7 7.7 0 0 1 12 2z"></path></svg>
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" title="Map"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="f1-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">04 / AESTHETICS</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Graphics &amp; Styling</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    The interface draws directly from the Formula 1 visual identity, using its signature red, black, and white palette as the foundation. Team specific colours are applied throughout the dashboard to reinforce race context, while clean, minimalist icons ensure information remains clear, consistent, and instantly recognizable.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 6: Interactive Prototype -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0 var(--space-2xl) 0; height: auto; display: block;">
+            <div class="container" style="max-width: 1400px; width: 95%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); flex-wrap: wrap; gap: var(--space-sm);">
+                    <div>
+                        <span class="mono brand-accent-color">05 / Interactive Prototype</span>
+                        <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">Telemetry Rig</h2>
+                    </div>
+                    <a href="../Projects/F1_Dashboard.html" target="_blank" class="btn-pop btn-pop-primary" style="background-color: var(--brand-accent); color: white; border: none;">Open Fullscreen ↗</a>
+                </div>
+                
+                <div class="ipad-mockup-container" style="background-image: url('../Projects/F1 Dashboard/ipad screen for f1.png');">
+                    <div class="ipad-viewport">
+                        <iframe src="../Projects/F1_Dashboard.html" title="F1 Telemetry Prototype"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Island Footer -->
+    <footer class="project-footer-island">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <span class="mono" style="font-size: 0.72rem; color: var(--brand-text-sub); opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+            <a href="honee.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #e10600); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">Next Project: HONÉE →</a>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <script src="js/project-detail.js"></script>
+
+
+</body></html>

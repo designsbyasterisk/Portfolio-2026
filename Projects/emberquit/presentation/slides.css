@@ -1,0 +1,1187 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* --- Reset & Base Variables --- */
+:root {
+  --primary-color: hsl(230, 100%, 45%);
+  --primary-glow: hsl(230, 100%, 55%);
+  --accent-color: hsl(210, 100%, 60%);
+  --accent-glow: hsl(210, 100%, 60%);
+  
+  --dark-bg: #0c0e17;
+  --dark-fg: #f3f4f6;
+  --light-bg: #eef1f5;
+  --light-fg: #0f172a;
+  
+  --card-dark: rgba(255, 255, 255, 0.04);
+  --card-light: #ffffff;
+  --card-border-dark: rgba(255, 255, 255, 0.08);
+  --card-border-light: rgba(0, 0, 0, 0.05);
+
+  --font-inter: 'Inter', sans-serif;
+  --font-quicksand: 'Quicksand', sans-serif;
+  
+  --transition-slide: all 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-hover: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-inter);
+  background: #000;
+  overflow: hidden;
+  color: var(--dark-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Presentation Container --- */
+.presentation-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- Slide Base Styling --- */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.97) translateY(10px);
+  transition: var(--transition-slide);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Active Slide Transition */
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+  z-index: 10;
+}
+
+/* Slide Color Themes */
+.dark-slide {
+  background-color: var(--dark-bg);
+  color: var(--dark-fg);
+}
+
+.light-slide {
+  background-color: var(--light-bg);
+  color: var(--light-fg);
+}
+
+/* --- Noise Overlay & Background Glows --- */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0.25;
+  animation: blob-float 15s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+@keyframes blob-float {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.3) translate(-10%, 10%); }
+}
+
+/* --- Slide Content Base Layout --- */
+.slide-content {
+  position: relative;
+  z-index: 5;
+  width: 85%;
+  max-width: 1200px;
+  height: 80%;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Slide 1: Title Layout --- */
+.title-layout {
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.brand-tag {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-title {
+  font-family: var(--font-inter);
+  font-weight: 700;
+  font-size: 5rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, hsl(210, 100%, 65%), hsl(230, 100%, 55%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  max-width: 650px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 3.5rem;
+}
+
+.start-instruction {
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.start-instruction .key {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0.2rem;
+}
+
+/* --- Slide Headers --- */
+.slide-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+.header-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.header-icon-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.header-icon-circle.light {
+  border-color: rgba(15, 23, 42, 0.15);
+  color: var(--light-fg);
+}
+
+.slide-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* --- Slide 2: Pain Points Card Grid --- */
+.header-and-grid {
+  height: 100%;
+}
+
+.pain-points-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  flex: 1;
+  align-content: stretch;
+}
+
+.pain-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.75rem;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: var(--transition-hover);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Custom background shapes inside cards to match Slide 1 of Template */
+.card-shape {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  bottom: -30px;
+  right: -30px;
+  opacity: 0.15;
+  background: currentColor;
+}
+
+.leaf-shape {
+  border-radius: 50% 0 50% 50%;
+}
+
+.ring-shape {
+  border-radius: 50%;
+  border: 15px solid currentColor;
+  background: transparent;
+}
+
+.arc-shape {
+  border-radius: 50% 50% 0 0;
+}
+
+.slice-shape {
+  border-radius: 100% 0 0 0;
+}
+
+/* Accent Card (Column 1 styled in muted blue-grey) */
+.pain-card.accent-card {
+  background: #8093b7; /* Muted Slate Blue from template */
+  border-color: #8093b7;
+  color: #fff;
+}
+
+.pain-card.accent-card .card-number,
+.pain-card.accent-card p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pain-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.pain-card.accent-card:hover {
+  background: #7385a8;
+  border-color: #7385a8;
+}
+
+.card-number {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 2.5rem;
+}
+
+.pain-card h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+.pain-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* --- Split Viewport Layout (Slide 3 & 7) --- */
+.split-layout {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5rem;
+}
+
+.left-col {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.right-col {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill-category {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: #000;
+  color: #fff;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.col-title {
+  font-size: 3.8rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+
+.muted-blue-text {
+  color: #8295b9; /* Theme slate blue */
+}
+
+.col-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(15, 23, 42, 0.65);
+  margin-bottom: 3rem;
+}
+
+.col-pill-buttons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.pill-btn {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.8rem 1.4rem;
+  border-radius: 30px;
+  background: var(--light-fg);
+  color: #fff;
+  border: 1.5px solid var(--light-fg);
+  cursor: pointer;
+  transition: var(--transition-hover);
+}
+
+.pill-btn.outline {
+  background: transparent;
+  color: var(--light-fg);
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+.pill-btn:hover {
+  transform: scale(1.05);
+}
+
+/* --- Slide 3: Right Column Shapes & Phone --- */
+.half-arch-bg {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 250px;
+  height: 380px;
+  background: #11131a; /* Dark arch from template */
+  border-radius: 130px 130px 0 0;
+  z-index: 1;
+}
+
+.blue-circle-bg {
+  position: absolute;
+  top: 15%;
+  right: 0;
+  width: 240px;
+  height: 240px;
+  background: #8aa3ca; /* Soft blue circle from template */
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.iphone-frame {
+  position: relative;
+  width: 300px;
+  height: 650px;
+  background: #181920;
+  border: 10px solid #323546;
+  border-radius: 48px;
+  z-index: 10;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: rotate(5deg) translateY(-20px);
+  transition: var(--transition-hover);
+}
+
+.iphone-frame:hover {
+  transform: rotate(2deg) translateY(-25px);
+}
+
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(105% 105% at 50% -10%, #f7f9fc 0%, #e2e8f0 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem 1rem 1rem;
+  color: #0f172a;
+}
+
+.iphone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  margin-top: 0.4rem;
+}
+
+.app-title {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.app-day {
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+}
+
+.iphone-ring-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.iphone-ring {
+  position: relative;
+  width: 130px;
+  height: 130px;
+}
+
+.iphone-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.05);
+  stroke-width: 6.5;
+}
+
+.ring-fg {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 6.5;
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: 140; /* Represents cap logic */
+  stroke-linecap: round;
+}
+
+.ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ring-count {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.ring-cap {
+  font-size: 0.6rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+}
+
+.iphone-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-story-icon {
+  font-size: 0.9rem;
+}
+
+.card-story-text {
+  font-size: 0.6rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: #334155;
+}
+
+.iphone-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.iphone-btn {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+  cursor: pointer;
+}
+
+.iphone-btn.active {
+  background: rgba(239, 68, 68, 0.1);
+  color: rgb(220, 38, 38);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+.iphone-navbar {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 0.6rem;
+}
+
+/* --- Slide Headers & Split Layout (Slide 4, 5, 6) --- */
+.header-and-split {
+  height: 100%;
+}
+
+.assessment-split {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 4rem;
+  flex: 1;
+  align-items: center;
+}
+
+.assessment-text-col {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.assessment-text-col.flex-center {
+  justify-content: center;
+}
+
+.assessment-text-col h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.15;
+}
+
+.assessment-text-col p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 1.5rem;
+}
+
+.assessment-text-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.assessment-text-col ul li {
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.8);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.assessment-text-col ul li::before {
+  content: "*";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.assessment-viz-col {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.badge-tag {
+  font-family: var(--font-quicksand);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+/* --- Score Card Visual (Slide 4) --- */
+.score-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.5rem;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.score-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 0.5rem;
+}
+
+.score-number {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 4.8rem;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 0.6rem;
+}
+
+.score-total {
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.score-level {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+}
+
+.score-level.high {
+  background: rgba(239, 68, 68, 0.15);
+  color: rgb(248, 113, 113);
+}
+
+.duration-impact-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.impact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  opacity: 0.5;
+  transition: var(--transition-hover);
+}
+
+.impact-row.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-color);
+}
+
+.impact-row.active .impact-result {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+/* --- Taper Formula & SVG Chart (Slide 5) --- */
+.formula-container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1.4rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.formula-title {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.formula-math {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.15rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+.formula-explanation {
+  font-size: 0.92rem !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+  line-height: 1.5;
+}
+
+.svg-chart-container {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.5rem;
+  padding: 1.6rem;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.chart-header {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.curve-svg {
+  width: 100%;
+  height: auto;
+}
+
+.chart-text {
+  font-size: 8px;
+  fill: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-inter);
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.dashed {
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 0;
+  width: 12px;
+  height: 1px;
+}
+
+.legend-dot.active {
+  background: var(--accent-color);
+}
+
+/* --- Overlapping Circles Layout (Slide 6) --- */
+.circles-container-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.bubbles-wrapper {
+  position: relative;
+  width: 380px;
+  height: 380px;
+}
+
+.bubble-circle {
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  transition: var(--transition-hover);
+}
+
+/* Slide 3 Circle Placements (similar to template) */
+.small-bubble {
+  width: 140px;
+  height: 140px;
+  background: #ffffff;
+  color: #0f172a;
+  top: 12%;
+  left: 2%;
+  z-index: 10;
+}
+
+.small-bubble .bubble-metric {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #0c0e17;
+}
+
+.small-bubble .bubble-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+.medium-bubble {
+  width: 170px;
+  height: 170px;
+  background: #252834;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  bottom: 5%;
+  left: 8%;
+  z-index: 5;
+}
+
+.medium-bubble .bubble-metric {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: #fff;
+  line-height: 1;
+}
+
+.medium-bubble .bubble-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 0.3rem;
+}
+
+.large-bubble {
+  width: 230px;
+  height: 230px;
+  background: #8aa3ca; /* Large overlay circle in template */
+  color: #0f172a;
+  top: 15%;
+  right: 2%;
+  z-index: 15;
+  transform: rotate(-3deg);
+}
+
+.large-bubble:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.bubble-leaf-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.large-bubble .bubble-metric {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 3.3rem;
+  line-height: 1;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.large-bubble .bubble-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(15, 23, 42, 0.65);
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.bubble-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Slide 7: Coping Layout & Breathing Mockup --- */
+.cbt-list {
+  margin-top: 1.8rem;
+}
+
+.cbt-list li {
+  font-size: 0.98rem;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 1rem;
+}
+
+.cbt-list li strong {
+  color: var(--light-fg);
+  font-weight: 600;
+  display: inline-block;
+  width: 150px;
+}
+
+.coping-phone-mockup {
+  position: relative;
+  width: 300px;
+  height: 650px;
+  background: #181920;
+  border: 10px solid #323546;
+  border-radius: 48px;
+  z-index: 10;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: var(--transition-hover);
+}
+
+.coping-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.breathing-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2rem;
+}
+
+.breathing-glow-ring {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.breathing-circle-glow {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(251, 146, 60, 0.3);
+  filter: blur(15px);
+  animation: breathing-anim 16s linear infinite;
+}
+
+.breathing-circle-core {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-quicksand);
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.15);
+}
+
+.breathing-desc {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+@keyframes breathing-anim {
+  0%, 100% { transform: scale(1); background: rgba(251, 146, 60, 0.25); }
+  25% { transform: scale(1.5); background: rgba(251, 146, 60, 0.55); filter: blur(10px); }
+  50% { transform: scale(1.5); background: rgba(251, 146, 60, 0.55); filter: blur(10px); }
+  75% { transform: scale(1); background: rgba(251, 146, 60, 0.25); }
+}
+
+/* --- Slide 8: Summary Layout --- */
+.summary-layout {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.summary-title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+
+.summary-subtitle {
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 4rem;
+  max-width: 750px;
+}
+
+.summary-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  width: 100%;
+  margin-bottom: 5rem;
+}
+
+.summary-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-family: var(--font-quicksand);
+  font-weight: 700;
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.stat-text {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-brand {
+  font-family: var(--font-quicksand);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.05em;
+}
+
+/* --- Slide Navigation Controls --- */
+.navigation-controls {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(15px);
+  padding: 0.4rem 0.6rem;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-btn, .fullscreen-btn {
+  background: transparent;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: var(--transition-hover);
+}
+
+.nav-btn:hover, .fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.nav-btn svg, .fullscreen-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.slide-indicator {
+  font-family: var(--font-quicksand);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.current-indicator {
+  color: #fff;
+}
+
+/* --- Slide Transitions & Animations --- */
+.animate-title {
+  animation: slide-up-fade 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+.animate-subtitle {
+  animation: slide-up-fade 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+  animation-delay: 0.15s;
+}
+
+@keyframes slide-up-fade {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Screenshot Image Fit */
+.screenshot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

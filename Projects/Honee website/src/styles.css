@@ -1,0 +1,202 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* HONÉE — Premium lipcare design system.
+ * Palette: cream #FFF3E3, honey #F6C453, caramel #C68A5A, cocoa #5C3A2A (logo).
+ * Type: TAN Grandeur (display) + DM Sans (body).
+ */
+
+@font-face {
+  font-family: "TAN Grandeur";
+  src: url("/fonts/TANGrandeur.woff2") format("woff2"),
+       url("/fonts/TANGrandeur.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TAN Grandeur";
+  src: url("/fonts/TANGrandeur-Alt.woff2") format("woff2"),
+       url("/fonts/TANGrandeur-Alt.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("https://fonts.gstatic.com/s/dmsans/v15/rP2tp2ywxg089UriI5-g4vlH9VoD8CmcqZG40F9JadbnoEwAop8.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-honey: var(--honey);
+  --color-cocoa: var(--cocoa);
+  --color-caramel: var(--caramel);
+  --color-cream: var(--cream);
+  --font-display: "TAN Grandeur", "Cormorant Garamond", serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Brand */
+  --cream: oklch(0.965 0.025 80);          /* #FFF3E3 */
+  --honey: oklch(0.835 0.155 82);          /* #F6C453 */
+  --caramel: oklch(0.665 0.095 55);        /* #C68A5A */
+  --cocoa: oklch(0.36 0.055 45);           /* deep cocoa from logo */
+  --cocoa-deep: oklch(0.26 0.045 40);
+
+  --background: var(--cream);
+  --foreground: var(--cocoa);
+  --card: oklch(0.985 0.012 80);
+  --card-foreground: var(--cocoa);
+  --popover: var(--cream);
+  --popover-foreground: var(--cocoa);
+  --primary: var(--cocoa);
+  --primary-foreground: var(--cream);
+  --secondary: oklch(0.92 0.04 75);
+  --secondary-foreground: var(--cocoa);
+  --muted: oklch(0.93 0.025 78);
+  --muted-foreground: oklch(0.48 0.04 45);
+  --accent: var(--honey);
+  --accent-foreground: var(--cocoa);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: var(--cream);
+  --border: oklch(0.86 0.03 70);
+  --input: oklch(0.88 0.025 70);
+  --ring: var(--caramel);
+
+  --gradient-honey: linear-gradient(135deg, var(--honey), var(--caramel));
+  --gradient-warm: radial-gradient(ellipse at top, oklch(0.96 0.05 82), var(--cream));
+  --shadow-warm: 0 30px 80px -30px color-mix(in oklab, var(--caramel) 50%, transparent);
+  --shadow-soft: 0 10px 40px -15px color-mix(in oklab, var(--cocoa) 25%, transparent);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: var(--cream);
+  --sidebar-foreground: var(--cocoa);
+  --sidebar-primary: var(--cocoa);
+  --sidebar-primary-foreground: var(--cream);
+  --sidebar-accent: var(--honey);
+  --sidebar-accent-foreground: var(--cocoa);
+  --sidebar-border: oklch(0.86 0.03 70);
+  --sidebar-ring: var(--caramel);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hide broken-image alt text + icon; container bg shows through */
+  img {
+    color: transparent;
+    font-size: 0;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

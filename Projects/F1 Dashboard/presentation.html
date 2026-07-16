@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F1 Dashboard - Coding &amp; Architecture Presentation</title>
+  <!-- Google Fonts: Inter for copy, Space Grotesk / Outfit for headings, Space Mono for details -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Outfit:wght@700;800;900&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet" integrity="sha384-jEmHldt33U9I4KTZGS+CRYhfD0+mEYgewlFtc7X7p19fSXrBIk8tW01fjNosqOVA" crossorigin="anonymous">
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          },
+          colors: {
+            f1red: '#e8002d',
+            f1black: '#08080a',
+            f1gray: '#f3f4f6',
+            f1darkgray: '#1f2937',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Slide Animations */
+    .slide {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      z-index: 10;
+    }
+    /* Decorative Grid Lines */
+    .bg-grid {
+      background-size: 50px 50px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    }
+    /* Liquid blob curves */
+    .shape-blob {
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    }
+    
+    /* Responsive Scale Lock */
+    #presentation-container {
+      transition: transform 0.2s ease-out;
+      transform-origin: center center;
+    }
+  </style>
+
+  <meta name="description" content="Detailed view of Presentation"></head>
+<body class="bg-[#e5e7eb] font-sans text-f1black overflow-hidden select-none h-screen w-screen flex flex-col items-center justify-center">
+
+  <!-- TOPOLOGICAL DECORATIVE LINES OVERLAY -->
+  <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+    <svg class="w-full h-full" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-100 200 C300 400, 600 100, 1000 600 C1400 1100, 1600 500, 2020 800" stroke="#e8002d" stroke-width="1.5"></path>
+      <path d="M-50 450 C400 300, 800 900, 1200 400 C1600 -100, 1800 800, 2100 500" stroke="#08080a" stroke-width="1" stroke-dasharray="8 6"></path>
+      <path d="M200 1150 C600 800, 900 1000, 1300 500 C1700 0, 1900 200, 2200 100" stroke="#e8002d" stroke-width="0.75"></path>
+    </svg>
+  </div>
+
+  <!-- PRESENTATION CONTAINER (1440x810 - Larger base scale, auto-adjusts to viewport) -->
+  <div id="presentation-container" class="relative w-[1440px] h-[810px] bg-[#f3f4f6] rounded-[28px] shadow-2xl border border-white/20 overflow-hidden z-10 flex flex-col justify-between p-14 bg-grid">
+    
+    <!-- HEADER BAR -->
+    <div class="flex justify-between items-center z-20 shrink-0 border-b border-black/5 pb-5">
+      <div class="flex items-center gap-4">
+        <span class="bg-f1red text-white text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-sm font-bold">F1 Telemetry</span>
+        <span class="text-[11px] tracking-widest uppercase font-mono text-f1black/40">Technical System &amp; Coding Guide</span>
+      </div>
+      <div class="text-[11px] font-mono text-f1black/60 flex items-center gap-6">
+        <span>MONACO GP · REPLAY SYSTEM</span>
+        <span class="font-bold text-f1red">SLIDE <span id="slide-num-current" class="text-f1black">01</span>/<span id="slide-num-total" class="text-f1black/40">05</span></span>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE SCREEN (SLIDES STACK) -->
+    <div class="relative flex-1 min-h-0 my-6">
+
+      <!-- ============================================== -->
+      <!-- SLIDE 1: INTRO-DUCTION -->
+      <!-- ============================================== -->
+      <div class="slide active flex items-center justify-between gap-16">
+        <!-- Left Section: Designer Graphics -->
+        <div class="w-1/2 h-full flex flex-col justify-between pr-8">
+          <div class="flex flex-col">
+            <span class="text-f1red font-mono text-sm uppercase tracking-widest mb-3 font-bold">// Overview</span>
+            <h1 class="font-display text-9xl font-black text-f1black leading-none uppercase tracking-tighter">
+              INTRO-<br><span class="text-f1red">DUCTION</span>
+            </h1>
+          </div>
+          <p class="text-base text-f1black/65 leading-relaxed font-sans max-w-lg border-l-3 border-f1red pl-5 py-1.5">
+            This presentation breaks down the inner workings of the F1 Live Telemetry &amp; 3D Race Dashboard from a designer's perspective. Learn the technical keywords, layout algorithms, and state architectures that bring this project to life.
+          </p>
+          <div class="flex gap-5 items-center">
+            <div class="w-14 h-14 rounded-full border border-f1black/10 flex items-center justify-center font-mono text-sm text-f1black/60 bg-white/50">
+              ↘
+            </div>
+            <span class="text-xs uppercase tracking-widest font-mono text-f1black/40">Use left/right arrows to navigate</span>
+          </div>
+        </div>
+
+        <!-- Right Section: visual grid card overlay -->
+        <div class="w-1/2 h-full relative flex items-center justify-center">
+          <!-- Background liquid shape in red -->
+          <div class="absolute w-[400px] h-[400px] bg-f1red/10 shape-blob -top-6 -left-6 z-0 animate-[pulse_6s_infinite]"></div>
+          <!-- Background liquid shape in black -->
+          <div class="absolute w-[360px] h-[360px] bg-f1black/5 shape-blob -bottom-6 -right-6 z-0"></div>
+
+          <!-- Scaled Dashboard Screenshot Container (Larger) -->
+          <div class="relative z-10 w-[580px] rounded-[18px] shadow-2xl border border-black/10 bg-f1black p-2 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+            <img src="./dashboard_full.png" alt="F1 Dashboard Overview" class="rounded-[12px] w-full object-cover">
+            <div class="absolute -bottom-5 -left-5 bg-[#08080a] text-white p-3.5 rounded-lg border border-white/10 shadow-xl text-[10px] font-mono tracking-widest uppercase">
+              // STABLE STANDALONE ASSEMBLY
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SLIDE 2: THE TECH-STACK -->
+      <!-- ============================================== -->
+      <div class="slide flex items-center justify-between gap-16">
+        <div class="w-5/12 h-full flex flex-col justify-between pr-6">
+          <div class="flex flex-col">
+            <span class="text-f1red font-mono text-sm uppercase tracking-widest mb-3 font-bold">// Architecture</span>
+            <h2 class="font-display text-9xl font-black text-f1black leading-none uppercase tracking-tighter">
+              THE TECH-<br><span class="text-f1red">STACK</span>
+            </h2>
+          </div>
+          <p class="text-base text-f1black/65 leading-relaxed max-w-sm">
+            Just like design requires Figma (editor), variable modes (rules), and file exporting, coding requires a library, constraints, and a compiler.
+          </p>
+          <div class="h-8"></div>
+        </div>
+
+        <!-- Tech Cards (Swiss Column Layout) -->
+        <div class="w-7/12 h-full flex flex-col justify-between py-3">
+          <!-- Item 1: React -->
+          <div class="flex gap-8 border-b border-f1black/10 pb-5">
+            <div class="text-f1red font-mono text-xl font-bold">01</div>
+            <div>
+              <div class="font-display text-xl font-extrabold uppercase tracking-tight text-f1black flex items-center gap-3">
+                React <span class="text-[10px] font-mono bg-f1black/5 text-f1black/60 px-2 py-0.5 rounded uppercase font-bold">Frontend Framework</span>
+              </div>
+              <p class="text-sm text-f1black/55 leading-relaxed mt-1.5">
+                <strong>Designer equivalent: Figma Components.</strong> Rather than copying layouts, we code small, reusable components (like cards or dials) and stitch them together to make a unified interface.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 2: TypeScript -->
+          <div class="flex gap-8 border-b border-f1black/10 py-5">
+            <div class="text-f1red font-mono text-xl font-bold">02</div>
+            <div>
+              <div class="font-display text-xl font-extrabold uppercase tracking-tight text-f1black flex items-center gap-3">
+                TypeScript <span class="text-[10px] font-mono bg-f1black/5 text-f1black/60 px-2 py-0.5 rounded uppercase font-bold">Safe Code Constraints</span>
+              </div>
+              <p class="text-sm text-f1black/55 leading-relaxed mt-1.5">
+                <strong>Designer equivalent: Variable constraints.</strong> Prevents errors by ensuring data types always match (e.g., locking a lap input field to only accept numbers, preventing text from breaking layouts).
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 3: Vite -->
+          <div class="flex gap-8 pt-5">
+            <div class="text-f1red font-mono text-xl font-bold">03</div>
+            <div>
+              <div class="font-display text-xl font-extrabold uppercase tracking-tight text-f1black flex items-center gap-3">
+                Vite &amp; single-file <span class="text-[10px] font-mono bg-f1black/5 text-f1black/60 px-2 py-0.5 rounded uppercase font-bold">Compiler / Packager</span>
+              </div>
+              <p class="text-sm text-f1black/55 leading-relaxed mt-1.5">
+                <strong>Designer equivalent: PDF/HTML Export.</strong> Compresses and packages the modular code directories, icons, fonts, and CSS into a single flat file that runs standalone anywhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SLIDE 3: THE GRID-ENGINE -->
+      <!-- ============================================== -->
+      <div class="slide flex items-center justify-between gap-16">
+        <div class="w-1/2 h-full flex flex-col justify-between pr-6">
+          <div class="flex flex-col">
+            <span class="text-f1red font-mono text-sm uppercase tracking-widest mb-3 font-bold">// Layout Solver</span>
+            <h2 class="font-display text-9xl font-black text-f1black leading-none uppercase tracking-tighter">
+              THE GRID-<br><span class="text-f1red">ENGINE</span>
+            </h2>
+          </div>
+          <div class="space-y-4 font-sans text-sm text-f1black/65 border-l-3 border-f1red pl-5">
+            <p>
+              <strong>React-Grid-Layout:</strong> Maps our dashboard to a strict 8-column by 12-row coordinate plane.
+            </p>
+            <p>
+              <strong>Backtracking Solver:</strong> A custom logic script (`packAndFillLayout`) that resolves collisions. When a card is dragged or resized, it dynamically tests coordinates, varying card heights to fit perfectly.
+            </p>
+            <p class="font-bold text-f1black">
+              Result: Zero gaps or overlapping cards on screen, satisfying strict layout rules.
+            </p>
+          </div>
+          <div class="h-2"></div>
+        </div>
+
+        <!-- Screenshots Overlapping Layout (Larger Crops) -->
+        <div class="w-1/2 h-full relative flex items-center justify-center">
+          <div class="absolute w-[360px] h-[360px] bg-f1red/5 shape-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+          
+          <!-- Crop 1: Widgets Menu (Larger) -->
+          <div class="absolute z-10 top-2 left-2 w-[340px] rounded-lg shadow-2xl border border-black/10 bg-f1black p-1 transform -rotate-2">
+            <img src="./widgets_dropdown.png" alt="Widgets Dropdown" class="rounded w-full">
+            <div class="text-[9px] font-mono tracking-widest uppercase text-white/50 p-1.5 mt-1 text-center">
+              // SELECTOR AUTO-FLOWS COLUMNS
+            </div>
+          </div>
+
+          <!-- Crop 2: Circuit Specs (Larger) -->
+          <div class="absolute z-20 bottom-2 right-2 w-[320px] rounded-lg shadow-2xl border border-black/10 bg-[#e0e0e0] p-1.5 transform rotate-3">
+            <img src="./circuit_specs_card.png" alt="Circuit Specs" class="rounded w-full">
+            <div class="text-[9px] font-mono tracking-widest uppercase text-[#121212]/50 p-1.5 mt-1 text-center">
+              // HEIGHT &amp; WIDTH CONSTRAINTS ACTIVATE
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SLIDE 4: REPLAY-BRAIN -->
+      <!-- ============================================== -->
+      <div class="slide flex items-center justify-between gap-16">
+        <div class="w-5/12 h-full flex flex-col justify-between pr-6">
+          <div class="flex flex-col">
+            <span class="text-f1red font-mono text-sm uppercase tracking-widest mb-3 font-bold">// Data &amp; State</span>
+            <h2 class="font-display text-9xl font-black text-f1black leading-none uppercase tracking-tighter">
+              REPLAY-<br><span class="text-f1red">BRAIN</span>
+            </h2>
+          </div>
+          <p class="text-base text-f1black/65 leading-relaxed font-sans max-w-sm border-l-3 border-f1red pl-5">
+            How do we coordinate 20 cars traveling at 300 km/h with charts and dials?
+          </p>
+          <div class="h-6"></div>
+        </div>
+
+        <div class="w-7/12 h-full flex flex-col justify-center gap-8">
+          <div class="flex gap-8 items-center">
+            <!-- Left: Crop image of telemetry (Larger) -->
+            <div class="w-[320px] shrink-0 rounded-lg shadow-2xl border border-black/10 bg-f1black p-1.5">
+              <img src="./telemetry_card.png" alt="Telemetry Card" class="rounded w-full">
+            </div>
+            
+            <!-- Right: Zustand & Interpolation logic details -->
+            <div class="space-y-5">
+              <div>
+                <h4 class="font-display font-extrabold uppercase text-base tracking-wide text-f1black">
+                  Zustand State Store (`useReplay`)
+                </h4>
+                <p class="text-xs text-f1black/50 mt-1.5 leading-relaxed">
+                  Acts as the single source of truth. It stores the active frame, driver selections, and playbacks. When the timer moves, it notifies all cards simultaneously.
+                </p>
+              </div>
+
+              <div>
+                <h4 class="font-display font-extrabold uppercase text-base tracking-wide text-f1black">
+                  Interpolation (`getFrameAt`)
+                </h4>
+                <p class="text-xs text-f1black/50 mt-1.5 leading-relaxed">
+                  Design equivalent: **Figma Smart Animate**. Calculates where cars are in the fractions of a second between recorded telemetry frames, ensuring smooth car transitions on map and speedometer.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- SLIDE 5: 3D VIEW-PORT -->
+      <!-- ============================================== -->
+      <div class="slide flex items-center justify-between gap-16">
+        <div class="w-1/2 h-full flex flex-col justify-between pr-6">
+          <div class="flex flex-col">
+            <span class="text-f1red font-mono text-sm uppercase tracking-widest mb-3 font-bold">// 3D Rendering</span>
+            <h2 class="font-display text-9xl font-black text-f1black leading-none uppercase tracking-tighter">
+              3D VIEW-<br><span class="text-f1red">PORT</span>
+            </h2>
+          </div>
+          <div class="space-y-4 font-sans text-sm text-f1black/65 border-l-3 border-f1red pl-5">
+            <p>
+              <strong>React Three Fiber (R3F):</strong> A React library that wraps WebGL and Three.js. Allows us to declare cameras, directional lights, and F1 track mesh models as simple component nodes.
+            </p>
+            <p>
+              <strong>OrbitControls:</strong> Captures click-and-drag mouse events to map camera movement. Lets you orbit, zoom, and pan around the model of Monaco dynamically.
+            </p>
+          </div>
+          <div class="h-2"></div>
+        </div>
+
+        <div class="w-1/2 h-full relative flex items-center justify-center">
+          <div class="absolute w-[360px] h-[360px] bg-f1black/5 shape-blob top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></div>
+          
+          <!-- Mockup/Overview Graphic (Larger) -->
+          <div class="relative z-10 w-[480px] bg-[#0c0c0f] rounded-2xl border border-white/5 shadow-2xl p-5 text-center">
+            <div class="text-[10px] font-mono tracking-[2px] uppercase text-white/40 mb-4">// 3D MONACO VIEWPORT SCENE</div>
+            <div class="aspect-video bg-black/60 rounded-lg relative overflow-hidden">
+              <video src="./3d viewport video.mp4" autoplay="" loop="" muted="" playsinline="" class="w-full h-full object-cover"></video>
+            </div>
+            <div class="flex justify-between mt-4 text-[9px] font-mono text-white/30 tracking-widest uppercase">
+              <span>CAMERA: ORBIT</span>
+              <span>ASSETS: MONACO_V14</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER NAV HUD -->
+    <div class="flex justify-between items-center z-20 shrink-0 border-t border-black/5 pt-5">
+      <div class="flex items-center gap-2">
+        <button id="btn-prev" class="w-12 h-12 rounded-full border border-f1black/10 hover:border-f1red/40 hover:text-f1red text-f1black flex items-center justify-center font-mono text-sm transition-colors bg-white shadow-sm font-bold">←</button>
+        <button id="btn-next" class="w-12 h-12 rounded-full border border-f1black/10 hover:border-f1red/40 hover:text-f1red text-f1black flex items-center justify-center font-mono text-sm transition-colors bg-white shadow-sm font-bold">→</button>
+      </div>
+
+      <!-- Slide Indicator Dots -->
+      <div class="flex gap-2">
+        <span class="dot w-8 h-2 rounded-full bg-f1red transition-all duration-300"></span>
+        <span class="dot w-2.5 h-2 rounded-full bg-f1black/10 transition-all duration-300"></span>
+        <span class="dot w-2.5 h-2 rounded-full bg-f1black/10 transition-all duration-300"></span>
+        <span class="dot w-2.5 h-2 rounded-full bg-f1black/10 transition-all duration-300"></span>
+        <span class="dot w-2.5 h-2 rounded-full bg-f1black/10 transition-all duration-300"></span>
+      </div>
+
+      <div class="text-[10px] font-mono text-f1black/40 tracking-wider">
+        USE KEYBOARD ARROW KEYS OR CLICK NAVIGATION HUD
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS NAVIGATION & AUTO-SCALE LOGIC -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const currentSlideNumEl = document.getElementById('slide-num-current');
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function updateNav() {
+      // Toggle Slides visibility & active animations
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active');
+        setTimeout(() => {
+          if (idx === currentSlide) {
+            slide.classList.add('active');
+          }
+        }, 50);
+      });
+
+      // Update indicators
+      dots.forEach((dot, idx) => {
+        if (idx === currentSlide) {
+          dot.classList.remove('bg-f1black/10', 'w-2.5');
+          dot.classList.add('bg-f1red', 'w-8');
+        } else {
+          dot.classList.remove('bg-f1red', 'w-8');
+          dot.classList.add('bg-f1black/10', 'w-2.5');
+        }
+      });
+
+      // Update text count
+      const formattedNum = String(currentSlide + 1).padStart(2, '0');
+      currentSlideNumEl.textContent = formattedNum;
+    }
+
+    function navigateNext() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateNav();
+    }
+
+    function navigatePrev() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateNav();
+    }
+
+    // Attach click listeners
+    document.getElementById('btn-next').addEventListener('click', navigateNext);
+    document.getElementById('btn-prev').addEventListener('click', navigatePrev);
+
+    // Attach keyboard listeners
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        navigateNext();
+      } else if (e.key === 'ArrowLeft') {
+        navigatePrev();
+      }
+    });
+
+    // Initialize display total
+    document.getElementById('slide-num-total').textContent = String(totalSlides).padStart(2, '0');
+
+    // Dynamic viewport auto-scaling
+    const container = document.getElementById('presentation-container');
+    function handleResize() {
+      const targetWidth = 1440;
+      const targetHeight = 810;
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate scaling factor, leaving 32px padding around the edges
+      const scaleX = (windowWidth - 32) / targetWidth;
+      const scaleY = (windowHeight - 32) / targetHeight;
+      const scale = Math.min(scaleX, scaleY);
+      
+      container.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial trigger
+  </script>
+
+
+</body></html>

@@ -1,0 +1,1655 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restease — Case Study &amp; Prototype</title>
+    <meta name="description" content="Case study and interactive emergency command center dashboard for RestEase, a disaster response command and control system.">
+    
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="css/project-detail.css?v=1.1.0">
+    
+    <style>
+        .chapter-physical-solution {
+            padding: var(--space-xl) 0;
+            background: var(--brand-bg);
+            position: relative;
+            z-index: 5;
+            height: auto !important;
+            min-height: auto !important;
+            display: block !important;
+        }
+        .physical-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: var(--space-xl);
+            align-items: center;
+        }
+        @media (max-width: 992px) {
+            .physical-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+            .physical-right {
+                height: 320px !important;
+            }
+        }
+
+        /* Persona Card Light Mode Overrides */
+        .persona-card {
+            background: var(--brand-card-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            color: var(--brand-text) !important;
+        }
+        .persona-name {
+            color: var(--brand-text) !important;
+        }
+        .persona-age {
+            color: var(--brand-text-sub) !important;
+        }
+        .persona-quote {
+            color: var(--brand-text) !important;
+        }
+        .persona-story-section, .persona-bottom-grid {
+            border-top: 1px solid var(--brand-border) !important;
+        }
+        .persona-metric .metric-label, .pain-points-list li {
+            color: var(--brand-text-sub) !important;
+        }
+        .slider-bar {
+            background-color: rgba(36, 54, 30, 0.08) !important;
+        }
+        .persona-col .section-title {
+            color: #c63d00 !important;
+        }
+        .persona-tag {
+            background-color: rgba(255, 79, 0, 0.08) !important;
+            border: 1px solid rgba(255, 79, 0, 0.18) !important;
+            color: #c63d00 !important;
+        }
+
+        /* Interactive Persona Styles */
+        .solution-persona-container {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--brand-border);
+        }
+        .persona-card-interactive {
+            background: var(--brand-card-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg) !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        .persona-card-interactive:hover {
+            transform: translateY(-8px);
+            border-color: var(--brand-accent) !important;
+            box-shadow: 0 12px 40px rgba(198, 61, 0, 0.12) !important;
+        }
+        .persona-avatar-wrap-interactive {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e9ece6;
+            flex-shrink: 0;
+            border: 2px solid var(--brand-border);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .persona-card-interactive:hover .persona-avatar-wrap-interactive {
+            transform: scale(1.06) rotate(2deg);
+            border-color: var(--brand-accent) !important;
+        }
+        .pain-point-item-interactive {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: var(--space-md);
+            background: rgba(36, 54, 30, 0.02);
+            border: 1px solid var(--brand-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-sm);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .pain-point-item-interactive:hover {
+            background: rgba(198, 61, 0, 0.03);
+            border-color: rgba(198, 61, 0, 0.2);
+            transform: translateX(6px);
+        }
+        .pain-point-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand-accent);
+            margin-top: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px var(--brand-accent);
+            transition: all 0.3s ease;
+        }
+        .pain-point-item-interactive:hover .pain-point-bullet {
+            transform: scale(1.3);
+            box-shadow: 0 0 12px var(--brand-accent);
+        }
+        .persona-card-interactive .persona-story-section {
+            border-top: none !important;
+            padding-top: 0 !important;
+        }
+        @media (max-width: 576px) {
+            .persona-avatar-wrap-interactive {
+                width: 80px !important;
+                height: 80px !important;
+            }
+        }
+
+        /* Interactive Stretcher Callouts */
+        .stretcher-callout-item-interactive {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: 16px var(--space-md) !important;
+            background: rgba(36, 54, 30, 0.02) !important;
+            border-radius: var(--radius-md) !important;
+            border-left: 4px solid var(--brand-border) !important;
+            border-top: 1px solid rgba(36, 54, 30, 0.03) !important;
+            border-right: 1px solid rgba(36, 54, 30, 0.03) !important;
+            border-bottom: 1px solid rgba(36, 54, 30, 0.03) !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(36, 54, 30, 0.01) !important;
+        }
+        .stretcher-callout-item-interactive:hover {
+            transform: translateX(8px) scale(1.02);
+            background: rgba(36, 54, 30, 0.04) !important;
+            border-left-color: var(--brand-accent) !important;
+            box-shadow: 0 8px 24px rgba(198, 61, 0, 0.06) !important;
+        }
+        .stretcher-callout-item-interactive.active-callout {
+            background: rgba(36, 54, 30, 0.05) !important;
+            border-left-color: var(--brand-accent) !important;
+            box-shadow: 0 8px 24px rgba(198, 61, 0, 0.08) !important;
+        }
+        .stretcher-callout-item-interactive h4 {
+            margin: 0 0 6px 0 !important;
+            color: var(--brand-text) !important;
+            font-size: 1rem !important;
+            font-family: var(--font-display) !important;
+            font-weight: 700 !important;
+            transition: color 0.3s ease;
+        }
+        .stretcher-callout-item-interactive:hover h4, 
+        .stretcher-callout-item-interactive.active-callout h4 {
+            color: var(--brand-accent) !important;
+        }
+        .stretcher-callout-item-interactive p {
+            margin: 0 !important;
+            color: var(--brand-text-sub) !important;
+            font-size: 0.85rem !important;
+            line-height: 1.55 !important;
+        }
+
+        /* Topographic Widget Light Mode Overrides */
+        .topo-widget-container {
+            background-color: var(--brand-card-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            border-radius: var(--radius-md) !important;
+            overflow: hidden;
+        }
+        .topo-map-display {
+            background-color: #ffffff !important;
+            border-right: 1px solid var(--brand-border) !important;
+        }
+        .map-grid-blueprint {
+            background-image: 
+                linear-gradient(rgba(36, 54, 30, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(36, 54, 30, 0.02) 1px, transparent 1px) !important;
+        }
+        .topo-contours-svg path:not(.glowing-route-path) {
+            stroke: rgba(36, 54, 30, 0.12) !important;
+        }
+        .elevation-profile-card {
+            background-color: var(--brand-card-bg) !important;
+        }
+        .telemetry-header {
+            border-bottom: 1px solid var(--brand-border) !important;
+        }
+        .telemetry-header h4, .readout-val {
+            color: var(--brand-text) !important;
+        }
+        .marker-tooltip {
+            background-color: var(--brand-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            color: var(--brand-text) !important;
+        }
+        .status-badge {
+            background-color: rgba(36, 54, 30, 0.05) !important;
+            color: var(--brand-text-sub) !important;
+        }
+        .status-badge.critical {
+            background-color: rgba(255, 79, 0, 0.12) !important;
+            color: var(--brand-accent) !important;
+        }
+
+        /* Sector Telemetry Bento Light Mode Overrides */
+        .sector-telemetry-container {
+            background-color: var(--brand-card-bg) !important;
+            border: 1px solid var(--brand-border) !important;
+            border-radius: var(--radius-md) !important;
+        }
+        .telemetry-top-bar {
+            border-bottom: 1px solid var(--brand-border) !important;
+        }
+        .sector-toggle-wrap {
+            background-color: rgba(36, 54, 30, 0.03) !important;
+            border: 1px solid rgba(36, 54, 30, 0.05) !important;
+        }
+        .bento-tile {
+            background-color: rgba(36, 54, 30, 0.015) !important;
+            border: 1px solid rgba(36, 54, 30, 0.04) !important;
+        }
+        .bento-tile:hover {
+            border-color: rgba(255, 79, 0, 0.25) !important;
+        }
+        .tile-numeric {
+            color: var(--brand-text) !important;
+        }
+        .stretcher-status-bar {
+            background-color: rgba(36, 54, 30, 0.05) !important;
+        }
+        .sig-bar {
+            background-color: rgba(36, 54, 30, 0.08) !important;
+        }
+        .sig-bar.active {
+            background-color: var(--brand-text) !important;
+            box-shadow: 0 0 4px var(--brand-text) !important;
+        }
+        .troop-dot {
+            background-color: rgba(36, 54, 30, 0.06) !important;
+        }
+        .troop-dot.active {
+            background-color: var(--brand-text) !important;
+            box-shadow: 0 0 5px var(--brand-text) !important;
+        }
+        .battery-body {
+            border-color: var(--brand-text-sub);
+        }
+        .battery-level-fill {
+            background-color: var(--brand-text);
+        }
+        .battery-tip {
+            background-color: var(--brand-text-sub);
+        }
+
+        /* Global Header/Footer & Layout Light Mode Fixes */
+        .deck-info-panel h2, .gallery-pin-header h2, .mockup-reveal-info h2, .slide-info h3, .bento-card h4 {
+            color: var(--brand-text) !important;
+        }
+        .gallery-pin-header p, .mockup-reveal-info p, .slide-info p {
+            color: var(--brand-text-sub) !important;
+        }
+        
+        /* Stretcher Physical Solution Callouts */
+        .stretcher-callout-item {
+            background: #24361e !important;
+            border-left: 4px solid var(--brand-accent) !important;
+            padding: 18px 24px !important;
+            box-shadow: 0 4px 15px rgba(36, 54, 30, 0.08) !important;
+        }
+        .stretcher-callout-item h4 {
+            color: #ffffff !important;
+            margin-bottom: 6px !important;
+        }
+        .stretcher-callout-item p {
+            color: #dcdfd8 !important;
+        }
+
+        /* Header / Footer Brand Palette Styling Overrides */
+        body.theme-brand header.floating-header {
+            background-color: rgba(255, 255, 255, 0.8) !important;
+            border-bottom: 1px solid rgba(36, 54, 30, 0.08) !important;
+        }
+        body.theme-brand footer.project-footer-island {
+            background-color: #24361e !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+        body.theme-brand footer.project-footer-island a, 
+        body.theme-brand footer.project-footer-island span {
+            color: #ffffff !important;
+        }
+
+        /* High-contrast brand accent override for texts against white background */
+        .brand-accent-color, .mono.brand-accent-color {
+            color: #c63d00 !important;
+        }
+
+        /* Chapter 3: Stationary Grid Responsiveness */
+        @media (max-width: 768px) {
+            .stationary-cards-grid {
+                grid-template-columns: 1fr !important;
+                gap: var(--space-md) !important;
+            }
+        }
+
+        /* Set Chapter 5 to exactly 1 viewport height on desktop and scale cards dynamically */
+        @media (min-width: 993px) {
+            .chapter-gallery-pin {
+                height: 100vh !important;
+                min-height: 100vh !important;
+                display: flex !important;
+                flex-direction: column;
+                justify-content: flex-start !important;
+                gap: var(--space-md) !important;
+                box-sizing: border-box;
+                padding-top: 105px !important;
+                padding-bottom: 25px !important;
+            }
+            .gallery-horizontal-container {
+                align-items: center !important;
+            }
+            .gallery-slide-card.wide-card {
+                width: 940px !important;
+            }
+            .slide-image-wrapper, .slide-image-wrapper.wide-wrapper {
+                height: clamp(300px, 45vh, 440px) !important;
+            }
+            .topo-map-display {
+                background-image: url('img/landslide_isometric.jpg') !important;
+                background-size: cover !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                background-color: #ffffff !important;
+                aspect-ratio: 1 / 1 !important;
+                height: 100% !important;
+                width: auto !important;
+            }
+            .topo-route-svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                pointer-events: none;
+            }
+            .profile-bar-column {
+                height: 100% !important;
+                justify-content: flex-end !important;
+            }
+
+            /* Severity status-badge overrides */
+            .status-badge.critical {
+                background-color: rgba(239, 68, 68, 0.1) !important;
+                color: #ef4444 !important;
+                border: 1px solid rgba(239, 68, 68, 0.15) !important;
+            }
+            .status-badge.high {
+                background-color: rgba(245, 158, 11, 0.1) !important;
+                color: #f59e0b !important;
+                border: 1px solid rgba(245, 158, 11, 0.15) !important;
+            }
+            .status-badge.moderate {
+                background-color: rgba(56, 189, 248, 0.1) !important;
+                color: #0284c7 !important;
+                border: 1px solid rgba(56, 189, 248, 0.15) !important;
+            }
+            .status-badge.safe {
+                background-color: rgba(34, 197, 94, 0.1) !important;
+                color: #22c55e !important;
+                border: 1px solid rgba(34, 197, 94, 0.15) !important;
+            }
+
+            /* Default state of severity-colored bars */
+            .bar-fill.bar-safe {
+                background: linear-gradient(180deg, #22c55e 0%, rgba(34, 197, 94, 0.15) 100%) !important;
+            }
+            .bar-fill.bar-moderate {
+                background: linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.15) 100%) !important;
+            }
+            .bar-fill.bar-steep {
+                background: linear-gradient(180deg, #f59e0b 0%, rgba(245, 158, 11, 0.15) 100%) !important;
+            }
+            .bar-fill.bar-danger {
+                background: linear-gradient(180deg, #ef4444 0%, rgba(239, 68, 68, 0.15) 100%) !important;
+            }
+
+            /* Hover/Active glowing state of severity-colored bars */
+            .profile-bar-column:hover .bar-fill.bar-safe,
+            .profile-bar-column.active .bar-fill.bar-safe {
+                background: linear-gradient(180deg, #22c55e 0%, rgba(34, 197, 94, 0.3) 100%) !important;
+                box-shadow: 0 0 12px rgba(34, 197, 94, 0.4) !important;
+            }
+            .profile-bar-column:hover .bar-fill.bar-moderate,
+            .profile-bar-column.active .bar-fill.bar-moderate {
+                background: linear-gradient(180deg, #38bdf8 0%, rgba(56, 189, 248, 0.3) 100%) !important;
+                box-shadow: 0 0 12px rgba(56, 189, 248, 0.4) !important;
+            }
+            .profile-bar-column:hover .bar-fill.bar-steep,
+            .profile-bar-column.active .bar-fill.bar-steep {
+                background: linear-gradient(180deg, #f59e0b 0%, rgba(245, 158, 11, 0.3) 100%) !important;
+                box-shadow: 0 0 12px rgba(245, 158, 11, 0.4) !important;
+            }
+            .profile-bar-column:hover .bar-fill.bar-danger,
+            .profile-bar-column.active .bar-fill.bar-danger {
+                background: linear-gradient(180deg, #ef4444 0%, rgba(239, 68, 68, 0.3) 100%) !important;
+                box-shadow: 0 0 12px rgba(239, 68, 68, 0.4) !important;
+            }
+        }
+    </style>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+</head>
+<body class="theme-brand" data-brand-bg="#ffffff" data-brand-text="#24361e" data-brand-text-sub="#4b5e43" data-brand-accent="#ff4f00" data-brand-card-bg="#f4f6f3" data-brand-border="rgba(36, 54, 30, 0.1)" style="--brand-bg: #ffffff; --brand-text: #24361e; --brand-text-sub: #4b5e43; --brand-accent: #ff4f00; --brand-card-bg: #f4f6f3; --brand-border: rgba(36, 54, 30, 0.1); --brand-grid-color: rgba(36, 54, 30, 0.08); --brand-sketch-fill: #f4f6f3; --brand-sketch-text-color: #4b5e43; --brand-moodboard-bg: #f4f6f3; --brand-moodboard-border: rgba(36, 54, 30, 0.1);">
+
+    <!-- Grid blueprint background -->
+    <div class="pattern-bg"></div>
+
+    <!-- Interactive Canvas backdrop -->
+    <canvas id="project-canvas"></canvas>
+    
+    <!-- Floating Parallax Shapes -->
+    <div class="parallax-shape shape-1" style="position: absolute; top: 12%; right: 5%; width: 60px; height: 60px; border: 2px dashed rgba(255, 79, 0, 0.1); border-radius: 50%; pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-2" style="position: absolute; top: 48%; left: 3%; width: 80px; height: 80px; border: 2px dashed rgba(255, 79, 0, 0.1); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-3" style="position: absolute; top: 80%; right: 7%; width: 100px; height: 100px; border: 2px dashed rgba(255, 79, 0, 0.1); pointer-events: none; z-index: -1; transform: rotate(15deg);"></div>
+
+    <!-- Header navigation (Floating Island Navbar) -->
+    <header class="floating-header">
+        <div class="container nav-wrapper" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="../index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <style>
+                        @keyframes kf_Frame_8_transform_0 {
+                          0% {
+                            animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+                            transform: translate(757px, 643.5px) rotate(6.283rad) translate(-757px, -643.5px);
+                          }
+                          100% {
+                            transform: translate(757px, 643.5px) rotate(-6.283rad) translate(-757px, -643.5px);
+                          }
+                        }
+                        #Frame_8 {
+                          transform-origin: 0 0;
+                          animation: kf_Frame_8_transform_0 1.074199s linear infinite;
+                        }
+                        </style>
+                        <g id="Frame_8">
+                        <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                        <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                        <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </g>
+                    </svg>
+                </a>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: #24361e; border: 1px solid rgba(36, 54, 30, 0.1); color: #ffffff; border-radius: 50px;">RESTEASE</span>
+            </div>
+            
+            <nav style="display: flex; align-items: center; gap: var(--space-md);">
+                <a href="../index.html#projects" class="back-link" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main);">← Back to Works</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Scroll Narrative -->
+    <main class="narrative-wrapper">
+
+        <!-- Chapter 1: The Hook (Hero) -->
+        <section class="story-chapter chapter-hero">
+            <div class="chapter-hero-bg" style="background: linear-gradient(135deg, rgba(255, 79, 0, 0.08) 0%, rgba(19, 19, 19, 0.03) 100%);"></div>
+            <div class="container hero-content">
+                <div class="hero-text-block">
+                    <span class="label-pill brand-accent-badge">CASE STUDY 02 //</span>
+                    <h1 class="gsap-split-header brand-hero-title">RESTEASE</h1>
+                    <p class="brand-hero-subtitle">A phygital disaster response system for <span style="white-space: nowrap;">Kerala Landslides</span>.</p>
+                </div>
+                <div class="project-meta-bar">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-val">Disaster UI/UX &amp; Systems</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-val">3 Weeks</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Team</span>
+                        <span class="meta-val">Jetin Krishna, Siddharth Jadhav, Shreya Kulkarni</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+                    <button class="scroll-indicator-arrow" aria-label="Scroll down" onclick="document.querySelector('.chapter-narrative').scrollIntoView({ behavior: 'smooth' });">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: The Context & Problem Statement -->
+        <section class="story-chapter chapter-narrative">
+            <div class="container narrative-grid">
+                <div class="narrative-content-left">
+                    <div class="narrative-block">
+                        <span class="mono brand-accent-color">01 / GEOGRAPHICAL VULNERABILITY</span>
+                        <h2>Kerala Landslide Crisis</h2>
+                        <p>
+                            Wayanad, Idukki, and Malappuram districts in the Western Ghats of Kerala are highly vulnerable to sudden, catastrophic landslides. Heavy monsoon precipitation, coupled with extensive deforestation and human soil interventions, destabilizes steep hillsides and amplifies soil erosion, triggering rapid slope failures.
+                        </p>
+                    </div>
+                    <div class="narrative-block" style="margin-top: var(--space-lg);">
+                        <span class="mono brand-accent-color">02 / INFRASTRUCTURE COLLAPSE</span>
+                        <h2>Communication Blackout</h2>
+                        <p>
+                            When a major landslide hits, power lines, access roads, and cellular towers are destroyed in seconds. Rescue teams are plunged into complete communication blackouts, forcing squads to operate offline-first to coordinate life-saving search and recovery efforts.
+                        </p>
+                    </div>
+                </div>
+                <div class="narrative-content-right" style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                    <!-- Precipitation vs. Risk Chart Card -->
+                    <div class="bento-card no-tilt" style="margin: 0; padding: var(--space-md); border-radius: var(--radius-lg);">
+                        <h4 style="font-family: var(--font-display); color: #f8fafc; font-size: 0.9rem; margin-top: 0; margin-bottom: 4px;">Rainfall vs. Landslide Risk Threshold</h4>
+                        <span class="mono" style="font-size: 0.7rem; color: var(--text-sub);">Wayanad Monsoon Danger Zones</span>
+                        <div class="chart-card-wrapper">
+                            <canvas id="rain-risk-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="brand-metric-card" style="padding: var(--space-md); margin-top: 5px;">
+                        <div class="metric-number" style="font-size: 3.8rem; text-shadow: 0 0 32px rgba(255, 79, 0, 0.25);">73%</div>
+                        <p class="metric-label" style="font-size: 0.82rem; line-height: 1.5; color: var(--text-sub);">Of landslides in Wayanad occur during the peak monsoon season (July–Sept). High risk mandates offline location tracking and automatic GPS sharing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Ground Operations & Field UX (Stationary side-by-side Cards Section) -->
+        <section class="story-chapter chapter-stationary-section" id="field-operations-pin" style="padding: var(--space-xl) 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; background: var(--brand-bg); position: relative; z-index: 4; box-sizing: border-box;">
+            <div class="container">
+                <!-- Top Description Header -->
+                <div style="max-width: 800px; margin-bottom: var(--space-lg);">
+                    <span class="mono brand-accent-color">03 / FIELD LEVEL UX</span>
+                    <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--brand-text); margin-top: 8px; margin-bottom: 12px;">Ground level response</h2>
+                    <p style="color: var(--brand-text-sub); line-height: 1.6; font-size: 0.95rem; margin: 0;">
+                        Field responders face physical drain and communication blackouts under severe monsoons. System constraints require a new kind of physical hardware and digital telemetry network.
+                    </p>
+                </div>
+                
+                <!-- Bottom Cards Grid (Side-by-Side) -->
+                <div class="stationary-cards-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+                    <!-- Card 1: Lacking Physical Equipment -->
+                    <div class="deck-card" style="margin: 0; background-color: var(--brand-card-bg); border: 1px solid var(--brand-border); border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: none; transform: none; position: relative; opacity: 1;">
+                        <div class="slide-image-wrapper" style="padding: 0; background-color: #030213; height: 320px; overflow: hidden; border-radius: var(--radius-md); margin-bottom: var(--space-sm);">
+                            <img src="img/restease_current_stretcher.jpg" alt="Current Landslide Stretcher Scenario" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="slide-info" style="margin: 0; padding: 0;">
+                            <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--brand-text); margin-top: 0; margin-bottom: 8px;">Challenging Casualty Evacuation</h3>
+                            <p style="color: var(--brand-text-sub); font-size: 0.85rem; line-height: 1.6; margin: 0;">Current stretchers require 10 to 12 rescuers to carry a single casualty across mud-clogged slopes exceeding 30°. The unstable terrain and uneven weight distribution quickly exhaust rescue teams, increasing the risk of slips.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2: Lacking Connectivity & Coordination -->
+                    <div class="deck-card" style="margin: 0; background-color: var(--brand-card-bg); border: 1px solid var(--brand-border); border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; justify-content: space-between; height: 100%; transition: none; transform: none; position: relative; opacity: 1;">
+                        <div class="slide-image-wrapper" style="padding: 0; background-color: #030213; height: 320px; overflow: hidden; border-radius: var(--radius-md); margin-bottom: var(--space-sm);">
+                            <img src="img/restease_collapsed_tower.jpg" alt="Collapsed Communication Infrastructure" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="slide-info" style="margin: 0; padding: 0;">
+                            <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--brand-text); margin-top: 0; margin-bottom: 8px;">Connectivity Loss in Disaster Zones</h3>
+                            <p style="color: var(--brand-text-sub); font-size: 0.85rem; line-height: 1.6; margin: 0;">Collapsed terrain frequently damages cellular towers and power lines, cutting off communication between field teams, command centers, and stranded survivors. Rescue efforts become slower and more difficult to coordinate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: The Two-Part Approach & Physical Solution -->
+        <section class="story-chapter chapter-physical-solution">
+            <!-- Persona & Pain Points Fullscreen Wrapper -->
+            <div class="persona-fullscreen-wrap" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; padding: var(--space-xl) 0; position: relative;">
+                <!-- Persona Card + Painpoints Container (Shares the exact same container block for alignment) -->
+                <div class="container solution-persona-container" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none; display: flex; flex-direction: column; gap: var(--space-lg);">
+                    <!-- 1. Chapter 4 Title (Top of section, nested inside container for perfect alignment) -->
+                    <div style="width: 100%;">
+                        <span class="mono brand-accent-color">04 / THE TWO-PART APPROACH</span>
+                        <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--brand-text); margin-top: 8px; margin-bottom: 0;">Physical Hardware: The Rescuer Stretcher</h2>
+                    </div>
+
+                    <!-- 2. Grid Content -->
+                    <div style="display: grid; grid-template-columns: 0.95fr 1.05fr; gap: var(--space-xl); align-items: stretch; width: 100%;">
+                        <!-- Left: Persona Card Details (GSAP animated) -->
+                        <div class="persona-card-animate" style="height: 100%;">
+                            <div class="persona-card persona-card-interactive" style="margin: 0; padding: var(--space-xl) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; box-sizing: border-box; gap: var(--space-lg);">
+                                <!-- Top Details (Avatar + Details + Quote) -->
+                                <div class="persona-top" style="display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; margin: 0; padding: 0; border-bottom: none; width: 100%;">
+                                    <div class="persona-avatar-wrap-interactive" style="border: 2px solid var(--brand-border); margin: 0 auto;">
+                                        <img src="img/persona_avatar.jpg" alt="Rajesh K. Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div class="persona-main-details" style="display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; width: 100%;">
+                                        <span class="persona-name" style="font-family: var(--font-display); font-size: 1.5rem; color: var(--brand-text); font-weight: 700; line-height: 1.2;">Rajesh K.</span>
+                                        <span class="persona-age" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--brand-text-sub); line-height: 1.3;">38 yrs, NDRF Team Lead // Stretcher Operator</span>
+                                        <span class="persona-quote" style="font-style: italic; font-size: 0.9rem; color: var(--brand-text); margin-top: 8px; line-height: 1.5; display: block; max-width: 90%;">
+                                            “With the self-leveling stretcher, we can carry casualties down steep muddy slopes without losing balance, and coordinates sync automatically without us touching screens.”
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Tags -->
+                                <div style="display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap; justify-content: center; width: 100%;">
+                                    <span class="persona-tag" style="font-size: 0.8rem; padding: 5px 12px; margin: 0;">Terrain Rescue</span>
+                                    <span class="persona-tag" style="font-size: 0.8rem; padding: 5px 12px; margin: 0;">Offline-First</span>
+                                </div>
+
+                                <!-- Story -->
+                                <div class="persona-story-section" style="border-top: none !important; padding-top: 0 !important; margin: 0; text-align: center; width: 100%;">
+                                    <h4 class="section-title" style="color: #c63d00 !important; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: var(--space-xs); text-align: center;">FIELD ROLE &amp; SCENARIO</h4>
+                                    <p class="story-text" style="font-size: 0.92rem; line-height: 1.7; color: var(--brand-text-sub); margin: 0; text-align: center;">
+                                        Rajesh leads a 12-member squad in landslide zones. The steep hillsides are prone to continuous slides, cellular signals are non-existent, and physical exhaustion drains the squad.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Pain Points and How Stretcher Solves Them (GSAP animated) -->
+                        <div class="pain-points-animate" style="padding: 10px;">
+                            <span class="mono brand-accent-color" style="color: #c63d00 !important; font-size: 0.78rem; font-weight: bold; letter-spacing: 2px;">FIELD PAIN POINTS &amp; DESIGN DIRECTIONS</span>
+                            <h3 style="font-family: var(--font-display); font-size: 1.95rem; color: var(--brand-text); margin-top: var(--space-xs); margin-bottom: var(--space-sm);">Optimized for Heavy-Duty Field Usage</h3>
+                            <p style="color: var(--brand-text-sub); line-height: 1.6; font-size: 0.95rem; margin: 0 0 var(--space-md) 0;">
+                                Based on field observations and interviews with rescue personnel, the physical stretcher was designed to address the most critical challenges encountered during landslide evacuations.
+                            </p>
+                            
+                            <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                                <div class="pain-point-item-interactive">
+                                    <div class="pain-point-bullet"></div>
+                                    <div style="flex: 1;">
+                                        <h4 style="margin: 0 0 8px 0; color: var(--brand-text); font-size: 1rem; font-family: var(--font-display);">Carrier Fatigue &amp; Slips</h4>
+                                        <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub); margin-bottom: 8px;">
+                                            <span style="color: #c63d00; font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 2px; letter-spacing: 0.5px;">PAIN POINT</span>
+                                            Manual evacuation over steep, debris-covered slopes places excessive physical strain on rescuers, increasing fatigue and reducing stability.
+                                        </div>
+                                        <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub);">
+                                            <span style="color: var(--brand-text); font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 4px; letter-spacing: 0.5px;">DESIGN DIRECTIONS</span>
+                                            <ul style="margin: 0; padding-left: 15px; list-style-type: square;">
+                                                <li style="margin-bottom: 2px;">Self-leveling pivot hinge for stable patient transport.</li>
+                                                <li style="margin-bottom: 0;">Torso harness for ergonomic load redistribution.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pain-point-item-interactive">
+                                    <div class="pain-point-bullet"></div>
+                                    <div style="flex: 1;">
+                                        <h4 style="margin: 0 0 8px 0; color: var(--brand-text); font-size: 1rem; font-family: var(--font-display);">Communication Blackouts</h4>
+                                        <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub); margin-bottom: 8px;">
+                                            <span style="color: #c63d00; font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 2px; letter-spacing: 0.5px;">PAIN POINT</span>
+                                            Damaged communication infrastructure isolates rescue teams, making it difficult to coordinate operations and locate field units.
+                                        </div>
+                                        <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub);">
+                                            <span style="color: var(--brand-text); font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 4px; letter-spacing: 0.5px;">DESIGN DIRECTIONS</span>
+                                            <ul style="margin: 0; padding-left: 15px; list-style-type: square;">
+                                                <li style="margin-bottom: 2px;">Offline rescue teams location tracking.</li>
+                                                <li style="margin-bottom: 0;">Route logging and safest path recommendations.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rescuer Stretcher Engineering Inner Container (Static scroll layout) -->
+            <div class="stretcher-fullscreen-wrap" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; padding: var(--space-xl) 0; background: var(--brand-bg); position: relative;">
+                <div class="container" style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                    <div class="stretcher-header-animate">
+                        <span class="mono brand-accent-color">THE HARDWARE INTERFACE</span>
+                        <h3 style="font-family: var(--font-display); font-size: 1.75rem; color: var(--brand-text); margin-top: var(--space-xs); margin-bottom: var(--space-sm);">Rescuer Stretcher Engineering</h3>
+                        <p style="color: var(--brand-text-sub); line-height: 1.7; max-width: 850px; font-size: 0.95rem; margin: 0;">
+                            To solve the landslide rescue bottleneck, the RestEase physical stretcher is designed to reduce the physical toll on carriers and transmit vital telemetry automatically, requiring zero direct touchscreen interaction from field rescuers in harsh monsoon rains.
+                        </p>
+                    </div>
+
+                    <div class="physical-grid">
+                        <div class="physical-right" style="position: relative; aspect-ratio: 16 / 9; height: auto; border-radius: var(--radius-lg); overflow: hidden; background: #08080f; border: 1px solid rgba(255,255,255,0.05); width: 100%;">
+                            <!-- Tech HUD Video Frame -->
+                            <div class="tech-hud-frame" style="width: 100%; height: 100%; position: relative;">
+                                <div class="hud-grid-overlay"></div>
+                                <div class="hud-corner tl"></div>
+                                <div class="hud-corner tr"></div>
+                                <div class="hud-corner bl"></div>
+                                <div class="hud-corner br"></div>
+                                <span class="hud-label">CAM 01 // STRETCHER_PIVOT_TRACK</span>
+                                <div class="hud-telemetry">
+                                    <span>ALT: 890m</span>
+                                    <span>PITCH: 42°</span>
+                                    <span>BATTERY: 88%</span>
+                                </div>
+                                <video class="slide-video" autoplay="" loop="" muted="" playsinline="" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <source src="../Projects/Restease/tkh rest ease with sos.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="physical-left">
+                            <div class="stretcher-callouts-list" style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                                <div class="stretcher-callout-item-interactive">
+                                    <div class="callout-content">
+                                        <h4>Self-Leveling Pivot Hinge</h4>
+                                        <p>Compensates for steep &gt;30° slopes, automatically keeping the casualty stable and preventing slips.</p>
+                                    </div>
+                                </div>
+                                <div class="stretcher-callout-item-interactive">
+                                    <div class="callout-content">
+                                        <h4>Weight Distribution Torso Harness</h4>
+                                        <p>Shifts carrying load from hands to chest/hips, leaving rescuers' hands free for terrain balance.</p>
+                                    </div>
+                                </div>
+                                <div class="stretcher-callout-item-interactive">
+                                    <div class="callout-content">
+                                        <h4>Embedded IoT GPS &amp; SOS Transceiver</h4>
+                                        <p>Automatically logs stretcher location and SOS alerts via off-grid radio/satellite ping loops.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: Command Center Systems & Persona (Static Section) -->
+        <section class="story-chapter chapter-command-persona" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; padding: var(--space-xl) 0; position: relative; background: var(--brand-bg);">
+            <div class="container" style="display: flex; flex-direction: column; gap: var(--space-lg);">
+                <!-- Title block -->
+                <div style="width: 100%;">
+                    <span class="mono brand-accent-color">05 / COMMAND CENTER SYSTEMS</span>
+                    <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--brand-text); margin-top: 8px; margin-bottom: 0;">The Mission Control</h2>
+                </div>
+
+                <!-- Grid Content (Anjali Persona on Left, Scenario & Benefits on Right) -->
+                <div style="display: grid; grid-template-columns: 0.95fr 1.05fr; gap: var(--space-xl); align-items: stretch; width: 100%;">
+                    <!-- Left: Persona Card Details -->
+                    <div style="height: 100%;">
+                        <div class="persona-card persona-card-interactive" style="margin: 0; padding: var(--space-xl) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; box-sizing: border-box; gap: var(--space-lg);">
+                            <!-- Top Details (Avatar + Details + Quote) -->
+                            <div class="persona-top" style="display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; margin: 0; padding: 0; border-bottom: none; width: 100%;">
+                                <div class="persona-avatar-wrap-interactive" style="border: 2px solid var(--brand-border); margin: 0 auto;">
+                                    <img src="img/monitor_avatar.jpg" alt="Dr. Anjali Sen Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="persona-main-details" style="display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center; width: 100%;">
+                                    <span class="persona-name" style="font-family: var(--font-display); font-size: 1.5rem; color: var(--brand-text); font-weight: 700; line-height: 1.2;">Dr. Anjali Sen</span>
+                                    <span class="persona-age" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--brand-text-sub); line-height: 1.3;">42 yrs, District Disaster Coordinator // Mission Commander</span>
+                                    <span class="persona-quote" style="font-style: italic; font-size: 0.9rem; color: var(--brand-text); margin-top: 8px; line-height: 1.5; display: block; max-width: 90%;">
+                                        “Every rescue begins at Base Camp. I manage rescue units, equipment, and emergency responses to keep field operations moving safely and efficiently.”
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Tags -->
+                            <div style="display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap; justify-content: center; width: 100%;">
+                                <span class="persona-tag" style="font-size: 0.8rem; padding: 5px 12px; margin: 0;">Command Operations</span>
+                                <span class="persona-tag" style="font-size: 0.8rem; padding: 5px 12px; margin: 0;">Resource Management</span>
+                            </div>
+
+                            <!-- Command Role & Scenario (Inside the card under the tags!) -->
+                            <div class="persona-story-section" style="border-top: none !important; padding-top: 0 !important; margin: 0; text-align: center; width: 100%;">
+                                <h4 class="section-title" style="color: #c63d00 !important; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: var(--space-xs); text-align: center; text-transform: uppercase;">Mission Command and Scenario</h4>
+                                <p class="story-text" style="font-size: 0.92rem; line-height: 1.7; color: var(--brand-text-sub); margin: 0; text-align: center;">
+                                    As Mission Commander, Anjali leads all rescue operations from Base Camp. She supervises rescue fleet readiness, dispatches teams in response to SOS alerts, oversees equipment allocation and maintenance, and coordinates logistics to support ongoing field missions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Base Camp Pain Points and Design Directions -->
+                    <div style="padding: 10px; height: 100%;">
+                        <span class="mono brand-accent-color" style="color: #c63d00 !important; font-size: 0.78rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">COMMAND PAIN POINTS &amp; DESIGN DIRECTIONS</span>
+                        <h3 style="font-family: var(--font-display); font-size: 1.95rem; color: var(--brand-text); margin-top: var(--space-xs); margin-bottom: var(--space-sm);">Optimized for Base Camp Operations</h3>
+                        <p style="color: var(--brand-text-sub); line-height: 1.6; font-size: 0.95rem; margin: 0 0 var(--space-md) 0;">
+                            Based on observations of command center workflows and emergency logistics, the RestEase app was designed to address the operational challenges faced by mission commanders during landslide rescue operations.
+                        </p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                            <div class="pain-point-item-interactive">
+                                <div class="pain-point-bullet"></div>
+                                <div style="flex: 1;">
+                                    <h4 style="margin: 0 0 8px 0; color: var(--brand-text); font-size: 1rem; font-family: var(--font-display);">Limited Visibility of Field Teams</h4>
+                                    <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub); margin-bottom: 8px;">
+                                        <span style="color: #c63d00; font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 2px; letter-spacing: 0.5px;">PAIN POINT</span>
+                                        Once rescue units are dispatched, Base Camp has limited visibility into their location and status. If a team becomes stranded or requires assistance, coordinating support becomes slow and uncertain.
+                                    </div>
+                                    <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub);">
+                                        <span style="color: var(--brand-text); font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 4px; letter-spacing: 0.5px;">DESIGN DIRECTIONS</span>
+                                        <ul style="margin: 0; padding-left: 15px; list-style-type: square;">
+                                            <li style="margin-bottom: 2px;">Live GPS tracking of dispatched rescue units.</li>
+                                            <li style="margin-bottom: 0;">Automated SOS alerts with precise location sharing.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pain-point-item-interactive">
+                                <div class="pain-point-bullet"></div>
+                                <div style="flex: 1;">
+                                    <h4 style="margin: 0 0 8px 0; color: var(--brand-text); font-size: 1rem; font-family: var(--font-display);">Inventory &amp; Fleet Management</h4>
+                                    <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub); margin-bottom: 8px;">
+                                        <span style="color: #c63d00; font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 2px; letter-spacing: 0.5px;">PAIN POINT</span>
+                                        Managing rescue stretchers and critical equipment across multiple missions is difficult in high-stress environments, leading to misplaced assets, delayed deployment, and inefficient resource allocation.
+                                    </div>
+                                    <div style="font-size: 0.82rem; line-height: 1.5; color: var(--brand-text-sub);">
+                                        <span style="color: var(--brand-text); font-weight: bold; font-family: var(--font-mono); font-size: 0.72rem; display: block; margin-bottom: 4px; letter-spacing: 0.5px;">DESIGN DIRECTIONS</span>
+                                        <ul style="margin: 0; padding-left: 15px; list-style-type: square;">
+                                            <li style="margin-bottom: 2px;">Live inventory tracking and equipment assignment.</li>
+                                            <li style="margin-bottom: 0;">Fleet dashboard with stretcher availability and deployment status.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: District Control Command & Telemetry (Horizontal Gallery Pin Section) -->
+        <section class="story-chapter chapter-gallery-pin" id="district-command-pin">
+            <div class="gallery-pin-header">
+                <div class="container">
+                    <span class="mono brand-accent-color">05 / SYSTEM OVERVIEW</span>
+                    <h2>How the System works</h2>
+                    <p>The RestEase App applies systems thinking to enable the Rescue Base Camp to monitor rescue teams by automatically receiving GPS coordinates from each stretcher. It also records evacuation routes, helping identify and recommend safer paths for future rescue missions based on previously traversed terrain and rescue outcomes.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-horizontal-container">
+                <div class="gallery-horizontal-track">
+                    <!-- Slide 1: Evacuation Path & Elevation Telemetry -->
+                    <div class="gallery-slide-card wide-card">
+                        <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                            <!-- Topographic map & elevation profile custom display -->
+                            <div class="topo-widget-container">
+                                <!-- Left panel: contour tactical map -->
+                                <div class="topo-map-display">
+                                    <div class="map-grid-blueprint" style="opacity: 0.5; pointer-events: none;"></div>
+                                    
+                                    <!-- Evacuation Route (Glowing green line matching the user's path layout) -->
+                                    <svg class="topo-route-svg" viewBox="0 0 400 400">
+                                        <path class="glowing-route-path" d="M 216,232 L 216,156 L 100,64" stroke="#00e676" fill="none" stroke-width="3.5" stroke-dasharray="6,4"></path>
+                                    </svg>
+                                    
+                                    <!-- Interactive hazard circle centered around Casualty Site at the bottom -->
+                                    <div class="hazard-zone-pulse" style="left: 54%; top: 58%;"></div>
+                                    
+                                    <!-- Floating markers -->
+                                    <div class="topo-marker marker-base" style="top: 16%; left: 25%;">
+                                        <div class="marker-dot green"></div>
+                                        <div class="marker-tooltip">Base DEOC</div>
+                                    </div>
+                                    <div class="topo-marker marker-unit active" id="map-marker-unit" style="top: 19%; left: 29%;">
+                                        <div class="marker-dot orange"></div>
+                                        <div class="marker-tooltip">Rescue Unit 01</div>
+                                    </div>
+                                    <div class="topo-marker marker-casualty" style="top: 58%; left: 54%;">
+                                        <div class="marker-dot red"></div>
+                                        <div class="marker-tooltip">Casualty Site</div>
+                                    </div>
+                                </div>
+
+                                <!-- Right panel: elevation profile card -->
+                                <div class="elevation-profile-card">
+                                    <div class="telemetry-header" style="margin-bottom: var(--space-md);">
+                                        <span class="mono accent-blue">ROUTE PROFILE</span>
+                                    </div>
+                                    
+                                    <!-- Profile bars with X and Y Axes -->
+                                    <div class="graph-axes-wrapper" style="display: flex; flex-direction: column; gap: var(--space-xs); margin-top: var(--space-sm);">
+                                        <div class="graph-row" style="display: flex; gap: var(--space-xs); align-items: stretch; height: 180px;">
+                                            <!-- Y-Axis (Altitude Ticks) -->
+                                            <div class="y-axis-labels" style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding-right: 8px; padding-bottom: 12px; font-family: var(--font-mono); font-size: 0.62rem; color: var(--brand-text-sub); width: 42px; box-sizing: border-box;">
+                                                <span>900m</span>
+                                                <span>700m</span>
+                                                <span>500m</span>
+                                                <span>300m</span>
+                                            </div>
+                                            
+                                            <!-- Graph Content with X and Y axis borders -->
+                                            <div class="profile-bars-container" id="elevation-bars" style="flex-grow: 1; display: flex; justify-content: space-between; align-items: flex-end; padding: var(--space-xs) 12px; border-left: 2px solid var(--brand-text-sub); border-bottom: 2px solid var(--brand-text-sub); background: rgba(36, 54, 30, 0.015); border-top: none !important; border-right: none !important; box-sizing: border-box; overflow: visible; margin-bottom: 12px;">
+                                                <div class="profile-bar-column active" data-alt="890" data-slope="10" data-risk="SAFE" data-marker-x="29%" data-marker-y="19%" style="position: relative;">
+                                                    <div class="bar-fill bar-safe" style="height: 90%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT1</span>
+                                                </div>
+                                                <div class="profile-bar-column" data-alt="820" data-slope="38" data-risk="STEEP INCLINE" data-marker-x="42%" data-marker-y="30%" style="position: relative;">
+                                                    <div class="bar-fill bar-steep" style="height: 80%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT2</span>
+                                                </div>
+                                                <div class="profile-bar-column" data-alt="740" data-slope="24" data-risk="MODERATE" data-marker-x="54%" data-marker-y="39%" style="position: relative;">
+                                                    <div class="bar-fill bar-moderate" style="height: 70%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT3</span>
+                                                </div>
+                                                <div class="profile-bar-column" data-alt="690" data-slope="45" data-risk="SLIP ALERT" data-marker-x="54%" data-marker-y="45%" style="position: relative;">
+                                                    <div class="bar-fill bar-danger" style="height: 62%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT4</span>
+                                                </div>
+                                                <div class="profile-bar-column" data-alt="580" data-slope="42" data-risk="SLIP ALERT" data-marker-x="54%" data-marker-y="52%" style="position: relative;">
+                                                    <div class="bar-fill bar-danger" style="height: 50%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT5</span>
+                                                </div>
+                                                <div class="profile-bar-column" data-alt="420" data-slope="20" data-risk="MODERATE" data-marker-x="54%" data-marker-y="58%" style="position: relative;">
+                                                    <div class="bar-fill bar-moderate" style="height: 35%;"></div>
+                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT6</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- X-Axis (Positions Label) -->
+                                        <div class="x-axis-label" style="text-align: center; margin-left: 48px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--brand-text-sub); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; margin-top: 14px;">
+                                            GPS WAYPOINTS
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Live readout display -->
+                                    <div class="elevation-readout-display" style="margin-top: var(--space-md);">
+                                        <div class="readout-item">
+                                            <span class="readout-label">Altitude</span>
+                                            <span class="readout-val" id="readout-alt">890m</span>
+                                        </div>
+                                        <div class="readout-item">
+                                            <span class="readout-label">Incline</span>
+                                            <span class="readout-val" id="readout-slope">45°</span>
+                                        </div>
+                                        <div class="readout-item">
+                                            <span class="readout-label">Status</span>
+                                            <span class="readout-val status-badge critical" id="readout-risk">SLIP ALERT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="slide-info">
+                            <h3>01 / Route Mapping &amp; Elevation Profiling</h3>
+                            <p>Tracks every evacuation route as a sequence of GPS waypoints (WPTs). Each waypoint records latitude, longitude, and altitude, enabling the system to generate an elevation profile that helps Base Camp monitor terrain gradients, mission progress, and potential hazard zones.</p>
+                        </div>
+                    </div>
+                       <!-- Slide 2: Fleet Inventory System Bento -->
+                    <div class="gallery-slide-card wide-card">
+                        <style>
+                            @keyframes spinDiamond {
+                                0%   { transform: rotate(45deg); }
+                                100% { transform: rotate(405deg); }
+                            }
+                            @keyframes spinGhost {
+                                0%   { transform: rotate(-45deg); }
+                                100% { transform: rotate(-405deg); }
+                            }
+                            #nfc-bento-tile.paired .nfc-ghost {
+                                opacity: 0;
+                                transform: scale(0.8);
+                            }
+                            #nfc-bento-tile.paired .nfc-diamond {
+                                border-color: #00e676 !important;
+                                background-color: rgba(0, 230, 118, 0.08) !important;
+                                animation: none !important;
+                                transform: rotate(0deg) !important;
+                                border-radius: 12px !important;
+                                width: 56px !important;
+                                height: 56px !important;
+                            }
+                            #nfc-bento-tile.paired .nfc-phone-icon {
+                                opacity: 0;
+                                transform: scale(0.5);
+                            }
+                            #nfc-bento-tile.paired .nfc-check-icon {
+                                opacity: 1 !important;
+                                transform: scale(1) !important;
+                            }
+                            #diag-bento-tile .battery-body {
+                                border-color: #64748b;
+                            }
+                            #diag-bento-tile .battery-tip {
+                                background-color: #64748b;
+                            }
+                            #diag-bento-tile .diag-battery {
+                                background-color: #00e676;
+                            }
+                        </style>
+                        <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                            <div class="sector-telemetry-container" style="padding: 14px 18px; gap: 8px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+                                <!-- Header with title -->
+                                <div class="telemetry-top-bar" style="margin-bottom: 4px; padding-bottom: 4px;">
+                                    <span class="mono accent-orange" style="font-size: 0.72rem;">CONNECTED STRETCHER INVENTORY</span>
+                                </div>
+                                
+                                <!-- Bento Grid cards representing the four system modules -->
+                                <div class="bento-telemetry-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; height: calc(100% - 32px); box-sizing: border-box; flex-grow: 1;">
+                                    <!-- Card 1: NFC Registration -->
+                                    <div class="bento-tile tile-stretchers" id="nfc-bento-tile" onclick="this.classList.toggle('paired'); const num = this.querySelector('.nfc-num'); num.textContent = this.classList.contains('paired') ? '12' : '11';" style="padding: 12px 14px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; position: relative;">
+                                        <!-- Left column: labels, stats, captions -->
+                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
+                                            <span class="tile-label">NFC Registration</span>
+                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="nfc-num">11</span><span class="sub">/12 paired</span></div>
+                                            <span class="tile-caption">Unique tag links stretcher identity.</span>
+                                        </div>
+                                        
+                                        <!-- Right column: Animated Scanner -->
+                                        <div class="nfc-scanner-container" style="display: flex; align-items: center; justify-content: center; width: 68px; height: 68px; position: relative; overflow: visible; flex-shrink: 0;">
+                                            <!-- Rotating Outer Ghost Ring (Fades out when paired) -->
+                                            <div class="nfc-ghost" style="position: absolute; width: 60px; height: 60px; border-radius: 11px; border: 1.2px dashed rgba(255, 79, 0, 0.25); animation: spinGhost 8s linear infinite; box-sizing: border-box; transition: all 0.4s ease-in-out;"></div>
+                                            <!-- Rotating Dashed Diamond (Locks into Green Rounded Square when paired) -->
+                                            <div class="nfc-diamond" style="position: absolute; width: 50px; height: 50px; border-radius: 9px; border: 2px dashed var(--brand-accent); background: rgba(255, 79, 0, 0.08); animation: spinDiamond 4.5s linear infinite; box-sizing: border-box; transition: all 0.4s ease-in-out;"></div>
+                                            
+                                            <!-- Icon Containers overlaying inside central diamond -->
+                                            <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                                                <!-- Contactless Phone SVG Icon (Fades out when paired) -->
+                                                <div class="nfc-phone-icon" style="position: absolute; display: flex; align-items: center; justify-content: center; color: var(--brand-accent); transition: all 0.4s ease-in-out;">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <rect x="6" y="2" width="12" height="20" rx="2.5"></rect>
+                                                        <circle cx="12" cy="6" r="1" fill="currentColor" stroke-width="0"></circle>
+                                                        <path d="M 8 20 A 3 3 0 0 1 11 17"></path>
+                                                        <path d="M 8 20 A 6 6 0 0 1 14 14"></path>
+                                                        <path d="M 8 20 A 9 9 0 0 1 17 11"></path>
+                                                    </svg>
+                                                </div>
+                                                <!-- Green Checkmark SVG Icon (Fades in when paired) -->
+                                                <div class="nfc-check-icon" style="position: absolute; display: flex; align-items: center; justify-content: center; color: #00e676; opacity: 0; transform: scale(0.5); transition: all 0.4s ease-in-out;">
+                                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Card 2: Unit Diagnostics -->
+                                    <div class="bento-tile tile-power" id="diag-bento-tile" onclick="runDiagnostics(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                        <!-- Left column: labels, stats, captions -->
+                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
+                                            <span class="tile-label">Unit Diagnostics // <span class="diag-unit-id">RE-01</span></span>
+                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;">
+                                                <span class="diag-batt-val" style="transition: color 0.3s; color: var(--brand-text);">95%</span><span class="sub diag-sub"> batt</span>
+                                            </div>
+                                            <span class="tile-caption diag-caption">Unit Battery scan.</span>
+                                        </div>
+                                        
+                                        <!-- Right column: Battery visualizer -->
+                                        <div style="display: flex; align-items: center; justify-content: center; width: 68px; flex-shrink: 0;">
+                                            <!-- Battery Icon -->
+                                            <div class="battery-icon-wrap" style="margin: 0; position: relative;">
+                                                <div class="battery-body" style="width: 48px; height: 18px; border: 1.5px solid #64748b; border-radius: 3px; padding: 1.5px; box-sizing: border-box; transition: border-color 0.4s;">
+                                                    <div class="battery-level-fill diag-battery" style="width: 95%; background-color: #00e676; height: 100%; border-radius: 1px; transition: width 0.4s, background-color 0.4s;"></div>
+                                                </div>
+                                                <div class="battery-tip" style="background-color: #64748b; transition: background-color 0.4s;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Card 3: Fleet Registry -->
+                                    <div class="bento-tile tile-satellite" id="registry-bento-tile" onclick="cycleRegistry(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                        <!-- Left column: labels, stats, captions -->
+                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
+                                            <span class="tile-label">Fleet Registry</span>
+                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="reg-num">RE-01</span></div>
+                                            <span class="tile-caption reg-caption">RE01 - command unit - online</span>
+                                        </div>
+                                        
+                                        <!-- Right column: Dynamic Signal Bars & Channel Tag -->
+                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 68px; flex-shrink: 0;">
+                                            <!-- Channel Tag -->
+                                            <div class="reg-chan-tag" style="font-family: var(--font-mono); font-size: 0.65rem; color: #ff4f00; background: rgba(255, 79, 0, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 79, 0, 0.15); font-weight: bold; transition: all 0.3s;">CH-16</div>
+                                            
+                                            <!-- Signal Wrapper (toggles between bars and no-signal) -->
+                                            <div class="reg-signal-wrapper" style="height: 16px; display: flex; align-items: center; justify-content: center; position: relative; width: 37px;">
+                                                <!-- Signal Bars -->
+                                                <div class="signal-bars reg-signal-bars" style="margin: 0; display: flex; gap: 3px; align-items: flex-end; height: 16px; width: 100%;">
+                                                    <div class="sig-bar bar-1 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
+                                                    <div class="sig-bar bar-2 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
+                                                    <div class="sig-bar bar-3 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
+                                                    <div class="sig-bar bar-4 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
+                                                    <div class="sig-bar bar-5 active" style="background-color: #00e676; transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
+                                                </div>
+                                                <!-- Red diagonal strike line overlay -->
+                                                <svg class="reg-no-signal-slash" width="37" height="16" viewBox="0 0 37 16" fill="none" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; display: none; transition: all 0.3s;">
+                                                    <line x1="2" y1="14" x2="35" y2="2" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"></line>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Card 4: Maintenance Log -->
+                                    <div class="bento-tile tile-troops" id="maintenance-bento-tile" onclick="cycleMaintenance(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                        <!-- Left column: labels, stats, captions -->
+                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
+                                            <span class="tile-label">Maintenance Log</span>
+                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="maint-num">0</span><span class="sub maint-sub"> pending</span></div>
+                                            <span class="tile-caption maint-caption">Logs inspection and repair history.</span>
+                                        </div>
+                                        
+                                        <!-- Right column: Dynamic Visualizer container -->
+                                        <div class="maint-visual-container" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; width: 135px; flex-shrink: 0; text-align: right;">
+                                            <div class="maint-cert-badge" style="font-family: var(--font-mono); font-size: 0.65rem; color: #00e676; background: rgba(0, 230, 118, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 230, 118, 0.15); font-weight: bold; transition: all 0.3s;">VERIFIED</div>
+                                            <!-- Dot Checklist Matrix -->
+                                            <div class="personnel-dot-matrix maint-dot-matrix" style="margin: 0; display: flex; gap: 4px;">
+                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
+                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
+                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
+                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide-info">
+                            <h3>02 / Fleet Inventory System</h3>
+                            <p>Every RestEase stretcher is assigned a unique NFC-linked digital identity. The system tracks equipment health, communication status, assigned personnel, radio channels, and maintenance history, enabling Base Camp to monitor fleet readiness and deploy assets efficiently during rescue operations.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Chapter 5: The Simulator Mockup Reveal (Mockup Pin Section) -->
+        <section class="story-chapter chapter-mockup-pin">
+            <div class="container mockup-reveal-grid">
+                <div class="mockup-reveal-info">
+                    <span class="mono brand-accent-color">05 / INTERACTIVE SIMULATOR</span>
+                    <h2>District Control Operations</h2>
+                    <p>
+                        Interact with the live, working rescue telemetry dashboard. Check the GPS satellites, respond to SOS alerts, and simulate off-grid connection drops.
+                    </p>
+                    <div id="cors-warning-badge" style="display: none; margin-top: var(--space-sm); padding: 12px; border-radius: var(--radius-sm); background-color: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.4); font-size: 0.85rem; color: #f87171; line-height: 1.4;">
+                        <strong>Note:</strong> Browser security (CORS) blocks loading the simulator under local <code>file://</code> paths. Open this page through a local server (e.g. VS Code Live Server) to see it live.
+                    </div>
+                    <div class="cta-row" style="margin-top: var(--space-md);">
+                        <a href="../Projects/restease.html" target="_blank" class="btn-pop btn-pop-primary">Open Fullscreen ↗</a>
+                    </div>
+                </div>
+                <div class="mockup-reveal-viewport-container">
+                    <div class="revealed-device-wrapper">
+                        <!-- Zoomed Phone Mockup using real transparent PNG image -->
+                        <div class="iphone13-mockup-wrapper zoomed-mockup restease-zoomed">
+                            <!-- The real transparent phone frame on top -->
+                            <img class="iphone13-frame-img" src="img/restease_phone_mockup.png" alt="iPhone 13 Green Mockup Frame">
+                            <!-- The iframe placed behind the frame image -->
+                            <div class="phone-viewport">
+                                <iframe class="zoomed-iframe" src="../Projects/restease.html?embed=true&amp;v=1.0.7" title="Restease Live Prototype" width="100%" height="100%"></iframe>
+                                <div class="viewport-mask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Island Footer -->
+    <footer class="project-footer-island">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <span class="mono" style="font-size: 0.72rem; color: #94a3b8; opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+            <a href="f1_dashboard.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #ff4f00); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">Next Project: F1 Dashboard →</a>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <script src="js/project-detail.js"></script>
+
+    <!-- Interactive Charts & Map Initialization -->
+    <script>
+        // Global interactive functions for Slide 2 bento tiles
+        let currentDiagIndex = 0;
+        const diagStates = [
+            { unit: 'RE-01', batt: '95%', battColor: '', battWidth: '95%', battFillColor: '#00e676', border: '#64748b', tip: '#64748b', caption: 'Unit Battery scan.' },
+            { unit: 'RE-03', batt: '46%', battColor: '#ff9800', battWidth: '46%', battFillColor: '#ff9800', border: '#ff9800', tip: '#ff9800', caption: 'Unit Battery scan.' },
+            { unit: 'RE-06', batt: '12%', battColor: '#ef4444', battWidth: '12%', battFillColor: '#ef4444', border: '#ef4444', tip: '#ef4444', caption: 'Unit Battery scan.' }
+        ];
+
+        window.runDiagnostics = function(el) {
+            currentDiagIndex = (currentDiagIndex + 1) % diagStates.length;
+            const state = diagStates[currentDiagIndex];
+            
+            const unitVal = el.querySelector('.diag-unit-id');
+            const battVal = el.querySelector('.diag-batt-val');
+            const caption = el.querySelector('.diag-caption');
+            const batteryFill = el.querySelector('.diag-battery');
+            const batteryBody = el.querySelector('.battery-body');
+            const batteryTip = el.querySelector('.battery-tip');
+            
+            unitVal.textContent = state.unit;
+            battVal.textContent = state.batt;
+            battVal.style.color = state.battColor;
+            caption.textContent = state.caption;
+            
+            batteryFill.style.width = state.battWidth;
+            batteryFill.style.backgroundColor = state.battFillColor;
+            batteryBody.style.borderColor = state.border;
+            batteryTip.style.backgroundColor = state.tip;
+        };
+
+        let currentRegIndex = 0;
+        const regStates = [
+            { num: 'RE-01', tag: 'CH-16', bars: [true, true, true, true, true], caption: 'RE01 - command unit - online', offline: false },
+            { num: 'RE-02', tag: 'CH-08', bars: [true, true, true, false, false], caption: 'RE02 - medical unit - online', offline: false },
+            { num: 'RE-03', tag: 'CH-12', bars: [false, false, false, false, false], caption: 'RE03 - valley unit - offline', offline: true }
+        ];
+
+        window.cycleRegistry = function(el) {
+            currentRegIndex = (currentRegIndex + 1) % regStates.length;
+            const state = regStates[currentRegIndex];
+            
+            const num = el.querySelector('.reg-num');
+            const caption = el.querySelector('.reg-caption');
+            const tag = el.querySelector('.reg-chan-tag');
+            const noSignalSlash = el.querySelector('.reg-no-signal-slash');
+            const bars = el.querySelectorAll('.reg-signal-bars .sig-bar');
+            
+            num.textContent = state.num;
+            caption.textContent = state.caption;
+            tag.textContent = state.tag;
+            
+            if (state.offline) {
+                // Show the diagonal slash
+                noSignalSlash.style.display = 'block';
+                // Make orange tag offline styled (red/gray)
+                tag.style.color = '#f87171';
+                tag.style.borderColor = 'rgba(248, 113, 113, 0.2)';
+                tag.style.backgroundColor = 'rgba(248, 113, 113, 0.08)';
+                
+                // Set all bars to inactive look (styled like standard inactive bars)
+                bars.forEach(bar => {
+                    bar.classList.remove('active');
+                    bar.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                    bar.style.boxShadow = 'none';
+                });
+            } else {
+                // Hide the diagonal slash
+                noSignalSlash.style.display = 'none';
+                // Reset tag styling to brand orange
+                tag.style.color = '#ff4f00';
+                tag.style.borderColor = 'rgba(255, 79, 0, 0.15)';
+                tag.style.backgroundColor = 'rgba(255, 79, 0, 0.08)';
+                
+                bars.forEach((bar, index) => {
+                    bar.style.boxShadow = '';
+                    if (state.bars[index]) {
+                        bar.classList.add('active');
+                        if (index === 4 && state.tag === 'CH-16') {
+                            bar.style.backgroundColor = '#00e676';
+                        } else {
+                            bar.style.backgroundColor = '';
+                        }
+                    } else {
+                        bar.classList.remove('active');
+                        bar.style.backgroundColor = 'transparent';
+                    }
+                });
+            }
+        };
+
+        let currentMaintIndex = 0;
+        window.cycleMaintenance = function(el) {
+            currentMaintIndex = (currentMaintIndex + 1) % 3;
+            const num = el.querySelector('.maint-num');
+            const sub = el.querySelector('.maint-sub');
+            const caption = el.querySelector('.maint-caption');
+            const container = el.querySelector('.maint-visual-container');
+            
+            if (currentMaintIndex === 0) {
+                // State 0: Initial (0 pending, Verified, 4 green dots)
+                num.textContent = '0';
+                num.style.color = '';
+                sub.textContent = ' pending';
+                caption.textContent = 'Logs inspection and repair history.';
+                container.innerHTML = `
+                    <div class="maint-cert-badge" style="font-family: var(--font-mono); font-size: 0.65rem; color: #00e676; background: rgba(0, 230, 118, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 230, 118, 0.15); font-weight: bold; transition: all 0.3s; margin-bottom: 6px;">VERIFIED</div>
+                    <div class="personnel-dot-matrix maint-dot-matrix" style="margin: 0; display: flex; gap: 4px;">
+                        <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s;"></div>
+                        <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s;"></div>
+                        <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s;"></div>
+                        <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s;"></div>
+                    </div>
+                `;
+            } else if (currentMaintIndex === 1) {
+                // State 1: 2 Flagged, 17 Resolved (exact image copy with larger text)
+                num.textContent = '2';
+                num.style.color = '#f87171'; // Red / Light red
+                sub.textContent = ' flagged';
+                caption.textContent = 'Click to view active flag details.';
+                container.innerHTML = `
+                    <div style="font-family: var(--font-mono); font-size: 0.74rem; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; width: 100%; line-height: 1.3;">
+                        <div style="color: #f87171; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                            <span>⚠️</span> <span>2 Flagged</span>
+                        </div>
+                        <div style="color: #00e676; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                            <span>✓</span> <span>17 Resolved</span>
+                        </div>
+                    </div>
+                `;
+            } else if (currentMaintIndex === 2) {
+                // State 2: Unit number details (exact image copy with larger text)
+                num.textContent = '2';
+                num.style.color = '#ef4444';
+                sub.textContent = ' active';
+                caption.textContent = 'Click to clear pending logs.';
+                container.innerHTML = `
+                    <div style="font-family: var(--font-mono); font-size: 0.68rem; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; width: 100%; line-height: 1.3;">
+                        <div style="text-align: right;">
+                            <div style="color: var(--brand-text); font-weight: 700; font-size: 0.76rem;">RE-04</div>
+                            <div style="color: #f87171; font-weight: 500; font-size: 0.68rem;">Battery replaced</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: var(--brand-text); font-weight: 700; font-size: 0.76rem;">RE-09</div>
+                            <div style="color: #f87171; font-weight: 500; font-size: 0.68rem;">GPS recalibrated</div>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // Section 4: Rescuer Stretcher Engineering Feature Cards Scroll-Linked Slide-In
+            // ==========================================
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                window.addEventListener('load', () => {
+                    gsap.fromTo('.stretcher-callout-item-interactive',
+                        { opacity: 0, x: 50 },
+                        {
+                            opacity: 1,
+                            x: 0,
+                            stagger: 0.25,
+                            duration: 0.7,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: '.stretcher-callouts-list',
+                                start: "top 80%",
+                                toggleActions: "play none none none"
+                            }
+                        }
+                    );
+                });
+            }
+            // 1. Precipitation vs. Landslide Susceptibility Chart (Chart.js)
+            // ==========================================
+            const rainCtx = document.getElementById('rain-risk-chart');
+            let rainChart;
+            if (rainCtx) {
+                rainChart = new Chart(rainCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['1h', '2h', '3h', '4h', '5h', '6h', '12h', '24h'],
+                        datasets: [
+                            {
+                                label: 'Rainfall (mm)',
+                                data: [0, 0, 0, 0, 0, 0, 0, 0], // Start at 0 for scroll animation
+                                backgroundColor: 'rgba(36, 54, 30, 0.15)',
+                                borderColor: '#24361e',
+                                borderWidth: 1.5,
+                                yAxisID: 'yRain',
+                                order: 2
+                            },
+                            {
+                                label: 'Landslide Risk (%)',
+                                data: [0, 0, 0, 0, 0, 0, 0, 0], // Start at 0 for scroll animation
+                                type: 'line',
+                                borderColor: '#ff4f00',
+                                borderWidth: 3,
+                                pointBackgroundColor: '#ff4f00',
+                                pointBorderColor: '#ffffff',
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                fill: false,
+                                yAxisID: 'yRisk',
+                                order: 1
+                            },
+                            {
+                                label: 'Safety Limit',
+                                data: Array(8).fill(0), // Start at 0 for scroll animation
+                                type: 'line',
+                                borderColor: 'rgba(255, 79, 0, 0.8)',
+                                borderWidth: 1.5,
+                                borderDash: [5, 5],
+                                pointRadius: 0,
+                                fill: false,
+                                yAxisID: 'yRain',
+                                order: 3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: '#0f172a',
+                                titleFont: { family: "'Clash Display', sans-serif", size: 12 },
+                                bodyFont: { family: "'Montserrat', sans-serif", size: 11 },
+                                borderWidth: 1,
+                                borderColor: 'rgba(15,23,42,0.08)'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(15,23,42,0.04)'
+                                },
+                                ticks: {
+                                    color: '#475569',
+                                    font: { family: "'Montserrat', sans-serif", size: 10 }
+                                }
+                            },
+                            yRain: {
+                                type: 'linear',
+                                position: 'left',
+                                grid: {
+                                    color: 'rgba(15,23,42,0.06)'
+                                },
+                                ticks: {
+                                    color: '#24361e',
+                                    font: { family: "'Montserrat', sans-serif", size: 9 },
+                                    callback: function(value) { return value + 'mm'; }
+                                }
+                            },
+                            yRisk: {
+                                type: 'linear',
+                                position: 'right',
+                                grid: {
+                                    drawOnChartArea: false
+                                },
+                                ticks: {
+                                    color: '#c63d00',
+                                    font: { family: "'Montserrat', sans-serif", size: 9 },
+                                    callback: function(value) { return value + '%'; }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // ==========================================
+            // 2. Interactive Workflow Nodes Hover/Click Bindings
+            // ==========================================
+            const nodes = document.querySelectorAll('.workflow-node');
+            nodes.forEach(node => {
+                node.addEventListener('mouseenter', () => {
+                    nodes.forEach(n => n.classList.remove('active'));
+                    node.classList.add('active');
+                });
+                node.addEventListener('click', () => {
+                    nodes.forEach(n => n.classList.remove('active'));
+                    node.classList.add('active');
+                });
+            });
+
+            // ==========================================
+            // 3. Elevation Profile Graph Hover Interactions
+            // ==========================================
+            const elevBars = document.querySelectorAll('.profile-bar-column');
+            const readoutAlt = document.getElementById('readout-alt');
+            const readoutSlope = document.getElementById('readout-slope');
+            const readoutRisk = document.getElementById('readout-risk');
+            const mapMarker = document.getElementById('map-marker-unit');
+
+            elevBars.forEach(bar => {
+                const handleHover = () => {
+                    elevBars.forEach(b => b.classList.remove('active'));
+                    bar.classList.add('active');
+
+                    // Read custom data attributes
+                    const alt = bar.getAttribute('data-alt');
+                    const slope = bar.getAttribute('data-slope');
+                    const risk = bar.getAttribute('data-risk');
+                    const markerX = bar.getAttribute('data-marker-x');
+                    const markerY = bar.getAttribute('data-marker-y');
+
+                    // Update UI readouts
+                    if (readoutAlt) readoutAlt.textContent = alt + 'm';
+                    if (readoutSlope) readoutSlope.textContent = slope + '°';
+                    if (readoutRisk) {
+                        readoutRisk.textContent = risk;
+                        readoutRisk.className = 'readout-val status-badge';
+                        if (risk.includes('ALERT')) {
+                            readoutRisk.classList.add('critical');
+                        } else if (risk.includes('STEEP')) {
+                            readoutRisk.classList.add('high');
+                        } else if (risk.includes('MODERATE')) {
+                            readoutRisk.classList.add('moderate');
+                        } else {
+                            readoutRisk.classList.add('safe');
+                        }
+                    }
+
+                    // Move map marker unit
+                    if (mapMarker && markerX && markerY) {
+                        gsap.to(mapMarker, {
+                            left: markerX,
+                            top: markerY,
+                            duration: 0.35,
+                            ease: "power2.out"
+                        });
+                    }
+                };
+
+                bar.addEventListener('mouseenter', handleHover);
+                bar.addEventListener('click', handleHover);
+            });
+
+            // ==========================================
+            // 4. Fleet Inventory System (Static Infographic Bento)
+            // ==========================================
+
+            // ==========================================
+            // 5. Scroll-linked triggers using GSAP ScrollTrigger
+            // ==========================================
+            window.addEventListener('load', () => {
+                if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+                // Vertical scroll trigger for Chapter 2 Rainfall vs Landslide Risk Chart
+                if (rainCtx && rainChart) {
+                    let rainChartLoaded = false;
+                    ScrollTrigger.create({
+                        trigger: '#rain-risk-chart',
+                        start: 'top 85%',
+                        onEnter: () => {
+                            if (rainChartLoaded) return;
+                            rainChartLoaded = true;
+                            rainChart.data.datasets[0].data = [15, 32, 54, 82, 115, 140, 195, 270];
+                            rainChart.data.datasets[1].data = [12, 18, 28, 42, 68, 85, 96, 99];
+                            rainChart.data.datasets[2].data = Array(8).fill(120);
+                            rainChart.update({
+                                duration: 1800,
+                                easing: 'easeOutQuart'
+                            });
+                        }
+                    });
+                }
+
+                // Section 3: Field Operations (Stagger workflow nodes fade-in inside Card 3)
+                const deckTrack = document.querySelector('.chapter-deck-pin');
+                if (deckTrack) {
+                    gsap.fromTo(deckTrack.querySelectorAll('.workflow-node'),
+                        { x: -30, opacity: 0 },
+                        {
+                            x: 0,
+                            opacity: 1,
+                            stagger: 0.1,
+                            duration: 0.5,
+                            ease: "power2.out",
+                            scrollTrigger: {
+                                trigger: deckTrack,
+                                start: "top 60%",
+                                toggleActions: "play none none none"
+                            }
+                        }
+                    );
+                }
+
+                // Section 4: District Command (Animate elevation profile bar heights and bento grid load)
+                const cmdTrack = document.querySelector('#district-command-pin');
+                const cmdTween = cmdTrack ? cmdTrack.horizontalTween : null;
+                
+                if (cmdTrack && cmdTween) {
+                    const elevationCard = cmdTrack.querySelector('.elevation-profile-card');
+                    const bentoGrid = cmdTrack.querySelector('.sector-telemetry-container');
+
+                    // Slide 1 entry: grow elevation profile bars
+                    if (elevationCard) {
+                        ScrollTrigger.create({
+                            trigger: elevationCard,
+                            containerAnimation: cmdTween,
+                            start: "left 75%",
+                            onEnter: () => {
+                                const bars = elevationCard.querySelectorAll('.profile-bar-column .bar-fill');
+                                bars.forEach(bar => {
+                                    const col = bar.closest('.profile-bar-column');
+                                    const heightPercent = col.getAttribute('data-alt') === '890' ? '90%' :
+                                                          col.getAttribute('data-alt') === '820' ? '80%' :
+                                                          col.getAttribute('data-alt') === '740' ? '70%' :
+                                                          col.getAttribute('data-alt') === '690' ? '62%' :
+                                                          col.getAttribute('data-alt') === '580' ? '50%' : '35%';
+                                    gsap.to(bar, {
+                                        height: heightPercent,
+                                        duration: 1,
+                                        ease: "power2.out",
+                                        delay: 0.1
+                                    });
+                                });
+                            }
+                        });
+                    }
+
+                    // Slide 2 entry: stagger bento tiles entry
+                    if (bentoGrid) {
+                        gsap.fromTo(bentoGrid.querySelectorAll('.bento-tile'),
+                            { scale: 0.9, opacity: 0, y: 20 },
+                            {
+                                scale: 1,
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.6,
+                                ease: "power2.out",
+                                stagger: 0.08,
+                                scrollTrigger: {
+                                    trigger: bentoGrid,
+                                    containerAnimation: cmdTween,
+                                    start: "left 75%",
+                                    toggleActions: "play none none none"
+                                }
+                            }
+                        );
+                    }
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreya Kulkarni — Product Designer</title>
+    <meta name="description" content="Portfolio of Shreya Kulkarni, a Product Designer creating thoughtful and unconventional products through systems thinking and interaction design.">
+    <meta property="og:title" content="Shreya Kulkarni — Product Designer">
+    <meta property="og:description" content="Portfolio of Shreya Kulkarni, a Product Designer creating thoughtful and unconventional products through systems thinking and interaction design.">
+    <meta property="og:type" content="website">
+    
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Local Page Style Adjustments -->
+    <style>
+        .showcase-header {
+            margin-bottom: var(--space-lg);
+            border-bottom: 1px solid rgba(10, 17, 40, 0.08);
+            padding-bottom: var(--space-xs);
+        }
+
+        .showcase-header .mono {
+            color: var(--accent-text);
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: color var(--transition-slow);
+        }
+
+        /* Swatches & timeline overrides */
+        .timeline-box {
+            border-left: none;
+            padding-left: var(--space-md);
+            margin-left: 8px;
+            position: relative;
+        }
+
+        .timeline-card {
+            position: relative;
+            margin-bottom: var(--space-md);
+        }
+
+        .timeline-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-indicator {
+            position: absolute;
+            left: -29px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            transition: background-color var(--transition-slow);
+        }
+
+        #hero-greeting {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="theme-blue">
+
+    <!-- Technical Midnight Navy Blueprint Grid Background -->
+    <div class="pattern-bg"></div>
+
+    <!-- Interactive Particle Canvas Backdrop -->
+    <canvas id="hero-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1;"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="floating-header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <style>
+                        @keyframes kf_Frame_8_transform_0 {
+                          0% {
+                            animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+                            transform: translate(757px, 643.5px) rotate(6.283rad) translate(-757px, -643.5px);
+                          }
+                          100% {
+                            transform: translate(757px, 643.5px) rotate(-6.283rad) translate(-757px, -643.5px);
+                          }
+                        }
+                        #Frame_8 {
+                          transform-origin: 0 0;
+                          animation: kf_Frame_8_transform_0 1.074199s linear infinite;
+                        }
+                        </style>
+                        <g id="Frame_8">
+                        <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                        <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                        <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </g>
+                    </svg>
+                </a>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px;">PORTFOLIO</span>
+            </div>
+            
+            <nav style="display: flex; align-items: center; gap: var(--space-md);">
+                <a href="#projects" class="font-display" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center;">WORKS</a>
+                <a href="resume.html" class="font-display" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center;">ABOUT ME</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main style="padding-top: 130px; position: relative; overflow: hidden;">
+        
+        <!-- Floating Parallax Geometric Primitives for Storytelling Scroll -->
+        <div class="parallax-shape shape-1" style="position: absolute; top: 15%; right: 8%; width: 80px; height: 80px; border: 2px dashed rgba(10, 17, 40, 0.08); border-radius: 50%; pointer-events: none; z-index: -1; transition: border-color 0.6s ease;"></div>
+        <div class="parallax-shape shape-2" style="position: absolute; top: 55%; left: 5%; width: 100px; height: 100px; border: 2px dashed rgba(10, 17, 40, 0.08); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1; transition: border-color 0.6s ease;"></div>
+        <div class="parallax-shape shape-3" style="position: absolute; top: 82%; right: 10%; width: 120px; height: 120px; border: 2px dashed rgba(10, 17, 40, 0.08); pointer-events: none; z-index: -1; transform: rotate(15deg); transition: border-color 0.6s ease;"></div>
+        
+        <!-- Hero Section -->
+        <section class="container reveal" style="margin-bottom: var(--space-xl); position: relative;">
+
+            <div class="bento-grid">
+                <!-- Hero text panel (Bento Card) -->
+                <div class="bento-card col-12" style="display: flex; flex-direction: column; justify-content: center; text-align: left; padding: var(--space-lg) var(--space-lg) var(--space-xl) var(--space-lg);">
+                    <h1 class="custom-entrance-h1" style="margin-bottom: var(--space-sm); position: relative;">
+                        <span id="hero-greeting" class="gsap-split-portfolio" style="color: var(--accent-text);">HI THERE!</span><br>
+                        <span class="hero-title-main gsap-split-portfolio">I</span> <span class="hero-title-main gsap-split-portfolio">AM</span> <span class="hero-title-main gsap-split-portfolio">SHREYA</span> <span class="hero-title-main gsap-split-portfolio">KULKARNI</span>
+                    </h1>
+                    <p class="text-lead" style="max-width: 620px; margin-bottom: var(--space-md);">
+                        A Product Designer who applies product thinking to promote unconventional design solutions by pushing the boundaries of problem solving and articulating compelling narratives.
+                    </p>
+                    <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                        <a href="#projects" class="btn-pop btn-pop-primary magnetic">
+                            VIEW WORKS
+                        </a>
+                        <a href="mailto:designsbyasterisk@gmail.com" class="btn-pop btn-pop-secondary magnetic">SAY HELLO</a>
+                    </div>
+                </div>
+
+                <!-- Location & Availability (Bento Card) -->
+                <div class="bento-card col-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: var(--space-md);">
+                    <div class="pulse-badge" style="margin-bottom: var(--space-sm);">
+                        <span class="pulse-circle"></span>
+                        <span>Available for projects</span>
+                    </div>
+                    <p style="font-weight: 700; margin: 0; font-size: 1.1rem; color: var(--text-main);">Bengaluru, India</p>
+                </div>
+
+                <!-- Specialization (Bento Card) -->
+                <div class="bento-card col-8" style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding: var(--space-md) var(--space-lg);">
+                    <div>
+                        <span class="mono" style="font-size: 0.8rem; color: var(--accent-text);">SPECIALIZATION //</span>
+                        <h3 class="font-display" style="margin-top: 4px; margin-bottom: 0; font-size: 1.4rem;">User Centered Design</h3>
+                    </div>
+                    <div class="specialization-badge-container" style="position: relative; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <div class="spinning-star" style="z-index: 2; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px;">
+                            <svg width="44" height="44" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                                <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                                <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Directional Navigation Arrow (Scroll Down) -->
+            <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+                <button class="scroll-indicator-arrow" aria-label="Scroll to projects" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- 01. FEATURED PROJECTS (GSAP Horizontal Scroll glide) -->
+        <section id="projects" style="margin-bottom: var(--space-xl);">
+            <div class="container">
+                <div class="showcase-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-sm);">
+                    <div>
+                        <span class="mono">SECTION 01 // FEATURED PROJECTS</span>
+                    </div>
+                </div>
+            </div>
+             <div class="horizontal-scroll-container">
+                <!-- Storytelling Horizontal progress tracker -->
+                <div class="horizontal-progress-tracker">
+                    <div class="project-indicator-text">
+                        PROJECT <span id="current-project-num">01</span> / 04
+                    </div>
+                    <div class="project-indicator-bar-wrapper">
+                        <div id="project-progress-bar"></div>
+                    </div>
+                    <div id="current-project-desc">
+                        EMBERQUIT: Behavioral Coaching Companion
+                    </div>
+                </div>
+
+                <div class="horizontal-scroll-wrapper">
+                    <!-- Panel 1: Intro -->
+                    <div class="horizontal-scroll-panel" style="color: var(--bg-canvas);">
+                        <div class="pulse-badge" style="margin-bottom: var(--space-sm); background-color: var(--accent); color: var(--accent-contrast);">
+                            <span>PRODUCT &amp; SYSTEMS DESIGN</span>
+                        </div>
+                        <h2 class="font-display" style="color: var(--bg-canvas); font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: var(--space-md);">Featured Projects</h2>
+                        <button class="scroll-indicator-arrow arrow-horizontal" aria-hidden="true" style="border-color: rgba(250, 246, 238, 0.2); color: var(--bg-canvas); background-color: transparent;">
+                             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                 <line x1="5" y1="12" x2="19" y2="12"></line>
+                                 <polyline points="12 5 19 12 12 19"></polyline>
+                             </svg>
+                         </button>
+                    </div>
+
+                    <!-- Panel 2: Project 1 (Emberquit Mobile App) -->
+                    <div class="horizontal-scroll-panel" data-project-num="01" data-project-desc="EMBERQUIT: Behavioral Coaching Companion">
+                        <a href="project-details/emberquit.html" class="horizontal-project-card bento-card card-emberquit" style="text-decoration: none; display: grid;">
+                            <div class="horizontal-project-media">
+                                <div class="project-thumb-container thumb-emberquit" style="position: relative;">
+                                    <div class="project-thumb-bg"></div>
+                                    <div class="project-logo-text">EMBERQUIT</div>
+                                </div>
+                            </div>
+                            <div class="horizontal-project-info" style="padding-left: var(--space-sm);">
+                                <div>
+                                    <span class="label-pill" style="margin-bottom: var(--space-sm);">MOBILE APP</span>
+                                    <h3 class="font-display" style="margin-top: 8px;">Emberquit</h3>
+                                    <p style="font-size: 0.9rem;">A behavior companion supporting individuals on their journey to quit smoking and vaping through positive reinforcement and logging.</p>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 20px;">
+                                    <div class="horizontal-project-tags">
+                                        <span class="horizontal-project-tag">PRODUCT DESIGN</span>
+                                        <span class="horizontal-project-tag">BEHAVIORAL DESIGN</span>
+                                    </div>
+                                    <span class="mono case-study-link" style="font-size: 0.8rem; font-weight: 700;">CASE STUDY →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Panel 3: Project 2 (Restease Mobile App) -->
+                    <div class="horizontal-scroll-panel" data-project-num="02" data-project-desc="RESTEASE: Disaster Response &amp; Telemetry System">
+                        <a href="project-details/restease.html" class="horizontal-project-card bento-card card-restease" style="text-decoration: none; display: grid;">
+                            <div class="horizontal-project-media">
+                                <div class="project-thumb-container thumb-restease" style="position: relative;">
+                                    <div class="project-thumb-bg"></div>
+                                    <div class="project-logo-text">RESTEASE</div>
+                                </div>
+                            </div>
+                            <div class="horizontal-project-info" style="padding-left: var(--space-sm);">
+                                <div>
+                                    <span class="label-pill" style="margin-bottom: var(--space-sm);">DISASTER SYSTEM</span>
+                                    <h3 class="font-display" style="margin-top: 8px;">Restease</h3>
+                                    <p style="font-size: 0.9rem;">An offline-first disaster response command and control telemetry system designed for rescuers to coordinate operations and track stretchers.</p>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 20px;">
+                                    <div class="horizontal-project-tags">
+                                        <span class="horizontal-project-tag">SYSTEMS DESIGN</span>
+                                        <span class="horizontal-project-tag">SERVICE DESIGN</span>
+                                    </div>
+                                    <span class="mono case-study-link" style="font-size: 0.8rem; font-weight: 700;">CASE STUDY →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Panel 4: Project 3 (F1 Live Telemetry) -->
+                    <div class="horizontal-scroll-panel" data-project-num="03" data-project-desc="F1 DASHBOARD: Real-Time Race Analytics">
+                        <a href="project-details/f1_dashboard.html" class="horizontal-project-card bento-card card-f1" style="text-decoration: none; display: grid;">
+                            <div class="horizontal-project-media">
+                                <div class="project-thumb-container thumb-f1" style="position: relative;">
+                                    <div class="project-thumb-bg"></div>
+                                    <div class="project-logo-text">F1 &nbsp; DASHBOARD</div>
+                                </div>
+                            </div>
+                            <div class="horizontal-project-info" style="padding-left: var(--space-sm);">
+                                <div>
+                                    <span class="label-pill" style="margin-bottom: var(--space-sm);">WEB APP</span>
+                                    <h3 class="font-display" style="margin-top: 8px;">F1 &nbsp; Dashboard</h3>
+                                    <p style="font-size: 0.9rem;">A live Formula 1 dashboard mockup plotting speed curves, tire wear status, DRS zones, and driver track maps in real-time.</p>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 20px;">
+                                    <div class="horizontal-project-tags">
+                                        <span class="horizontal-project-tag">INTERACTION DESIGN</span>
+                                        <span class="horizontal-project-tag">DATA VISUALIZATION</span>
+                                    </div>
+                                    <span class="mono case-study-link" style="font-size: 0.8rem; font-weight: 700;">CASE STUDY →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Panel 5: Project 4 (HONÉE Storefront) -->
+                    <div class="horizontal-scroll-panel" data-project-num="04" data-project-desc="HONÉE STOREFRONT: Luxury Organic Honey Skincare">
+                        <a href="project-details/honee.html" class="horizontal-project-card bento-card card-honee" style="text-decoration: none; display: grid;">
+                            <div class="horizontal-project-media">
+                                <div class="project-thumb-container thumb-honee" style="position: relative;">
+                                    <div class="project-thumb-bg"></div>
+                                    <div class="project-logo-text serif-title">HONÉE</div>
+                                </div>
+                            </div>
+                            <div class="horizontal-project-info" style="padding-left: var(--space-sm);">
+                                <div>
+                                    <span class="label-pill" style="margin-bottom: var(--space-sm);">E-COMMERCE</span>
+                                    <h3 class="font-display" style="margin-top: 8px;">HONÉE Storefront</h3>
+                                    <p style="font-size: 0.9rem;">A luxury cosmetics storefront reimagining organic honey lipcare through custom skincare rituals and tactile cart flows.</p>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 20px;">
+                                    <div class="horizontal-project-tags">
+                                        <span class="horizontal-project-tag">BRANDING</span>
+                                        <span class="horizontal-project-tag">VISUAL DESIGN</span>
+                                    </div>
+                                    <span class="mono case-study-link" style="font-size: 0.8rem; font-weight: 700;">CASE STUDY →</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 02. WORK HISTORY -->
+        <section id="experience-summary" class="container reveal" style="margin-bottom: var(--space-xl);">
+            <div class="showcase-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-sm);">
+                <div>
+                    <span class="mono">SECTION 02 // WORK HISTORY</span>
+                </div>
+                <button class="scroll-indicator-arrow" aria-label="Scroll to connect section" onclick="document.querySelector('.cta-bento-card').scrollIntoView({ behavior: 'smooth' });" style="margin-bottom: var(--space-xs);">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bento-card" style="padding: var(--space-xl) var(--space-lg); text-align: center;">
+                <p class="text-lead" style="max-width: 680px; margin: 0 auto var(--space-md) auto; line-height: 1.7; font-weight: 500;">
+                    As the Founding Designer at The Karmhaus Design Studio, I work at the intersection of systems thinking, interaction design, and product design. I enjoy simplifying complex problems into intuitive experiences across physical and digital touchpoints.
+                </p>
+                <div style="display: flex; justify-content: center; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-md); opacity: 0.9;">
+                    <span class="label-pill" style="font-size: 0.75rem; text-transform: none; font-weight: 600; letter-spacing: 0.03em;">The Karmhaus (Founding Designer) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; September 2025 - Present</span>
+                </div>
+                <div style="text-align: center; margin-top: var(--space-md);">
+                    <a href="resume.html" class="btn-pop btn-pop-primary magnetic" style="font-size: 1.05rem; padding: 14px 28px;">VIEW DETAILED RESUME</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Say Hello (Bento Card) -->
+        <section class="container reveal bento-card cta-bento-card" style="padding: var(--space-xl) var(--space-lg); margin-bottom: var(--space-xl);">
+            <div class="cta-grid">
+                <div class="cta-content">
+                    <div class="label-pill" style="margin-bottom: var(--space-sm); background-color: var(--accent); color: var(--accent-contrast); transition: all var(--transition-slow);">LET'S CONNECT</div>
+                    <h2 class="font-display" style="margin-bottom: var(--space-xs); font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--text-main);">Have a project in mind?</h2>
+                    <p style="font-size: 1.05rem; margin-bottom: 0; color: var(--text-sub);">
+                        I am currently open to consulting, contract work, and full-time Product Design roles. Let's make something playful and high-impact together.
+                    </p>
+                </div>
+                <div class="cta-action">
+                    <a href="mailto:designsbyasterisk@gmail.com" class="btn-pop btn-pop-primary magnetic" style="font-size: 1.15rem; padding: 18px 36px; display: inline-flex; align-items: center; gap: 10px;">
+                        SAY HELLO
+                        <svg width="18" height="18" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                            <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                            <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--bg-card); padding: var(--space-md) 0; margin-top: var(--space-xl); border-top: 1px solid rgba(10, 17, 40, 0.06);">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+            <span class="mono" style="font-size: 0.75rem; color: var(--text-main);">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+            <div style="display: flex; gap: var(--space-md);">
+                <a href="mailto:designsbyasterisk@gmail.com" class="mono" style="font-size: 0.75rem; color: var(--text-main);">Email</a>
+                <a href="https://linkedin.com/in/shreyakulkarni01" target="_blank" class="mono" style="font-size: 0.75rem; color: var(--text-main);">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animation Library & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/cursor.js"></script>
+
+
+</body></html>

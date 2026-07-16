@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standalone Dynamic Bento Grid</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React-Grid-Layout Core and Resizable Stylesheets -->
+  <link rel="stylesheet" href="https://unpkg.com/react-grid-layout@1.4.4/css/styles.css" integrity="sha384-oL3FAWHQC/MNGYySRjub/NDXeh7qLs86iOWOPEyunDUUqxMuW3vti5/a32lSha9n" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/react-resizable@3.0.5/css/styles.css" integrity="sha384-06y1M5slGjLqahZD1k8tdsVnnXVVH50QJFNy2tCGiwtSehLT78XxuHz0RXtnJKkE" crossorigin="anonymous">
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      min-height: 100vh;
+      background: radial-gradient(circle at center, #1c1d24 0%, #0c0d10 100%);
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+      pointer-events: none;
+      z-index: 3;
+      opacity: 2%;
+    }
+
+    .react-grid-item.react-grid-placeholder {
+      background: rgba(219, 8, 1, 0.15) !important;
+      border: 2px dashed rgba(219, 8, 1, 0.4) !important;
+      z-index: 2;
+      user-select: none;
+      border-radius: 24px;
+      transition: all 400ms ease 0s !important;
+      will-change: transform;
+    }
+
+    .react-grid-item {
+      transition: 400ms ease 0s;
+    }
+  </style>
+
+  <meta name="description" content="Detailed view of Standalone grid"></head>
+<body><h1 style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;">Standalone Dynamic Bento Grid</h1>
+
+  <!-- On-Screen Error Diagnostics -->
+  <div id="error-console" style="display: none; padding: 20px; background: #fee2e2; color: #991b1b; border: 2px solid #f87171; margin: 20px; font-family: monospace; border-radius: 8px; z-index: 9999; position: relative;">
+    <h3 style="margin-top: 0; font-weight: bold;">JavaScript Error Detected:</h3>
+    <pre id="error-log" style="white-space: pre-wrap; word-break: break-all;"></pre>
+  </div>
+
+  <script>
+    window.process = { env: { NODE_ENV: 'production' } };
+    window.addEventListener('error', function(e) {
+      document.getElementById('error-console').style.display = 'block';
+      document.getElementById('error-log').textContent += '\n' + e.message + ' at ' + e.filename + ':' + e.lineno + ':' + e.colno + '\n' + (e.error ? e.error.stack : '');
+    });
+
+    if (window.self !== window.top) {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.style.background = 'transparent';
+        const rootNode = document.getElementById('root');
+        if (rootNode) {
+          rootNode.className = "relative z-10 flex items-center justify-center";
+          rootNode.style.minHeight = 'auto';
+          rootNode.style.padding = '10px 0';
+        }
+        const overlayNode = document.querySelector('.overlay');
+        if (overlayNode) overlayNode.style.display = 'none';
+
+        // Inject light mode style overrides for iframe
+        const style = document.createElement('style');
+        style.textContent = `
+          .text-white { color: #09090b !important; }
+          .border-white\\/5 { border-color: rgba(9, 9, 11, 0.08) !important; }
+          .bg-white\\/\\[0\\.02\\] { background-color: rgba(9, 9, 11, 0.02) !important; }
+          .react-grid-item > div {
+             background-color: rgba(225, 6, 0, 0.06) !important;
+             color: #e10600 !important;
+             border: 1px solid rgba(225, 6, 0, 0.15) !important;
+             box-shadow: 0 4px 12px rgba(225, 6, 0, 0.05) !important;
+          }
+          .react-grid-item > div:hover {
+             border-color: rgba(225, 6, 0, 0.35) !important;
+          }
+          .react-grid-item > div span {
+             color: #e10600 !important;
+          }
+          .opacity-60 { opacity: 0.75 !important; }
+        `;
+        document.head.appendChild(style);
+      });
+    }
+  </script>
+
+  <div class="overlay"></div>
+  <div id="root" class="relative z-10 min-h-screen py-10 flex items-center justify-center"></div>
+
+  <!-- CDN Dependencies -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin=""></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin=""></script>
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js" crossorigin="anonymous" integrity="sha384-/AfDwVDXNopzPvhxMPQ11y1OCpR6mVkWx47qzSwIiquvxkcMkZddEzDNtIOtfCpk"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha384-H6KKS1H1WwuERMSm+54dYLzjg0fKqRK5ZRyASdbrI/lwrCc6bXEmtGYr5SwvP1pZ" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-grid-layout@1.4.4/dist/react-grid-layout.min.js" integrity="sha384-yHCa+jW1cDHQj+rOuthkp9eJY7k28sZDL3D935PBuNrHS4vnSt/04yl32vqFLX8U" crossorigin="anonymous"></script>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+    const { Responsive, WidthProvider } = ReactGridLayout;
+    const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
+    const keys = ["a", "b", "c", "d", "e", "f", "g"];
+
+    const AboutLayout = {
+      lg: [
+        { i: "a", x: 0, y: 0, w: 2, h: 2 },
+        { i: "b", x: 2, y: 0, w: 1, h: 1 },
+        { i: "c", x: 3, y: 0, w: 1, h: 1 },
+        { i: "d", x: 2, y: 1, w: 1, h: 1 },
+        { i: "e", x: 3, y: 1, w: 1, h: 1 },
+        { i: "f", x: 0, y: 2, w: 2, h: 1 },
+        { i: "g", x: 2, y: 2, w: 2, h: 1 },
+      ],
+      xs: [
+        { i: "a", x: 0, y: 0, w: 1, h: 1, static: true },
+        { i: "b", x: 0, y: 1, w: 1, h: 1, static: true },
+        { i: "c", x: 0, y: 2, w: 1, h: 1, static: true },
+        { i: "d", x: 0, y: 3, w: 1, h: 1, static: true },
+        { i: "e", x: 0, y: 4, w: 1, h: 1, static: true },
+        { i: "f", x: 0, y: 5, w: 1, h: 1, static: true },
+        { i: "g", x: 0, y: 6, w: 1, h: 1, static: true },
+      ]
+    };
+
+    function tryExpandLeft(layout, grid, x, y, cols) {
+      if (x <= 0) return false;
+      const leftItemId = grid[y][x - 1];
+      if (!leftItemId) return false;
+      const item = layout.find(i => i.i === leftItemId);
+      if (!item) return false;
+
+      const targetX = item.x + item.w;
+      if (targetX >= cols) return false;
+
+      for (let ty = item.y; ty < item.y + item.h; ty++) {
+        if (ty >= grid.length) return false;
+        if (grid[ty][targetX] !== null && grid[ty][targetX] !== leftItemId) {
+          return false;
+        }
+      }
+
+      item.w += 1;
+      return true;
+    }
+
+    function tryExpandRight(layout, grid, x, y, cols) {
+      if (x >= cols - 1) return false;
+      const rightItemId = grid[y][x + 1];
+      if (!rightItemId) return false;
+      const item = layout.find(i => i.i === rightItemId);
+      if (!item) return false;
+
+      const targetX = item.x - 1;
+      if (targetX < 0) return false;
+
+      for (let ty = item.y; ty < item.y + item.h; ty++) {
+        if (ty >= grid.length) return false;
+        if (grid[ty][targetX] !== null && grid[ty][targetX] !== rightItemId) {
+          return false;
+        }
+      }
+
+      item.x -= 1;
+      item.w += 1;
+      return true;
+    }
+
+    function tryExpandTop(layout, grid, x, y) {
+      if (y <= 0) return false;
+      const topItemId = grid[y - 1][x];
+      if (!topItemId) return false;
+      const item = layout.find(i => i.i === topItemId);
+      if (!item) return false;
+
+      const targetY = item.y + item.h;
+      if (targetY >= grid.length) return false;
+
+      for (let tx = item.x; tx < item.x + item.w; tx++) {
+        if (grid[targetY][tx] !== null && grid[targetY][tx] !== topItemId) {
+          return false;
+        }
+      }
+
+      item.h += 1;
+      return true;
+    }
+
+    function tryExpandBottom(layout, grid, x, y) {
+      if (y >= grid.length - 1) return false;
+      const bottomItemId = grid[y + 1][x];
+      if (!bottomItemId) return false;
+      const item = layout.find(i => i.i === bottomItemId);
+      if (!item) return false;
+
+      const targetY = item.y - 1;
+      if (targetY < 0) return false;
+
+      for (let tx = item.x; tx < item.x + item.w; tx++) {
+        if (grid[targetY][tx] !== null && grid[targetY][tx] !== bottomItemId) {
+          return false;
+        }
+      }
+
+      item.y -= 1;
+      item.h += 1;
+      return true;
+    }
+
+    function getOriginalItem(id, breakpoint) {
+      const layoutKey = breakpoint === "xs" ? "xs" : "lg";
+      const defaultLayout = AboutLayout[layoutKey];
+      return defaultLayout.find(item => item.i === id);
+    }
+
+    function solveLayoutPlacement(items, grid, itemIndex, cols, rows, placements) {
+      if (itemIndex === items.length) {
+        return true;
+      }
+
+      const item = items[itemIndex];
+      const candidates = [];
+      
+      candidates.push({ w: item.wPref, h: item.hPref });
+      
+      if (item.wPref > 1 && item.hPref > 1) {
+        candidates.push({ w: 1, h: item.hPref });
+        candidates.push({ w: item.wPref, h: 1 });
+      }
+      
+      if (item.wPref > 1 || item.hPref > 1) {
+        candidates.push({ w: 1, h: 1 });
+      }
+
+      const uniqueCandidates = [];
+      const seen = new Set();
+      for (const cand of candidates) {
+        const key = `${cand.w}x${cand.h}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueCandidates.push(cand);
+        }
+      }
+
+      for (const cand of uniqueCandidates) {
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            if (x + cand.w <= cols && y + cand.h <= rows) {
+              let canFit = true;
+              for (let dy = 0; dy < cand.h; dy++) {
+                for (let dx = 0; dx < cand.w; dx++) {
+                  if (grid[y + dy][x + dx] !== null) {
+                    canFit = false;
+                    break;
+                  }
+                }
+                if (!canFit) break;
+              }
+
+              if (canFit) {
+                for (let dy = 0; dy < cand.h; dy++) {
+                  for (let dx = 0; dx < cand.w; dx++) {
+                    grid[y + dy][x + dx] = item.id;
+                  }
+                }
+                placements.set(item.id, { x, y, w: cand.w, h: cand.h });
+
+                if (solveLayoutPlacement(items, grid, itemIndex + 1, cols, rows, placements)) {
+                  return true;
+                }
+
+                for (let dy = 0; dy < cand.h; dy++) {
+                  for (let dx = 0; dx < cand.w; dx++) {
+                    grid[y + dy][x + dx] = null;
+                  }
+                }
+                placements.delete(item.id);
+              }
+            }
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function packAndFillLayout(layout, cols, rows, changedItem, breakpoint) {
+      let clampedChangedItem = null;
+      if (changedItem) {
+        let w = changedItem.w;
+        let h = changedItem.h;
+        
+        if (w * h > 6) {
+          if (w > 3) w = 3;
+          if (h > 2) h = 2;
+          if (w * h > 6) {
+            w = 2;
+            h = 2;
+          }
+        }
+        
+        w = Math.max(1, Math.min(w, cols));
+        h = Math.max(1, Math.min(h, rows));
+        const x = Math.max(0, Math.min(changedItem.x, cols - w));
+        const y = Math.max(0, Math.min(changedItem.y, rows - h));
+        
+        clampedChangedItem = { ...changedItem, x, y, w, h };
+      }
+
+      const grid = Array.from({ length: rows }, () => Array(cols).fill(null));
+      const newLayoutMap = new Map();
+      
+      if (clampedChangedItem) {
+        newLayoutMap.set(clampedChangedItem.i, clampedChangedItem);
+        for (let dy = 0; dy < clampedChangedItem.h; dy++) {
+          for (let dx = 0; dx < clampedChangedItem.w; dx++) {
+            grid[clampedChangedItem.y + dy][clampedChangedItem.x + dx] = clampedChangedItem.i;
+          }
+        }
+      }
+
+      const remainingItems = layout
+        .filter(item => !clampedChangedItem || item.i !== clampedChangedItem.i)
+        .map(item => {
+          const prev = layout.find(p => p.i === item.i) || getOriginalItem(item.i, breakpoint) || item;
+          return { ...item, prevX: prev.x, prevY: prev.y, prevW: prev.w, prevH: prev.h };
+        });
+
+      remainingItems.sort((a, b) => {
+        const origA = getOriginalItem(a.i, breakpoint);
+        const origB = getOriginalItem(b.i, breakpoint);
+        const areaA = (origA ? origA.w * origA.h : a.w * a.h) || 1;
+        const areaB = (origB ? origB.w * origB.h : b.w * b.h) || 1;
+        return areaB - areaA;
+      });
+
+      const itemsToPlace = remainingItems.map(item => {
+        const orig = getOriginalItem(item.i, breakpoint);
+        return { id: item.i, wPref: orig ? orig.w : item.w, hPref: orig ? orig.h : item.h, rawItem: item };
+      });
+
+      const placements = new Map();
+      const success = solveLayoutPlacement(itemsToPlace, grid, 0, cols, rows, placements);
+
+      if (success) {
+        for (const item of itemsToPlace) {
+          const plc = placements.get(item.id);
+          newLayoutMap.set(item.id, { ...item.rawItem, x: plc.x, y: plc.y, w: plc.w, h: plc.h });
+        }
+      } else {
+        for (const item of itemsToPlace) {
+          let placed = false;
+          for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+              if (grid[y][x] === null) {
+                grid[y][x] = item.id;
+                newLayoutMap.set(item.id, { ...item.rawItem, x, y, w: 1, h: 1 });
+                placed = true;
+                break;
+              }
+            }
+            if (placed) break;
+          }
+        }
+      }
+
+      const newLayout = Array.from(newLayoutMap.values());
+      
+      let changed = true;
+      let iterations = 0;
+      const maxIterations = cols * rows * 4;
+
+      while (changed && iterations < maxIterations) {
+        iterations++;
+        changed = false;
+
+        const currentGrid = Array.from({ length: rows }, () => Array(cols).fill(null));
+        for (const item of newLayout) {
+          for (let dy = 0; dy < item.h; dy++) {
+            for (let dx = 0; dx < item.w; dx++) {
+              const ny = item.y + dy;
+              const nx = item.x + dx;
+              if (ny < rows && nx < cols) {
+                currentGrid[ny][nx] = item.i;
+              }
+            }
+          }
+        }
+
+        let foundEmpty = false;
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            if (currentGrid[y][x] === null) {
+              foundEmpty = true;
+              if (tryExpandLeft(newLayout, currentGrid, x, y, cols) ||
+                  tryExpandRight(newLayout, currentGrid, x, y, cols) ||
+                  tryExpandTop(newLayout, currentGrid, x, y) ||
+                  tryExpandBottom(newLayout, currentGrid, x, y)) {
+                changed = true;
+                break;
+              }
+            }
+          }
+          if (changed) break;
+        }
+        if (!foundEmpty) break;
+      }
+
+      return newLayout;
+    }
+
+    function Layout() {
+      const [layouts, setLayouts] = useState(() => ({
+        lg: packAndFillLayout(AboutLayout.lg, 4, 3, null, "lg"),
+        xs: packAndFillLayout(AboutLayout.xs, 1, 3, null, "xs")
+      }));
+      const [currentCols, setCurrentCols] = useState(4);
+      const [currentBreakpoint, setCurrentBreakpoint] = useState("lg");
+
+      const onBreakpointChange = (newBreakpoint, newCols) => {
+        setCurrentBreakpoint(newBreakpoint);
+        setCurrentCols(newCols);
+      };
+
+      const handleDrag = (currentLayout, _oldItem, newItem) => {
+        const filledCurrentLayout = packAndFillLayout(currentLayout, currentCols, 3, newItem, currentBreakpoint);
+        setLayouts(prev => ({ ...prev, [currentBreakpoint]: filledCurrentLayout }));
+      };
+
+      const handleResize = (currentLayout, _oldItem, newItem) => {
+        const filledCurrentLayout = packAndFillLayout(currentLayout, currentCols, 3, newItem, currentBreakpoint);
+        setLayouts(prev => ({ ...prev, [currentBreakpoint]: filledCurrentLayout }));
+      };
+
+      return (
+        <div 
+          className="mx-auto border border-white/5 rounded-[40px] bg-white/[0.02] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md"
+          style={{
+            width: "694.72px",
+            height: "533.54px",
+            minWidth: "694.72px",
+            minHeight: "533.54px",
+            maxWidth: "694.72px",
+            maxHeight: "533.54px",
+            padding: "16px",
+            boxSizing: "border-box"
+          }}
+        >
+          <ResponsiveReactGridLayout
+            className="m-auto" 
+            style={{
+              width: "654.72px",
+              height: "493.54px"
+            }}
+            breakpoints={{ lg: 0 }}  
+            cols={{ lg: 4 }}  
+            rowHeight={151.18}
+            layouts={layouts}
+            compactType={null}
+            maxRows={3}
+            onDrag={handleDrag}
+            onResize={handleResize}
+            onDragStop={handleDrag}
+            onResizeStop={handleResize}
+            onBreakpointChange={onBreakpointChange}
+            margin={[10, 10]}
+            containerPadding={[10, 10]}
+          >
+            {keys.map((key) => (
+              <div
+                key={key}
+                className="flex justify-center items-center shadow-[inset_0_0_0_2px_rgba(0,0,0,0)] rounded-3.5xl text-2xl text-white visible cursor-grab active:cursor-grabbing"
+              >
+                <Block label={"Tile " + key.toUpperCase()} />
+              </div>
+            ))}
+          </ResponsiveReactGridLayout>
+        </div>
+      );
+    }
+
+    const Block = ({ label }) => {
+      const [word, keyPart] = label.split(" ");
+      return (
+        <div
+          style={{ 
+            backgroundColor: 'rgba(219, 8, 1, 0.22)',
+            backdropFilter: 'blur(12px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+            border: '1px solid rgba(255, 255, 255, 0.12)'
+          }}
+          className="h-full w-full flex flex-col justify-center items-center p-6 text-white rounded-3xl shadow-[0_8px_32px_0_rgba(219,8,1,0.15)] hover:border-white/20 transition-all duration-300"
+        >
+          <span>
+            <span className="normal-case opacity-60 font-medium">{word}</span>{" "}
+            <span className="font-bold tracking-wider">{keyPart}</span>
+          </span>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Layout />);
+  </script>
+
+
+</body></html>

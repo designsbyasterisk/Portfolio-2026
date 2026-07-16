@@ -1,0 +1,625 @@
+/* ==========================================================================
+   RESUME SPECIFIC STYLESHEET
+   Handles Web Layout and Print Optimization (Single Page PDF)
+   ========================================================================== */
+
+/* Web layout grid overrides */
+.resume-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.resume-header {
+    text-align: left;
+    margin-bottom: var(--space-lg);
+    position: relative;
+    padding: var(--space-md);
+    background-color: var(--bg-card);
+}
+
+.resume-section-title {
+    font-size: 1.3rem;
+    color: var(--text-main);
+    margin-bottom: var(--space-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Timeline lists */
+.timeline-list {
+    position: relative;
+    padding-left: var(--space-md);
+    border-left: 2px dashed rgba(10, 17, 40, 0.12);
+    margin-left: 8px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: var(--space-md);
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -29px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--accent);
+    background-color: var(--bg-canvas);
+    border-radius: 50%; /* Symmetrical outline circle marker */
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+.timeline-role {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.timeline-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.timeline-company {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    transition: color var(--transition-slow);
+}
+
+.timeline-date {
+    color: var(--text-sub);
+    font-family: var(--font-body);
+}
+
+/* Contact badges */
+.contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.contact-icon-wrapper {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    background-color: var(--bg-canvas);
+    border-radius: 50%; /* Symmetrical circle icon wrapper */
+    border: 1px solid rgba(10, 17, 40, 0.08);
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+@media (hover: hover) {
+    .contact-item:hover .contact-icon-wrapper {
+        transform: scale(1.1);
+        border-color: var(--accent);
+        background-color: var(--accent-glow);
+    }
+}
+
+.ios-icon {
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    color: var(--accent);
+    stroke-width: 2.2;
+    transition: color var(--transition-normal);
+}
+
+
+/* Floating print trigger */
+.floating-print-trigger {
+    position: fixed;
+    bottom: var(--space-md);
+    left: var(--space-md);
+    z-index: 1000;
+}
+
+/* Responsive collapse on mobile */
+@media (max-width: 768px) {
+    .resume-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom Colorful Bento Card Overrides */
+main.container #about.bento-card,
+main.container #skills.bento-card,
+main.container #software.bento-card,
+main.container #experience.bento-card,
+main.container #certificates.bento-card,
+main.container #portfolio-link.bento-card {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal);
+}
+
+/* Disable default accent before hover fills */
+main.container #about.bento-card::before,
+main.container #skills.bento-card::before,
+main.container #software.bento-card::before,
+main.container #experience.bento-card::before,
+main.container #certificates.bento-card::before,
+main.container #portfolio-link.bento-card::before {
+    display: none;
+}
+
+/* Static non-interactive color-coded tags for the Skills & Software tile */
+#skills .pill-tag,
+#software .pill-tag {
+    cursor: default;
+    pointer-events: none; /* Disables hover effects and pointer cursor clicks */
+    white-space: nowrap;
+}
+
+main.container #skills .pill-tag.pill-blue {
+    background-color: var(--color-blue);
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+main.container #skills .pill-tag.pill-orange {
+    background-color: var(--color-tangerine);
+    color: var(--text-main);
+    box-shadow: none;
+}
+
+/* Style certificate names inside the bento card to not be bold */
+main.container #certificates .timeline-role {
+    font-weight: 500;
+}
+
+/* Interactive Hover Effect for the Go To Portfolio CTA card */
+main.container #portfolio-link.bento-card {
+    transition: background-color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-fast);
+}
+
+@media (hover: hover) {
+    main.container #portfolio-link.bento-card:hover {
+        background-color: var(--color-tangerine);
+        border-color: var(--color-tangerine);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(253, 121, 3, 0.18);
+    }
+
+    main.container #portfolio-link.bento-card:hover h2,
+    main.container #portfolio-link.bento-card:hover p,
+    main.container #portfolio-link.bento-card:hover .mono {
+        color: var(--text-main);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   LANDSCAPE LAYOUT SYSTEM (Widescreen Grid)
+   -------------------------------------------------------------------------- */
+.resume-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr 1.25fr;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    align-items: stretch; /* Stretch items to same height */
+}
+
+/* Page container expansion for widescreen view */
+main.container,
+header.floating-header .container {
+    max-width: 1440px !important;
+    width: 95% !important;
+}
+
+/* Positioning rules for the grid cells */
+.profile-photo-container {
+    grid-column: 1;
+    grid-row: 1;
+    height: 100%;
+}
+
+#skills {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#about {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#software {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#experience {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+}
+
+#certificates {
+    grid-column: 2 / span 2;
+    grid-row: 2;
+}
+
+#portfolio-link-wrap {
+    grid-column: 4;
+    grid-row: 2;
+}
+
+/* Responsive collapse on tablets */
+@media (max-width: 1024px) {
+    .resume-layout-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .profile-photo-container {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    #about {
+        grid-column: 2;
+        grid-row: auto;
+    }
+    #skills {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    #software {
+        grid-column: 2;
+        grid-row: auto;
+    }
+    #experience {
+        grid-column: 1 / span 2;
+        grid-row: auto;
+    }
+    #certificates {
+        grid-column: 1 / span 2;
+        grid-row: auto;
+    }
+    #portfolio-link-wrap {
+        grid-column: 1 / span 2;
+        grid-row: auto;
+    }
+}
+
+/* Responsive collapse on mobile */
+@media (max-width: 768px) {
+    .resume-layout-grid {
+        grid-template-columns: 1fr;
+    }
+    .resume-layout-grid > * {
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   PRINT OPTIMIZATION (@media print)
+   Forces clean 1-page high-contrast layout with heading colors
+   -------------------------------------------------------------------------- */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 0.5in 0.5in;
+    }
+
+    body {
+        background-color: #FFFFFF !important;
+        background-image: none !important;
+        color: #000000 !important;
+        font-size: 11pt !important;
+        line-height: 1.4 !important;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    h1, h2, h3, .font-display, .timeline-company, .resume-section-title {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
+    }
+
+    main.container {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .pattern-bg,
+    header,
+    footer,
+    .no-print,
+    .blueprint-indicator,
+    .floating-print-trigger,
+    .scribble-container,
+    .custom-cursor,
+    .custom-cursor-ring,
+    .cursor-playful,
+    .cursor-trail {
+        display: none !important;
+    }
+
+    /* Undo clip-paths for print to ensure full text readability and boxes */
+    .bento-card,
+    .resume-header,
+    .btn-pop,
+    .label-pill,
+    .pill-tag,
+    .contact-icon-wrapper,
+    .ios-icon,
+    .timeline-marker,
+    .horizontal-project-tag {
+        clip-path: none !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        color: #000000 !important;
+        border-radius: 0 !important;
+    }
+
+    /* Reset GSAP and scroll reveal animations for clean printing */
+    .reveal,
+    .bento-card,
+    .timeline-item,
+    .timeline-list,
+    .resume-header,
+    h1, h2, h3, p, span, li, a, div {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+    }
+
+    /* Hide geometric shapes behind letters on print */
+    .flip-char-front,
+    .flip-char-front svg {
+        display: none !important;
+    }
+
+    .flip-char-container {
+        overflow: visible !important;
+    }
+
+    .flip-char-back {
+        opacity: 1 !important;
+        transform: none !important;
+        display: inline-block !important;
+        position: relative !important;
+    }
+
+    .resume-header {
+        margin-top: 0 !important;
+        margin-bottom: 12pt !important;
+        border-bottom: 2pt solid #FD7903 !important; /* Orange line for main header */
+        padding-bottom: 4pt !important;
+    }
+
+    .resume-header h1 {
+        font-size: 26pt !important;
+        margin-bottom: 4pt !important;
+        color: #000000 !important; /* Black name */
+        font-weight: 700 !important;
+    }
+
+    .resume-header h1 span {
+        margin-right: 0 !important;
+    }
+
+    .resume-header p {
+        font-size: 13pt !important;
+        font-family: var(--font-body) !important;
+        text-transform: uppercase !important;
+        font-weight: 700 !important;
+        color: #1A56C6 !important; /* Blue for product designer subtitle */
+    }
+
+    /* Print grid layout: keeps exact 2-column format as requested */
+    .resume-layout-grid {
+        display: grid !important;
+        grid-template-columns: 4.2fr 7.8fr !important;
+        gap: 24pt !important;
+        margin-bottom: 0 !important;
+    }
+
+    .profile-photo-container {
+        display: none !important;
+    }
+
+    #about {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+    #skills {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        margin-top: 6pt !important;
+    }
+
+    #software {
+        grid-column: 1 !important;
+        grid-row: 3 !important;
+        margin-top: 6pt !important;
+    }
+
+    #experience {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+    }
+
+    #certificates {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        margin-top: 2pt !important;
+    }
+
+    /* Primary Headings: Blue text, orange underline border */
+    .resume-section-title {
+        font-size: 13pt !important;
+        font-weight: 700 !important;
+        color: #1A56C6 !important; /* Blue text */
+        border-bottom: 1.5pt solid #FD7903 !important; /* Orange line */
+        padding-bottom: 2pt !important;
+        margin-top: 6pt !important;
+        margin-bottom: 4pt !important;
+        text-transform: uppercase !important;
+        display: block !important;
+    }
+
+    /* Sub-headings: Orange text, blue underline border */
+    .resume-layout-grid h3 {
+        color: #FD7903 !important; /* Orange text */
+        border-bottom: 1px solid #1A56C6 !important; /* Blue line */
+        font-size: 11pt !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        margin-top: 6pt !important;
+        margin-bottom: 4pt !important;
+        padding-bottom: 1.5pt !important;
+        display: block !important;
+    }
+
+    /* Timeline print adjustments */
+    .timeline-list {
+        border-left: none !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .timeline-marker {
+        display: none !important;
+    }
+
+    .timeline-item {
+        margin-bottom: 8pt !important;
+        page-break-inside: avoid;
+    }
+
+    .timeline-item p {
+        margin-top: 2pt !important;
+        margin-bottom: 0 !important;
+        font-size: 10.5pt !important;
+        line-height: 1.3 !important;
+    }
+
+    .timeline-role {
+        font-size: 11.5pt !important;
+        font-weight: 700 !important;
+        color: #000000 !important;
+    }
+
+    .timeline-company {
+        color: #000000 !important;
+        font-size: 11pt !important;
+        font-weight: 700 !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        border: none !important;
+        clip-path: none !important;
+        display: inline !important;
+    }
+
+    .timeline-date {
+        color: #000000 !important;
+        font-size: 10pt !important;
+    }
+
+    .timeline-meta {
+        margin-bottom: 1pt !important;
+    }
+
+    /* Force plain black text on all body and list elements to fix contrast */
+    body, p, span, li, a, div, .timeline-role, .timeline-date, .contact-item {
+        color: #000000 !important;
+    }
+
+    /* Contact details */
+    .contact-list {
+        gap: 8pt !important;
+    }
+ 
+    .contact-item {
+        font-size: 11.5pt !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+ 
+    .contact-icon-wrapper {
+        display: inline-grid !important;
+        background: none !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 16px !important;
+        height: 16px !important;
+        vertical-align: middle !important;
+        place-items: center !important;
+        flex-shrink: 0 !important;
+        box-shadow: none !important;
+    }
+ 
+    .ios-icon {
+        display: block !important;
+        width: 14px !important;
+        height: 14px !important;
+        color: #000000 !important;
+        stroke: #000000 !important;
+        stroke-width: 2.2 !important;
+        vertical-align: middle !important;
+    }
+ 
+    /* Skills list print configuration: force black inline text */
+    .pill-tag,
+    #skills .pill-tag.pill-blue,
+    #skills .pill-tag.pill-orange {
+        display: inline !important;
+        background: none !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 11.5pt !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+ 
+    .pill-tag::after {
+        content: ", ";
+    }
+ 
+    .pill-tag:last-child::after {
+        content: "";
+    }
+ 
+    .skills-print-container,
+    .software-print-container {
+        display: block !important;
+        line-height: 1.5 !important;
+    }
+}

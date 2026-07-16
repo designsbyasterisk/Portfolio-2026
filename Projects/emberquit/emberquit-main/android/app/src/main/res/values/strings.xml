@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Emberquit</string>
+    <string name="title_activity_main">Emberquit</string>
+    <string name="package_name">com.emberquit.app</string>
+    <string name="custom_url_scheme">com.emberquit.app</string>
+</resources>

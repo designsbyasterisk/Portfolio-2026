@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HONÉE — Case Study &amp; Prototype</title>
+    <meta name="description" content="Case study and interactive desktop storefront prototype for HONÉE, a premium e-commerce honey lipcare brand presenting dynamic ingredient stories and cosmetic rituals.">
+    <link rel="stylesheet" href="css/project-detail.css">
+    <style>
+        .moodboard-masonry {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: var(--space-lg);
+            align-items: start;
+        }
+        .moodboard-image-placeholder {
+            background-color: #704b3c; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid rgba(92,58,42,0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .moodboard-image-placeholder:hover {
+            transform: translateY(-2px);
+            border-color: rgba(92,58,42,0.3);
+        }
+        .moodboard-swatch-card {
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid rgba(92,58,42,0.1); 
+            box-shadow: var(--shadow-warm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .moodboard-swatch-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(92,58,42,0.1);
+        }
+        @media (max-width: 991px) {
+            .moodboard-masonry {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 576px) {
+            .moodboard-masonry {
+                grid-template-columns: 1fr !important;
+            }
+            .moodboard-logo-wrap {
+                left: -20px !important;
+            }
+        }
+    </style>
+</head>
+<body class="theme-brand" data-brand-bg="#fff3e3" data-brand-text="#5c3a2a" data-brand-accent="#d99f0d" data-brand-card-bg="#fdfbf7" data-brand-border="rgba(92, 58, 42, 0.08)" style="--brand-bg: #fff3e3; --brand-text: #5c3a2a; --brand-text-sub: #8c6a5a; --brand-accent: #d99f0d; --brand-card-bg: #fdfbf7; --brand-border: rgba(92, 58, 42, 0.08); --brand-grid-color: rgba(92, 58, 42, 0.035); --brand-nav-bg: rgba(255, 255, 255, 0.85); --brand-nav-border: rgba(92, 58, 42, 0.1);">
+
+    <!-- Grid blueprint background -->
+    <div class="pattern-bg"></div>
+
+    <!-- Interactive Canvas backdrop -->
+    <canvas id="project-canvas"></canvas>
+    
+    <!-- Floating Parallax Shapes -->
+    <div class="parallax-shape shape-1" style="position: absolute; top: 12%; right: 5%; width: 60px; height: 60px; border: 2px dashed rgba(92, 58, 42, 0.06); border-radius: 50%; pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-2" style="position: absolute; top: 48%; left: 3%; width: 80px; height: 80px; border: 2px dashed rgba(92, 58, 42, 0.06); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-3" style="position: absolute; top: 80%; right: 7%; width: 100px; height: 100px; border: 2px dashed rgba(92, 58, 42, 0.06); pointer-events: none; z-index: -1; transform: rotate(15deg);"></div>
+
+    <!-- Header navigation (Floating Island Navbar) -->
+    <header class="floating-header">
+        <div class="container nav-wrapper" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="../index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <style>
+                        @keyframes kf_Frame_8_transform_0 {
+                          0% {
+                            animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+                            transform: translate(757px, 643.5px) rotate(6.283rad) translate(-757px, -643.5px);
+                          }
+                          100% {
+                            transform: translate(757px, 643.5px) rotate(-6.283rad) translate(-757px, -643.5px);
+                          }
+                        }
+                        #Frame_8 {
+                          transform-origin: 0 0;
+                          animation: kf_Frame_8_transform_0 1.074199s linear infinite;
+                        }
+                        </style>
+                        <g id="Frame_8">
+                        <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                        <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                        <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </g>
+                    </svg>
+                </a>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: rgba(92,58,42,0.05); border: 1px solid rgba(92,58,42,0.1); color: var(--text-main); border-radius: 50px;">HONÉE</span>
+            </div>
+            
+            <nav style="display: flex; align-items: center; gap: var(--space-md);">
+                <a href="../index.html#projects" class="back-link" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main);">← Back to Works</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="narrative-wrapper">
+
+        <!-- Chapter 1: The Hook (Hero) -->
+        <section class="story-chapter chapter-hero">
+            <div class="chapter-hero-bg" style="background: linear-gradient(135deg, rgba(217, 159, 13, 0.08) 0%, rgba(217, 159, 13, 0.03) 100%);"></div>
+            <div class="container hero-content">
+                <div class="hero-text-block">
+                    <span class="label-pill brand-accent-badge">PROJECT 04 //</span>
+                    <h1 class="gsap-split-header brand-hero-title">HONÉE</h1>
+                    <p class="brand-hero-subtitle" style="max-width: 800px;">A honey-inspired brand and e-commerce experience.</p>
+                </div>
+                <div class="project-meta-bar">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-val">Brand Identity • UI/UX Design</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-val">3 Weeks</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+                    <button class="scroll-indicator-arrow" aria-label="Scroll down" onclick="document.querySelector('.chapter-narrative').scrollIntoView({ behavior: 'smooth' });">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: The Philosophy of Slow Beauty -->
+        <section class="story-chapter chapter-narrative">
+            <div class="container narrative-grid">
+                <div class="narrative-content-left">
+                    <div class="narrative-block">
+                        <span class="mono brand-accent-color">01 / THE PHILOSOPHY</span>
+                        <h2>Designing with Honey</h2>
+                        <p>
+                            Since honey is the defining ingredient across the product range, it became the foundation of the brand's design philosophy. Rather than representing honey literally, the project translates its natural qualities such as warmth, fluidity, and softness into a cohesive visual language. These characteristics informed every design decision, from the identity and colour palette to the packaging, photography, and digital experience.
+                        </p>
+                    </div>
+                    <div class="narrative-block" style="margin-top: var(--space-lg);">
+                        <span class="mono brand-accent-color">02 / THE DESIGN STYLE</span>
+                        <h2>Translating the Philosophy</h2>
+                        <p>
+                            The visual system applies the material qualities of honey through a restrained design language. A warm colour palette, generous white space, and elegant typography create an interface that feels calm and approachable. Glossy product photography and fluid compositions reinforce the tactile nature of the products while maintaining clarity and consistency across both packaging and the website.
+                        </p>
+                    </div>
+                </div>
+                <div class="narrative-content-right" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="brand-metric-card" style="width: 100%; padding: 0; overflow: hidden; border: 1px solid rgba(92,58,42,0.1); border-radius: var(--radius-md); box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                        <img src="../Projects/Honee%20website/honeycomb-drip.jpg" alt="Pure Organic Honeycomb dripping honey" style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Ingredient Storytelling (Card Deck) -->
+        <section class="story-chapter chapter-deck-pin">
+            <div class="deck-grid-container">
+                <div class="deck-info-panel">
+                    <span class="mono brand-accent-color">03 / BRAND STORYTELLING</span>
+                    <h2>Building Trust Through Storytelling</h2>
+                    <p>Rather than presenting HONÉE as just another honey based skincare brand, I wanted to communicate the journey behind the ingredient. By introducing the sourcing, harvesting, and transformation of honey throughout the experience, the brand builds authenticity and gives users a deeper understanding of what makes the products unique.</p>
+                </div>
+                
+                <div class="stacked-deck-wrapper">
+                    <!-- Card 1: Hive Sourcing -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" style="background-color: #fff3e3; border-color: rgba(92,58,42,0.1);">
+                                <img src="../Projects/Honee website/src/assets/about/beekeeper-hive.jpg" alt="Honee Hive Sourcing" style="border-radius: var(--radius-md);">
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">01 / THE SOURCE</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Connecting Products to Origin</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    Introducing the people and environments behind the ingredient is key for the brand. Showcasing apiaries and beekeepers establishes transparency while creating a stronger emotional connection between the product and its source.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Card 2: Honeycomb -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" style="background-color: #fff3e3; border-color: rgba(92,58,42,0.1);">
+                                <img src="../Projects/Honee website/src/assets/about/honeycomb.jpg" alt="Honee Honeycomb" style="border-radius: var(--radius-md);">
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">02 / THE NECTAR</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Celebrating the Ingredient</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    Instead of treating honey as a functional ingredient, the experience highlights its natural texture, colour, and healing properties. This reinforces honey as the visual and conceptual foundation of the brand.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Handcrafted Extraction -->
+                    <div class="deck-card gallery-slide-card" style="background-color: var(--brand-card-bg) !important;">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" style="background-color: #fff3e3; border-color: rgba(92,58,42,0.1);">
+                                <img src="../Projects/Honee%20website/src/assets/about/honey-craft.jpg" alt="Honee Honey Craft" style="border-radius: var(--radius-md);">
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">03 / THE CRAFT</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Visualising the Making Process</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    We focuses on the craftsmanship behind production. Carefully curated imagery and concise storytelling communicate care, quality, and intention, reinforcing the brand's commitment to thoughtful design rather than mass production.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: The Interface Journey (Moodboard & Visuals) -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0; height: auto; overflow: visible; display: block;">
+            <div class="container">
+                <span class="mono brand-accent-color">04 / DESIGN SYSTEM &amp; MOODBOARD</span>
+                <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">Defining the Visual System</h2>
+                <p style="color: var(--text-sub); margin: 0 0 var(--space-lg) 0; font-size: 0.95rem; max-width: 800px; line-height: 1.6;">Every visual element was selected to evoke the warmth and tactile qualities of honey. A palette inspired by natural honey tones, rich textures, editorial typography, and close-up product photography come together to create a visual language that feels comforting, authentic, and contemporary.</p>
+                
+                <div style="width: 100%; display: flex; justify-content: center; margin-top: var(--space-lg);">
+                    <div style="width: 100%; max-width: 100%; padding: 48px; background: rgba(92, 58, 42, 0.3); border: 1px solid rgba(92, 58, 42, 0.15); border-radius: 40px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(92, 58, 42, 0.05); display: flex; justify-content: center; align-items: center; box-sizing: border-box;">
+                        <img src="../Projects/Honee%20website/honee%20moodboard.svg?v=3" alt="Honee Brand Moodboard" style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: Product Walkthrough (Gallery Ticker) -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0; height: auto; display: block;">
+            <div class="container">
+                <span class="mono brand-accent-color">05 / Product Gallery</span>
+                <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">Building a Cohesive Product Narrative</h2>
+                <p style="color: var(--text-sub); margin: 0 0 var(--space-lg) 0; font-size: 0.95rem; max-width: 800px; line-height: 1.6;">The gallery was designed as a continuation of the brand story with Material-focused photography, controlled lighting, and honey-inspired compositions. This transform product imagery into a storytelling device, reinforcing the warmth and tactile qualities established throughout the identity.</p>
+                      <style>
+                .gallery-ticker-container {
+                    overflow: hidden;
+                    width: 100%;
+                    max-width: 1248px; /* Exactly 3 images (400px) + 2 gaps (24px) */
+                    margin: var(--space-md) auto 0 auto;
+                    position: relative;
+                    padding: 20px 0;
+                    border-radius: var(--radius-lg);
+                }
+                .gallery-ticker-track {
+                    display: flex;
+                    width: max-content;
+                    gap: 24px;
+                    animation: scroll-ticker 65s linear infinite;
+                }
+                .gallery-ticker-track:hover {
+                    animation-play-state: paused;
+                }
+                .ticker-image-wrapper {
+                    flex-shrink: 0;
+                    width: 400px;
+                    height: 500px;
+                    border-radius: var(--radius-lg);
+                    overflow: hidden;
+                    border: 1px solid rgba(92, 58, 42, 0.08);
+                    background-color: var(--brand-card-bg);
+                    box-shadow: 0 12px 36px rgba(92, 58, 42, 0.05);
+                }
+                .ticker-image-wrapper img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.4s ease;
+                }
+                .ticker-image-wrapper:hover img {
+                    transform: scale(1.06);
+                }
+                @keyframes scroll-ticker {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(-50%);
+                    }
+                }
+            </style>
+
+            <div class="gallery-ticker-container">
+                <div class="gallery-ticker-track">
+                    <!-- Set 1 -->
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-1.webp" alt="Honee Balm Jar">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-2.webp" alt="Honee Balm Texture close-up">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-3.webp" alt="Honee Lip Balm Tube packaging">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-1.webp" alt="Honee Shine Gloss tube">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-2.webp" alt="Honee Nectar Gloss swatch">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-3.webp" alt="Honee Shine Gloss style">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-1.webp" alt="Honee Hydrating Lip Oil bottle">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-2.webp" alt="Honee Infused Botanical Lip Oil">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-3.webp" alt="Honee Botanical Oils bottles range">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-1.jpg" alt="Honee Crystal Scrub texture close-up">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-2.webp" alt="Honee Organic Lip Scrub jar">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-3.jpg" alt="Honee Scrub Jar packaging design">
+                    </div>
+
+                    <!-- Set 2 (Duplicate for Seamless Inf Scrolling) -->
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-1.webp" alt="Honee Balm Jar">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-2.webp" alt="Honee Balm Texture close-up">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/balm-3.webp" alt="Honee Lip Balm Tube packaging">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-1.webp" alt="Honee Shine Gloss tube">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-2.webp" alt="Honee Nectar Gloss swatch">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/gloss-3.webp" alt="Honee Shine Gloss style">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-1.webp" alt="Honee Hydrating Lip Oil bottle">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-2.webp" alt="Honee Infused Botanical Lip Oil">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/oil-3.webp" alt="Honee Botanical Oils bottles range">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-1.jpg" alt="Honee Crystal Scrub texture close-up">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-2.webp" alt="Honee Organic Lip Scrub jar">
+                    </div>
+                    <div class="ticker-image-wrapper">
+                        <img src="../Projects/Honee website/src/assets/products/scrub-3.jpg" alt="Honee Scrub Jar packaging design">
+                    </div>
+                </div>
+            </div>
+        </div></section>
+
+        <!-- Chapter 6: Interactive Prototype -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0 var(--space-2xl) 0; height: auto; display: block;">
+            <div class="container" style="max-width: 1400px; width: 95%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); flex-wrap: wrap; gap: var(--space-sm);">
+                    <div>
+                        <span class="mono brand-accent-color">06 / Interactive Prototype</span>
+                        <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">The Honée Storefront</h2>
+                    </div>
+                    <a href="../Projects/Honee website/Honee.html" target="_blank" class="btn-pop btn-pop-primary" style="background-color: var(--brand-accent); color: white; border: none;">Open Fullscreen ↗</a>
+                </div>
+                
+                <div class="ipad-mockup-container" style="background-image: url('../Projects/Honee website/ipad screen for honee.png');">
+                    <div class="ipad-viewport" data-target-width="1024" data-target-height="710">
+                        <iframe src="../Projects/Honee website/Honee.html" title="Honee Storefront Prototype"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Island Footer -->
+    <footer class="project-footer-island">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <span class="mono" style="font-size: 0.72rem; color: #8c6a5a; opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+            <a href="emberquit.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #d99f0d); color: #5c3a2a; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif; font-weight: 700;">Next Project: Emberquit →</a>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <script src="js/project-detail.js"></script>
+
+
+</body></html>

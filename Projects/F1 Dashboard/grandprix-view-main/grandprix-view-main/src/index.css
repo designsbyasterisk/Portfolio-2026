@@ -1,0 +1,613 @@
+@import "react-grid-layout/css/styles.css";
+@import "react-resizable/css/styles.css";
+
+/* Formula 1 Font Family */
+@font-face {
+  font-family: 'Formula1';
+  src: url('./fonts/Formula1-Regular-1.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Formula1';
+  src: url('./fonts/Formula1-Bold_web.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Formula1';
+  src: url('./fonts/Formula1-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Formula1';
+  src: url('./fonts/Formula1-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Formula1-Wide';
+  src: url('./fonts/Formula1-Wide.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Titillium Web Font Family */
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./fonts/TitilliumWeb-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./fonts/TitilliumWeb-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./fonts/TitilliumWeb-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./fonts/TitilliumWeb-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Titillium Web';
+  src: url('./fonts/Formula1-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 348 100% 45.5%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 348 100% 45.5%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 16%;
+    --input: 0 0% 14%;
+    --ring: 348 100% 45.5%;
+
+    --radius: 0.25rem;
+
+    --f1-red: 348 100% 45.5%;
+    --f1-red-glow: 348 100% 60%;
+    --f1-carbon: 0 0% 6%;
+    --f1-panel: 0 0% 8%;
+    --f1-grid: 0 0% 18%;
+    --f1-purple: 280 80% 60%;
+    --f1-green: 142 70% 45%;
+    --f1-yellow: 48 96% 56%;
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 357 100% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 357 100% 44%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body, #root {
+    @apply h-full overflow-hidden;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Titillium Web', 'Inter', system-ui, -apple-system, sans-serif;
+    background-image:
+      radial-gradient(ellipse at top, hsl(0 0% 8%) 0%, hsl(0 0% 3%) 70%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6, .panel-title, .f1-font {
+    font-family: 'Formula1', sans-serif;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply relative bg-card/80 backdrop-blur-sm border border-border;
+    background-image:
+      repeating-linear-gradient(45deg, hsl(var(--f1-carbon)) 0 2px, transparent 2px 4px),
+      repeating-linear-gradient(-45deg, hsl(0 0% 9%) 0 2px, transparent 2px 4px);
+  }
+  .panel::before {
+    content: "";
+    @apply absolute top-0 left-0 right-0 h-[2px] bg-primary;
+    box-shadow: 0 0 12px hsl(var(--f1-red-glow) / 0.6);
+  }
+  .panel-title {
+    @apply text-[10px] font-bold tracking-[0.25em] text-muted-foreground uppercase;
+  }
+  .mono {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .carbon-bg {
+    background:
+      repeating-linear-gradient(45deg, hsl(0 0% 5%) 0 3px, hsl(0 0% 7%) 3px 6px),
+      repeating-linear-gradient(-45deg, hsl(0 0% 4%) 0 3px, hsl(0 0% 6%) 3px 6px);
+  }
+  .pulse-red {
+    box-shadow: 0 0 0 0 hsl(var(--f1-red) / 0.7);
+    animation: pulse-red 2s infinite;
+  }
+  .pulse-red-border {
+    animation: pulse-red-border 5s infinite ease-in-out;
+  }
+  .pulse-yellow-border {
+    animation: pulse-yellow-border 5s infinite ease-in-out;
+  }
+  .pulse-slow {
+    animation: pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse-red-border {
+  0%, 100% {
+    border-color: rgba(232, 0, 45, 0.35);
+    box-shadow: 0 0 15px rgba(232, 0, 45, 0.25);
+  }
+  50% {
+    border-color: rgba(232, 0, 45, 1);
+    box-shadow: 0 0 30px rgba(232, 0, 45, 0.85), inset 0 0 15px rgba(232, 0, 45, 0.4);
+  }
+}
+
+@keyframes pulse-yellow-border {
+  0%, 100% {
+    border-color: rgba(255, 212, 0, 0.35);
+    box-shadow: 0 0 15px rgba(255, 212, 0, 0.25);
+  }
+  50% {
+    border-color: rgba(255, 212, 0, 1);
+    box-shadow: 0 0 30px rgba(255, 212, 0, 0.85), inset 0 0 15px rgba(255, 212, 0, 0.4);
+  }
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 hsl(var(--f1-red) / 0.7); }
+  70% { box-shadow: 0 0 0 10px hsl(var(--f1-red) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--f1-red) / 0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.4s ease-out both; }
+
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(232, 0, 45, 0.65);
+  }
+}
+
+/* Container Query System for Bento Grid Cards */
+.card-container {
+  container-type: size;
+  container-name: card;
+}
+
+.card-padding-adaptive {
+  padding: 1rem; /* p-4 */
+}
+@media (min-width: 640px) {
+  .card-padding-adaptive {
+    padding: 1.25rem; /* p-5 */
+  }
+}
+
+.card-show-narrow {
+  display: none !important;
+}
+
+@container card (max-width: 190px) {
+  .card-padding-adaptive {
+    padding: 0.5rem !important; /* p-2 */
+  }
+  .card-title-adaptive {
+    font-size: 8px !important;
+    letter-spacing: 0.1em !important;
+  }
+  .card-hide-narrow {
+    display: none !important;
+  }
+  .card-show-narrow {
+    display: flex !important;
+  }
+  /* Scale font-sizes inside cells */
+  .card-text-adaptive-xs {
+    font-size: 8px !important;
+  }
+  .card-text-adaptive-sm {
+    font-size: 9px !important;
+  }
+  .card-text-adaptive-base {
+    font-size: 10px !important;
+  }
+}
+
+@container card (max-width: 140px) {
+  .card-padding-adaptive {
+    padding: 0.25rem !important; /* p-1 */
+  }
+  .card-title-adaptive {
+    font-size: 7.5px !important;
+    letter-spacing: 0.05em !important;
+  }
+  .card-hide-super-narrow {
+    display: none !important;
+  }
+  .card-text-adaptive-xs {
+    font-size: 7px !important;
+  }
+  .card-text-adaptive-sm {
+    font-size: 8px !important;
+  }
+  .card-text-adaptive-base {
+    font-size: 9px !important;
+  }
+}
+
+/* Container height query for small card height (h: 2 or below) */
+@container card (max-height: 165px) {
+  .card-padding-adaptive {
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  /* Squeeze Telemetry component */
+  .telemetry-container {
+    gap: 0.5rem !important;
+  }
+  .telemetry-gauge {
+    height: 4rem !important; /* h-16 */
+  }
+  .telemetry-speed-val {
+    font-size: 1.25rem !important; /* text-xl */
+  }
+  .telemetry-header {
+    margin-bottom: 0px !important;
+  }
+  .telemetry-driver-text {
+    font-size: 9.5px !important;
+  }
+  .telemetry-pos-val {
+    font-size: 14px !important;
+  }
+  .telemetry-right-col > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.25rem !important;
+  }
+  .telemetry-status-box {
+    padding: 0.25rem !important;
+  }
+  .telemetry-gear-val {
+    font-size: 14px !important;
+    margin-top: 2px !important;
+  }
+  .telemetry-tire-badge {
+    width: 0.85rem !important;
+    height: 0.85rem !important;
+    font-size: 7px !important;
+  }
+  .telemetry-bar-label {
+    font-size: 7.5px !important;
+    margin-bottom: 2px !important;
+  }
+  .telemetry-bar-height {
+    height: 5px !important;
+  }
+  .telemetry-title {
+    font-size: 7.5px !important;
+  }
+  
+  /* Squeeze Team Comparison Chart component */
+  .team-comparison-chart-container {
+    height: 110px !important;
+  }
+}
+
+@container card (max-height: 125px) {
+  .telemetry-gauge {
+    height: 3.5rem !important; /* h-14 */
+  }
+  .telemetry-speed-val {
+    font-size: 1rem !important; /* text-base */
+  }
+  .telemetry-right-col > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.15rem !important;
+  }
+  .telemetry-status-box {
+    padding: 0.15rem !important;
+  }
+  .telemetry-gear-val {
+    font-size: 12px !important;
+  }
+  .telemetry-bar-label {
+    font-size: 7px !important;
+  }
+  .telemetry-bar-height {
+    height: 4px !important;
+  }
+  .team-comparison-chart-container {
+    height: 90px !important;
+  }
+}
+
+/* Card width query for medium-narrow cards (max-width: 580px) */
+@container card (max-width: 580px) {
+  /* Telemetry layout stacking */
+  .telemetry-layout-container {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    align-items: stretch !important;
+  }
+
+  .telemetry-settings-panel {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .telemetry-settings-panel > .space-y-2 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0.5rem !important;
+    margin-top: 0 !important;
+    flex: 2.5 !important;
+    align-items: center !important;
+  }
+
+  .telemetry-settings-panel > .space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0 !important;
+  }
+
+  .telemetry-settings-panel > .space-y-2 > div {
+    margin-top: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .telemetry-settings-panel > .pt-1\.5 {
+    padding-top: 0 !important;
+    border-top: none !important;
+    flex: 1.5 !important;
+    min-width: 0 !important;
+  }
+
+  /* Zone Telemetry stacking */
+  .zone-telemetry-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .zone-telemetry-grid > div {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+
+  /* Incident Telemetry stacking */
+  .incident-telemetry-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .incident-telemetry-grid > div {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Card width query for narrow cards (max-width: 440px) */
+@container card (max-width: 440px) {
+  /* Incident Collision Metrics Grid */
+  .incident-impact-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Damage severity layout wrap */
+  .incident-damage-row {
+    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
+  }
+
+  .incident-damage-box {
+    flex: 1 1 30% !important;
+    justify-content: space-between !important;
+  }
+}
+
+/* Card height query for small card height (h: 2 or below) - Zone & Incident components squeeze */
+@container card (max-height: 165px) {
+  /* Zone Telemetry low-height squeeze */
+  .zone-desc-hide-short {
+    display: none !important;
+  }
+
+  .zone-telemetry-difficulty-container {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .zone-telemetry-difficulty-container span {
+    margin-top: 1px !important;
+  }
+
+  .zone-telemetry-gauge {
+    height: 3rem !important;
+  }
+
+  .zone-telemetry-gauge .text-base {
+    font-size: 0.875rem !important; /* text-sm */
+  }
+
+  /* Incident Telemetry low-height squeeze */
+  .incident-col-1 > div:first-child p {
+    margin-top: 1px !important;
+  }
+
+  .incident-impact-grid {
+    gap: 0.5rem !important;
+    padding-top: 0.25rem !important;
+  }
+
+  .incident-impact-box {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .incident-impact-box span.text-sm {
+    font-size: 0.75rem !important; /* text-xs */
+    margin-top: 1px !important;
+  }
+
+  .incident-col-2 > div.flex-1 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .incident-damage-row {
+    gap: 0.25rem !important;
+  }
+
+  .incident-damage-box {
+    padding: 0.15rem 0.35rem !important;
+  }
+
+  .incident-damage-box span {
+    font-size: 8px !important;
+  }
+
+  .incident-verdict-box {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .incident-verdict-box p {
+    font-size: 8px !important;
+    line-clamp: 1 !important;
+    -webkit-line-clamp: 1 !important;
+  }
+}
+
+/* Pit Stop Strategy 3D Coin Flip Custom Styles */
+.pit-tire-card-3d {
+  width: min(calc(100cqw - 1rem), calc(100cqh - 1rem)) !important;
+  height: min(calc(100cqw - 1rem), calc(100cqh - 1rem)) !important;
+  perspective: 1000px;
+}
+
+.pit-tire-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.pit-tire-card-3d.flipped .pit-tire-card-inner {
+  transform: rotateY(180deg);
+}
+
+.pit-tire-card-front,
+.pit-tire-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 9999px;
+}
+
+.pit-tire-card-front {
+  background-color: #1c1c24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pit-tire-card-back {
+  background-color: #121216;
+  background-image: 
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0 2px, transparent 2px 4px),
+    radial-gradient(circle at center, #1e1e24 0%, #0c0c0f 80%);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  container-type: size;
+  container-name: tire-back;
+}
+
+.pit-tire-wheel-element {
+  container-type: size;
+  container-name: tire;
+  width: 100% !important;
+  height: 100% !important;
+}

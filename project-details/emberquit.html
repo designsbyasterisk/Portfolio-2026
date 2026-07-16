@@ -1,0 +1,2398 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emberquit — Case Study &amp; Prototype</title>
+    <meta name="description" content="Case study and interactive mobile prototype for Emberquit, a companion app designed to help users log cravings, track health recovery milestones, and quit smoking.">
+    <link rel="stylesheet" href="css/project-detail.css?v=1.1.0">
+    <!-- Google Fonts for app style native accuracy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Architects+Daughter&amp;display=swap" rel="stylesheet" integrity="sha384-M7xkFVU/+R8aWrnFaUVvJ142sJk3Cy/dvAWVF6Mi+ad+W+liE+P/ekWoadsWuhcT" crossorigin="anonymous">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom layout for Emberquit deck cards */
+        .gallery-slide-card {
+            background-color: #ffffff !important;
+        }
+        
+        .emberquit-deck-card-image-wrap {
+            height: 100%;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--brand-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--brand-card-bg);
+        }
+        
+        .emberquit-deck-card-image-wrap img {
+            max-height: 90%;
+            max-width: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .deck-card:hover .emberquit-deck-card-image-wrap img {
+            transform: scale(1.03);
+        }
+
+        .emberquit-deck-card-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--space-xs);
+        }
+
+        /* Split gallery container for horizontal scrolling */
+        .emberquit-split-gallery-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background-color: var(--brand-card-bg);
+            height: 100%;
+            align-items: stretch;
+        }
+
+        /* Three column breathing widget layout */
+        .emberquit-breathing-gallery-wrapper {
+            display: grid;
+            grid-template-columns: 1.05fr 1.05fr 0.9fr;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background-color: var(--brand-card-bg);
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .breathing-circle-widget {
+            box-shadow: 0 0 30px rgba(30, 99, 243, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .emberquit-deck-card-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1.2fr;
+                gap: var(--space-sm);
+                padding: var(--space-sm);
+            }
+            .emberquit-deck-card-image-wrap {
+                height: 100%;
+            }
+            .emberquit-deck-card-text {
+                gap: 4px;
+            }
+            .emberquit-deck-card-text p {
+                font-size: 0.78rem !important;
+                line-height: 1.4 !important;
+            }
+            .emberquit-deck-card-text h3 {
+                font-size: 1.15rem !important;
+            }
+            .emberquit-split-gallery-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .emberquit-breathing-gallery-wrapper {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                overflow-y: auto;
+            }
+        }
+
+        /* Design Moodboard Bento Grid */
+        .moodboard-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+
+        .moodboard-card {
+            background-color: var(--brand-card-bg, #ffffff);
+            border: 1px solid var(--brand-border, rgba(14, 22, 41, 0.08));
+            border-radius: var(--radius-md, 24px);
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            box-shadow: 0 4px 20px rgba(14, 22, 41, 0.03);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .moodboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(14, 22, 41, 0.06);
+            border-color: rgba(14, 22, 41, 0.15);
+        }
+
+        .moodboard-span-2 { grid-column: span 2; }
+        .moodboard-span-3 { grid-column: span 3; }
+        .moodboard-span-4 { grid-column: span 4; }
+        .moodboard-span-6 { grid-column: span 6; }
+
+        @media (max-width: 992px) {
+            .moodboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .moodboard-span-2, .moodboard-span-3, .moodboard-span-4 {
+                grid-column: span 1;
+            }
+            .moodboard-span-6 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .moodboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .moodboard-span-2, .moodboard-span-3, .moodboard-span-4, .moodboard-span-6 {
+                grid-column: span 1;
+            }
+        }
+
+        /* ==========================================
+           Emberquit Design System Styles
+           ========================================== */
+        .design-system-container {
+            --ds-primary: #0019e6;
+            --ds-accent: #3399ff;
+            --ds-sage: #2eb868;
+            --ds-ember: #f97316;
+            --ds-text-main: #0a1128;
+            --ds-text-muted: #64748b;
+            --ds-bg-canvas: #FCFAF6;
+            --ds-bg-card: #FFFFFF;
+            --ds-card-border: rgba(10, 17, 40, 0.08);
+            --ds-gradient-ember: linear-gradient(135deg, var(--ds-primary), var(--ds-accent));
+            
+            width: 100%;
+            margin-top: var(--space-lg);
+            font-family: 'Inter', sans-serif;
+            color: var(--ds-text-main);
+        }
+
+        .ds-grid {
+            display: flex;
+            gap: 24px;
+        }
+
+        .ds-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .ds-column .ds-card:last-child {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 992px) {
+            .ds-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ds-column {
+                display: contents;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ds-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ds-card-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .ds-card-stack .ds-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .ds-span-2 {
+            grid-column: span 2;
+        }
+
+        .ds-span-3 {
+            grid-column: span 3;
+        }
+
+        @media (max-width: 992px) {
+            .ds-span-2, .ds-span-3 {
+                grid-column: span 1;
+            }
+        }
+
+
+        .ds-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--ds-card-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 30px rgba(10, 17, 40, 0.03);
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .ds-card:hover {
+            border-color: rgba(10, 17, 40, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(10, 17, 40, 0.06);
+        }
+
+        .ds-section-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--ds-primary);
+            margin-bottom: 20px;
+            border-left: 3px solid var(--ds-primary);
+            padding-left: 10px;
+            line-height: 1.2;
+        }
+
+        /* Typography */
+        .ds-font-specimen {
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(10, 17, 40, 0.06);
+            padding-bottom: 20px;
+        }
+
+        .ds-font-specimen:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .ds-specimen-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ds-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .ds-font-preview-large {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--ds-text-main);
+            margin-bottom: 4px;
+            line-height: 1.1;
+        }
+
+        .ds-font-specimen.quicksand .ds-font-preview-large {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .ds-font-specimen.inter .ds-font-preview-large {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ds-font-meta {
+            font-size: 11px;
+            color: var(--ds-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .ds-font-desc {
+            font-size: 13px;
+            color: var(--ds-text-muted);
+            line-height: 1.5;
+            margin: 0;
+            text-align: left;
+        }
+
+        /* Icons */
+        .ds-icon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .ds-icon-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .ds-icon-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 6px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(10, 17, 40, 0.05);
+            border-radius: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .ds-icon-box:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 25, 230, 0.15);
+            transform: scale(1.05);
+        }
+
+        .ds-icon-box svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--ds-primary);
+            stroke-width: 2.2;
+        }
+
+        .ds-icon-name {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--ds-text-muted);
+        }
+
+        /* Colors */
+        .ds-color-swatch-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .ds-color-swatch-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .ds-swatch {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(10, 17, 40, 0.06);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(10, 17, 40, 0.02);
+            background: #fff;
+        }
+
+        .ds-swatch-color {
+            height: 70px;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .ds-swatch:hover .ds-swatch-color {
+            transform: scale(1.05);
+        }
+
+        .ds-swatch-info {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .ds-swatch-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ds-text-main);
+            margin-bottom: 2px;
+            white-space: normal;
+            line-height: 1.25;
+        }
+
+        .ds-swatch-value {
+            font-family: monospace;
+            font-size: 9px;
+            color: var(--ds-text-muted);
+            font-weight: 600;
+        }
+
+        /* Trigger Dialog Mockup styles */
+        .ds-trigger-modal {
+            background: #cbd5e1;
+            border-radius: 28px;
+            padding: 30px 24px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+        .ds-trigger-modal-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+            text-align: center;
+        }
+        .ds-trigger-modal-subtitle {
+            font-size: 13px;
+            color: #475569;
+            margin: 0 0 24px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .ds-trigger-modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .ds-trigger-modal-card {
+            background: rgba(255, 255, 255, 0.65);
+            border-radius: 20px;
+            padding: 22px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1.5px solid rgba(15, 23, 42, 0.06);
+            box-sizing: border-box;
+        }
+        .ds-trigger-modal-card:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+        }
+        .ds-trigger-modal-card.active {
+            background: #ffffff;
+            border-color: #0019e6;
+            box-shadow: 0 6px 20px rgba(0, 25, 230, 0.08);
+        }
+        .ds-tm-icon-wrap {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ds-tm-icon-wrap svg {
+            width: 24px;
+            height: 24px;
+            stroke: #334155;
+            stroke-width: 2.2;
+        }
+        .ds-trigger-modal-card.active .ds-tm-icon-wrap svg {
+            stroke: #0019e6;
+        }
+        .ds-tm-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .ds-trigger-modal-card.active .ds-tm-title {
+            color: #0019e6;
+        }
+        .ds-trigger-modal-footer {
+            margin-top: 16px;
+            text-align: center;
+        }
+        .ds-trigger-modal-skip {
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .ds-trigger-modal-skip:hover {
+            color: #0019e6;
+        }
+
+        /* Buttons specimens grid */
+        .ds-btn-state-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 2fr 2fr 2fr;
+            gap: 12px;
+            align-items: center;
+            text-align: left;
+        }
+        .ds-btn-header {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--ds-text-muted);
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+        .ds-btn-row-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ds-text-main);
+        }
+        .ds-btn-state {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 10px 14px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            text-align: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+        .ds-btn-state.ds-btn-primary { 
+            background: #0019e6; 
+            color: #fff; 
+            border-radius: 9999px;
+        }
+        .ds-btn-state.ds-btn-primary.hover {
+            background: #1a33ff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 25, 230, 0.4);
+        }
+        .ds-btn-state.ds-btn-primary.active {
+            background: #0013b3;
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .ds-btn-state.ds-btn-outline {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.15);
+            color: #0f172a;
+            border-radius: 12px;
+        }
+        .ds-btn-state.ds-btn-outline.hover {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.35);
+            transform: translateY(-1px);
+        }
+        .ds-btn-state.ds-btn-outline.active {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.15);
+            transform: translateY(0);
+        }
+        .ds-btn-state.ds-btn-sos {
+            background: #eef2ff;
+            color: #0019e6;
+            border-radius: 12px;
+        }
+        .ds-btn-state.ds-btn-sos.hover {
+            background: #e0e7ff;
+            transform: translateY(-1px);
+        }
+        .ds-btn-state.ds-btn-sos.active {
+            background: #eef2ff;
+            transform: translateY(0);
+        }
+
+        /* Inputs */
+        .ds-inputs-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .ds-label-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ds-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .ds-input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1.5px solid rgba(10, 17, 40, 0.1);
+            color: var(--ds-text-main);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .ds-input-field.active {
+            border-color: var(--ds-accent);
+            background: #fff;
+            box-shadow: 0 0 12px rgba(51, 153, 255, 0.2);
+        }
+
+        .ds-input-field.error {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.04);
+        }
+
+        .ds-error-msg {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            color: #ef4444;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .ds-input-with-label {
+            display: flex;
+            flex-direction: column;
+            border: 1.5px solid var(--ds-accent);
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 6px 12px;
+            box-shadow: 0 0 12px rgba(51, 153, 255, 0.15);
+            text-align: left;
+        }
+
+        .ds-input-label-inner {
+            font-size: 8px;
+            font-weight: 800;
+            color: var(--ds-accent);
+            letter-spacing: 0.05em;
+        }
+
+        .ds-input-field-nested {
+            border: none;
+            outline: none;
+            padding: 2px 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ds-text-main);
+            width: 100%;
+        }
+
+        /* Steppers, Progress & Links */
+        .ds-progress-links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .ds-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+
+        .ds-step {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(10, 17, 40, 0.05);
+            border: 1px solid rgba(10, 17, 40, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ds-text-muted);
+        }
+
+        .ds-step.completed {
+            background: var(--ds-sage);
+            border-color: var(--ds-sage);
+            color: #ffffff;
+        }
+
+        .ds-step.completed svg {
+            width: 12px;
+            height: 12px;
+            stroke: #ffffff;
+            stroke-width: 3;
+        }
+
+        .ds-step.active {
+            background: var(--ds-primary);
+            border-color: var(--ds-primary);
+            color: #ffffff;
+            box-shadow: 0 0 8px rgba(0, 25, 230, 0.25);
+        }
+
+        .ds-step-line {
+            flex-grow: 1;
+            height: 2px;
+            background: rgba(10, 17, 40, 0.1);
+            margin: 0 8px;
+        }
+
+        .ds-step-line.completed {
+            background: var(--ds-sage);
+        }
+
+        .ds-line-progress-bar {
+            width: 100%;
+            height: 6px;
+            border-radius: 10px;
+            background: rgba(10, 17, 40, 0.06);
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .ds-line-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--ds-gradient-ember);
+            box-shadow: 0 2px 6px rgba(0, 25, 230, 0.15);
+        }
+
+        .ds-nav-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ds-text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .ds-nav-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .ds-nav-link:hover {
+            color: var(--ds-primary);
+        }
+
+        .ds-nav-link.active {
+            color: var(--ds-primary);
+        }
+
+        .ds-nav-link.active:hover {
+            transform: translateX(2px);
+        }
+
+        /* Box breathing */
+        .ds-breathing-module {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: transparent;
+            position: relative;
+            overflow: visible;
+            min-height: 200px;
+            box-sizing: border-box;
+        }
+        .ds-breathing-bg-glow {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(0, 25, 230, 0.08);
+            filter: blur(30px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .ds-breathing-circle-outer {
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        .ds-breathing-squircle-inner {
+            width: 100px;
+            height: 100px;
+            border-radius: 28px;
+            background: rgba(0, 25, 230, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(0, 25, 230, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0019e6;
+            box-shadow: 0 6px 24px rgba(0, 25, 230, 0.06);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Active animation states for Box Breathing squircle */
+        .ds-breathing-module.active .ds-breathing-bg-glow {
+            opacity: 1;
+            animation: ds-breathe-glow-squircle 16s infinite;
+        }
+        .ds-breathing-module.active .ds-breathing-circle-outer {
+            animation: ds-breathe-outer-scale-squircle 16s infinite;
+        }
+        .ds-breathing-module.active .ds-breathing-squircle-inner {
+            animation: ds-breathe-inner-style-squircle 16s infinite;
+        }
+        @keyframes ds-breathe-outer-scale-squircle {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.3); }
+            75% { transform: scale(1); }
+        }
+        @keyframes ds-breathe-inner-style-squircle {
+            0%, 100% {
+                background: rgba(0, 25, 230, 0.1);
+                box-shadow: 0 4px 16px rgba(0, 25, 230, 0.05);
+                border-color: rgba(0, 25, 230, 0.2);
+            }
+            25% {
+                background: rgba(0, 25, 230, 0.22);
+                box-shadow: 0 8px 32px rgba(0, 25, 230, 0.2);
+                border-color: rgba(0, 25, 230, 0.4);
+            }
+            50% {
+                background: rgba(0, 25, 230, 0.22);
+                box-shadow: 0 8px 32px rgba(0, 25, 230, 0.2);
+                border-color: rgba(0, 25, 230, 0.4);
+            }
+            75% {
+                background: rgba(0, 25, 230, 0.1);
+                box-shadow: 0 4px 16px rgba(0, 25, 230, 0.05);
+                border-color: rgba(0, 25, 230, 0.2);
+            }
+        }
+        @keyframes ds-breathe-glow-squircle {
+            0%, 100% { transform: scale(1); opacity: 0.3; background: rgba(0, 25, 230, 0.08); }
+            25% { transform: scale(1.6); opacity: 0.7; background: rgba(0, 25, 230, 0.18); }
+            50% { transform: scale(1.6); opacity: 0.7; background: rgba(0, 25, 230, 0.18); }
+            75% { transform: scale(1); opacity: 0.3; background: rgba(0, 25, 230, 0.08); }
+        }
+        .ds-breathing-toggle-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: #f8fafc;
+            color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .ds-breathing-toggle-btn:hover {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+        .ds-breathing-toggle-btn.active {
+            background: #ffffff;
+            border-color: rgba(0, 25, 230, 0.15);
+            color: #0019e6;
+            box-shadow: 0 4px 12px rgba(0, 25, 230, 0.04);
+        }
+        .ds-breathing-hint {
+            font-size: 12px;
+            color: #475569;
+            margin-top: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Visualizations row & charts */
+        .ds-vis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 992px) {
+            .ds-vis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ds-vis-card {
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(10, 17, 40, 0.04);
+            border-radius: 18px;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .ds-graph-svg {
+            width: 100%;
+            height: auto;
+            max-height: 120px;
+            display: block;
+        }
+
+        /* Bar Chart card styles */
+        .ds-bar-chart-card {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
+            padding: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .ds-bar-chart-sim {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 120px;
+            position: relative;
+        }
+        .ds-bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            height: 100%;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .ds-bar-track {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            min-height: 80px;
+        }
+        .ds-bar-cap-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-top: 2.2px dashed #2eb868;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .ds-bar-fill {
+            width: 100%;
+            border-radius: 999px 999px 0 0;
+            z-index: 1;
+            position: relative;
+            transition: height 0.4s ease;
+        }
+        .ds-bar-fill.normal {
+            background: #0019e6;
+        }
+        .ds-bar-fill.active {
+            background: #0019e6;
+        }
+        .ds-bar-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            font-family: 'Inter', sans-serif;
+            margin-top: 4px;
+        }
+        .ds-bar-col.highlighted .ds-bar-label {
+            color: #0019e6;
+        }
+        .ds-bar-value {
+            font-size: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #64748b;
+            order: 3;
+        }
+        .ds-bar-col.highlighted .ds-bar-value {
+            color: #0019e6;
+        }
+
+        /* Calendar Heatmap */
+        .ds-calendar-card {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
+            padding: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .ds-calendar-header-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .ds-calendar-week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--ds-text-muted);
+            margin-bottom: 6px;
+        }
+        .ds-calendar-day-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .ds-cal-empty {
+            aspect-ratio: 1;
+        }
+        .ds-cal-day {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            color: #475569;
+            transition: all 0.2s ease;
+            background: transparent;
+            cursor: pointer;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+        }
+        .ds-cal-day:hover {
+            transform: scale(1.08);
+            background: rgba(15, 23, 42, 0.04);
+        }
+        .ds-cal-day.well-under {
+            background: #2eb868;
+            color: #ffffff;
+        }
+        .ds-cal-day.at-cap {
+            background: #a2e0b8;
+            color: #2C374E;
+        }
+        .ds-cal-day.over-cap {
+            background: #ec8c8c;
+            color: #ffffff;
+        }
+        .ds-cal-day.selected {
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #0019e6;
+            font-weight: 700;
+            transform: scale(1.08);
+            z-index: 5;
+        }
+        .ds-calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: lowercase;
+            font-family: 'Inter', sans-serif;
+        }
+        .ds-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .ds-legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .ds-legend-dot.well-under { background: #2eb868; }
+        .ds-legend-dot.at-cap { background: #a2e0b8; }
+        .ds-legend-dot.over-cap { background: #ec8c8c; }
+
+        .ds-copy-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--ds-sage);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(46, 184, 104, 0.25);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10000;
+            pointer-events: none;
+        }
+        .ds-copy-toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="theme-brand" data-brand-bg="#CFD8E4" data-brand-text="#0E1629" data-brand-text-sub="#2C374E" data-brand-accent="#1E63F3" data-brand-card-bg="#ffffff" data-brand-border="rgba(14, 22, 41, 0.08)" style="--brand-bg: #CFD8E4; --brand-text: #0E1629; --brand-text-sub: #2C374E; --brand-accent: #1E63F3; --brand-card-bg: #ffffff; --brand-border: rgba(14, 22, 41, 0.08); --brand-grid-color: rgba(14, 22, 41, 0.08); --brand-sketch-fill: #ffffff; --brand-moodboard-bg: rgba(14, 22, 41, 0.03); --brand-moodboard-border: rgba(14, 22, 41, 0.08); --brand-nav-bg: rgba(255, 255, 255, 0.85); --brand-nav-border: rgba(14, 22, 41, 0.08);">
+
+    <!-- Hidden SVG filter for organic hand-drawn sketch lines -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <filter id="handdrawn">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise"></feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Grid blueprint background -->
+    <div class="pattern-bg"></div>
+
+    <!-- Interactive Canvas backdrop -->
+    <canvas id="project-canvas"></canvas>
+    
+    <!-- Floating Parallax Shapes -->
+    <div class="parallax-shape shape-1" style="position: absolute; top: 12%; right: 5%; width: 60px; height: 60px; border: 2px dashed rgba(10, 17, 40, 0.06); border-radius: 50%; pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-2" style="position: absolute; top: 48%; left: 3%; width: 80px; height: 80px; border: 2px dashed rgba(10, 17, 40, 0.06); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1;"></div>
+    <div class="parallax-shape shape-3" style="position: absolute; top: 80%; right: 7%; width: 100px; height: 100px; border: 2px dashed rgba(10, 17, 40, 0.06); pointer-events: none; z-index: -1; transform: rotate(15deg);"></div>
+
+    <!-- Header navigation (Floating Island Navbar) -->
+    <header class="floating-header">
+        <div class="container nav-wrapper" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="../index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <style>
+                        @keyframes kf_Frame_8_transform_0 {
+                          0% {
+                            animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+                            transform: translate(757px, 643.5px) rotate(6.283rad) translate(-757px, -643.5px);
+                          }
+                          100% {
+                            transform: translate(757px, 643.5px) rotate(-6.283rad) translate(-757px, -643.5px);
+                          }
+                        }
+                        #Frame_8 {
+                          transform-origin: 0 0;
+                          animation: kf_Frame_8_transform_0 1.074199s linear infinite;
+                        }
+                        </style>
+                        <g id="Frame_8">
+                        <path d="M559.56 757.221C564.269 748.959 558.296 738.691 548.786 738.7L4.99175 739.189C3.07642 739.191 1.88359 737.112 2.85193 735.459L114.747 544.504C115.192 543.746 116.004 543.279 116.883 543.279L676.027 542.775C679.584 542.772 682.866 540.862 684.628 537.772L989.929 2.06869C990.369 1.29605 991.19 0.818692 992.079 0.817891L1208.75 0.622788C1210.64 0.621087 1211.83 2.64816 1210.92 4.30033L923.126 524.155C918.552 532.416 924.532 542.551 933.975 542.543L1508.13 542.026C1510.05 542.024 1511.24 544.122 1510.26 545.774L1396.16 736.732C1395.72 737.48 1394.91 737.938 1394.04 737.939L810.314 738.464C806.713 738.468 803.397 740.424 801.653 743.575L503.544 1282.07C503.108 1282.85 502.279 1283.34 501.378 1283.34L263.863 1283.56C261.961 1283.56 260.767 1281.5 261.709 1279.85L559.56 757.221Z" fill="#0A1128"></path>
+                        <path d="M673.578 180.373C673.862 180.786 674.014 181.274 674.015 181.775L674.325 526.123C674.327 528.565 671.169 529.537 669.797 527.516L314.603 4.19047C313.487 2.54628 314.664 0.323334 316.651 0.321545L548.26 0.11299C549.076 0.112255 549.84 0.513721 550.303 1.18629L673.578 180.373Z" fill="#0A1128"></path>
+                        <path d="M815.897 1106C815.613 1105.59 815.461 1105.1 815.46 1104.6L815.15 760.248C815.148 757.806 818.307 756.834 819.678 758.854L1174.87 1282.18C1175.99 1283.82 1174.81 1286.05 1172.82 1286.05L941.215 1286.26C940.399 1286.26 939.635 1285.86 939.172 1285.18L815.897 1106Z" fill="#0A1128"></path>
+                        </g>
+                    </svg>
+                </a>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: var(--brand-moodboard-bg, rgba(255,255,255,0.05)); border: 1px solid var(--brand-border, rgba(255,255,255,0.1)); color: var(--text-main); border-radius: 50px;">EMBERQUIT</span>
+            </div>
+            
+            <nav style="display: flex; align-items: center; gap: var(--space-md);">
+                <a href="../index.html#projects" class="back-link" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main);">← Back to Works</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Scroll Narrative -->
+    <main class="narrative-wrapper">
+
+        <!-- Chapter 1: The Hook (Hero) -->
+        <section class="story-chapter chapter-hero">
+            <div class="chapter-hero-bg" style="background: linear-gradient(135deg, rgba(30, 99, 243, 0.08) 0%, rgba(30, 99, 243, 0.03) 100%);"></div>
+            <div class="container hero-content">
+                <div class="hero-text-block">
+                    <span class="label-pill brand-accent-badge">CASE STUDY 01 //</span>
+                    <h1 class="gsap-split-header brand-hero-title">EMBERQUIT</h1>
+                    <p class="brand-hero-subtitle">Nicotine Habits Cessation Companion</p>
+                </div>
+                <div class="project-meta-bar">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-val">Mobile UI/UX</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-val">4 Weeks</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+                    <button class="scroll-indicator-arrow" aria-label="Scroll down" onclick="document.querySelector('.chapter-narrative').scrollIntoView({ behavior: 'smooth' });">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: The Context & Story (Scroll 1: The Reframe) -->
+        <section class="story-chapter chapter-narrative">
+            <div class="container narrative-grid">
+                <div class="narrative-content-left">
+                    <div class="narrative-block">
+                        <span class="mono brand-accent-color">01 / THE CONTEXT</span>
+                        <h2>Replacing Shame with Growth</h2>
+                        <p>
+                            Most quit-smoking apps are built on panic. They feature ticking stopwatches, red warnings, and financial penalties that trigger guilt the moment a user slips. When design uses negative reinforcement, it creates friction, leading to app abandonment during a relapse.
+                        </p>
+                    </div>
+                    <div class="narrative-block" style="margin-top: var(--space-lg);">
+                        <span class="mono brand-accent-color">02 / THE PROBLEM &amp; SOLUTION</span>
+                        <h2>A Path Forward</h2>
+                        <p>
+                            Nicotine addiction operates on a tight physiological and psychological loop. Standard apps treat cessation as an instantaneous milestone, triggering alarm states and shame cycles on relapses. Emberquit shifts this paradigm by designing a gradual, automated reduction path that accommodates behavioral slip-ups and translates progress through gamified milestones.
+                        </p>
+                    </div>
+                </div>
+                <div class="narrative-content-right">
+                    <div class="brand-metric-card emberquit-metric-card">
+                        <!-- Title and description -->
+                        <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px;">
+                            <h4 style="font-family: 'Quicksand', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--brand-text); margin: 0; line-height: 1.2;">Clinical Cessation Reality</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--brand-text-sub, #2C374E); margin: 0; line-height: 1.45;">
+                                Contrast of user outcomes based on design and behavioral cessation systems.
+                            </p>
+                        </div>
+
+                        <div class="layered-stats-container">
+                            <!-- Layered Card 1: Success -->
+                            <div class="layered-card layered-card-success">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 700; color: #1e63f3; text-transform: uppercase; letter-spacing: 0.08em; background-color: rgba(30, 99, 243, 0.08); padding: 3px 8px; border-radius: 12px;">Recommended Path</span>
+                                    <span style="font-family: 'Quicksand', sans-serif; font-size: 1.35rem; font-weight: 700; color: #1e63f3; line-height: 1;">3.8x Success</span>
+                                </div>
+                                <h5 style="font-family: 'Quicksand', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--brand-text); margin: 0 0 4px 0; line-height: 1.2;">Gradual Reduction Protocol</h5>
+                                <p style="font-family: 'Inter', sans-serif; font-size: 0.76rem; color: var(--brand-text-sub); margin: 0; line-height: 1.45;">
+                                    Step-down scheduling prevents severe receptor shock, increasing cessation completion rates.
+                                </p>
+                            </div>
+
+                            <!-- Layered Card 2: Failure -->
+                            <div class="layered-card layered-card-fail">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 700; color: #ef4444; text-transform: uppercase; letter-spacing: 0.08em; background-color: rgba(239, 68, 68, 0.08); padding: 3px 8px; border-radius: 12px;">Standard Cessation</span>
+                                    <span style="font-family: 'Quicksand', sans-serif; font-size: 1.35rem; font-weight: 700; color: #ef4444; line-height: 1;">95% Failure</span>
+                                </div>
+                                <h5 style="font-family: 'Quicksand', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--brand-text); margin: 0 0 4px 0; line-height: 1.2;">Abrupt Nicotine Cutoff</h5>
+                                <p style="font-family: 'Inter', sans-serif; font-size: 0.76rem; color: var(--brand-text-sub); margin: 0; line-height: 1.45;">
+                                    Abrupt, willpower-alone quit methods fail due to intense craving spikes and withdrawal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Chapter 3: The Science & Habits (Scrolls 2, 3, & 6: The Card Deck) -->
+        <section class="story-chapter chapter-deck-pin" id="science-cessation-pin">
+            <div class="deck-grid-container">
+                <div class="deck-info-panel">
+                    <span class="mono brand-accent-color" style="color: #64748b !important;">03 / THE SCIENCE &amp; DATA</span>
+                    <h2 style="color: #000000 !important;">Habit Cessation Systems</h2>
+                    <p style="color: #3b486b !important;">Quitting is not a single decision; it is a complex user journey. By converting clinical diagnostics into conversational flows and visualizing progress based on behavioral insights, we alleviate a major user pain point, building trust and long-term retention.</p>
+                </div>
+                
+                <div class="stacked-deck-wrapper">
+                    <!-- Card 1: The Assessment (Fagerström Test) -->
+                    <div class="deck-card gallery-slide-card">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" id="fagerstrom-quiz-widget" style="padding: var(--space-sm); background-color: #E2EBF4; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+                                <!-- A mini mobile phone frame container -->
+                                <div class="mini-phone-frame" style="width: 210px; height: 390px; background-color: #ffffff; border: 4px solid #CAD3E2; border-radius: 24px; padding: 16px 12px; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Inter', sans-serif; box-shadow: 0 10px 30px rgba(14, 22, 41, 0.1); position: relative; overflow: hidden; box-sizing: border-box;">
+                                    <!-- Question Flow -->
+                                    <div id="quiz-question-container" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+                                        <div id="quiz-progress" style="font-size: 0.65rem; color: var(--brand-text-sub, #2C374E); font-family: monospace;">QUESTION 1 / 6</div>
+                                        <div id="quiz-question-text" style="font-size: 0.78rem; font-weight: 600; color: var(--brand-text); line-height: 1.3; font-family: 'Quicksand', sans-serif;">How soon after you wake up do you smoke?</div>
+                                        <div id="quiz-options-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                                            <!-- Options dynamically inserted -->
+                                        </div>
+                                    </div>
+                                    <!-- Results state (initially hidden) -->
+                                    <div id="quiz-result-container" style="display: none; flex-grow: 1; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 12px;">
+                                        <span class="mono brand-accent-color" style="font-size: 0.62rem; padding: 2px 8px; background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; border: 1px solid rgba(30, 99, 243, 0.2); border-radius: 50px;">DEPENDENCE REPORT</span>
+                                        <h4 id="quiz-result-bracket" style="font-size: 0.9rem; color: var(--brand-text); margin: 0; font-family: 'Quicksand', sans-serif;">HIGH DEPENDENCE</h4>
+                                        <div id="quiz-result-score" style="font-size: 2.2rem; font-family: 'Quicksand', sans-serif; color: #1E63F3; line-height: 1;">8/10</div>
+                                        <p style="font-size: 0.65rem; color: var(--brand-text-sub, #2C374E); margin: 0; line-height: 1.3;">Taper plan generated below.</p>
+                                        <button id="btn-reset-quiz" style="padding: 4px 8px; font-size: 0.6rem; border-radius: 4px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif;">Restart Test</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">01 / THE ASSESSMENT</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Conversational Trust</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    The Fagerström Test for Nicotine Dependence (FTND) is the global clinical standard for measuring nicotine addiction. It asks six key questions, ranging from morning habits to behavioral choices. 
+                                </p>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    I redesigned this diagnostic tool into a conversational onboarding flow. By presenting only one Fagerström question per screen and using tactile, single-click buttons, we reduce cognitive load, build immediate user trust, and guarantee cleaner self-reported data.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Card 2: The Plan (Reduction Curve) -->
+                    <div class="deck-card gallery-slide-card">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" id="taper-simulator-widget" style="padding: var(--space-sm); background-color: #E2EBF4; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--space-sm); font-family: 'Inter', sans-serif;">
+                                <!-- SVG Graph -->
+                                 <div style="width: 100%; max-width: 240px; height: 190px; background-color: #ffffff; border-radius: var(--radius-md); border: 1px solid #CAD3E2; padding: 12px; box-sizing: border-box; position: relative;">
+                                     <svg id="taper-svg" viewBox="0 0 200 125" style="width: 100%; height: 100%; overflow: visible; margin-top: 10px;">
+                                         <!-- Faint Grid Guidelines -->
+                                         <line x1="20" y1="20" x2="190" y2="20" stroke="#F1F5F9" stroke-width="1"></line>
+                                         <line x1="20" y1="60" x2="190" y2="60" stroke="#F1F5F9" stroke-width="1"></line>
+                                         <line x1="105" y1="10" x2="105" y2="100" stroke="#F1F5F9" stroke-width="1"></line>
+                                         <line x1="190" y1="10" x2="190" y2="100" stroke="#F1F5F9" stroke-width="1"></line>
+
+                                         <!-- Main Axes (slate grey) -->
+                                         <line x1="20" y1="10" x2="20" y2="100" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"></line>
+                                         <line x1="20" y1="100" x2="190" y2="100" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"></line>
+                                         
+                                         <!-- Y-Axis Ticks (at 0, 20, 40 cigs) -->
+                                         <line x1="16" y1="20" x2="20" y2="20" stroke="#94a3b8" stroke-width="1"></line>
+                                         <line x1="16" y1="60" x2="20" y2="60" stroke="#94a3b8" stroke-width="1"></line>
+                                         <line x1="16" y1="100" x2="20" y2="100" stroke="#94a3b8" stroke-width="1"></line>
+                                         
+                                         <!-- X-Axis Ticks (at Day 0, Day 7, Day 15) -->
+                                         <line x1="20" y1="100" x2="20" y2="104" stroke="#94a3b8" stroke-width="1"></line>
+                                         <line x1="105" y1="100" x2="105" y2="104" stroke="#94a3b8" stroke-width="1"></line>
+                                         <line x1="190" y1="100" x2="190" y2="104" stroke="#94a3b8" stroke-width="1"></line>
+
+                                         <!-- Y-Axis Tick Labels & Parameters -->
+                                         <text x="12" y="22" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="end" font-weight="600">40</text>
+                                         <text x="12" y="62" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="end" font-weight="600">20</text>
+                                         <text x="12" y="102" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="end" font-weight="600">0</text>
+                                         <text x="8" y="5" font-family="'Inter', sans-serif" font-weight="700" font-size="6px" fill="#475569" text-anchor="start" letter-spacing="0.05em">CIGS / DAY</text>
+
+                                         <!-- X-Axis Tick Labels & Parameters -->
+                                         <text x="20" y="112" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="middle" font-weight="600">Day 0</text>
+                                         <text x="105" y="112" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="middle" font-weight="600">Day 7</text>
+                                         <text x="190" y="112" font-family="'Inter', sans-serif" font-size="7px" fill="#64748b" text-anchor="middle" font-weight="600">Day 15</text>
+                                         <text x="105" y="122" font-family="'Inter', sans-serif" font-weight="700" font-size="6px" fill="#475569" text-anchor="middle" letter-spacing="0.08em">TIMELINE</text>
+
+                                         <!-- Cold Turkey Line (dashed red) -->
+                                         <line x1="20" y1="30" x2="20" y2="100" stroke="#ef4444" stroke-dasharray="3,3" stroke-width="1.5"></line>
+                                         <!-- Taper Path -->
+                                         <path id="taper-curve-path" d="M 20,30 Q 100,50 190,100" fill="none" stroke="#1E63F3" stroke-width="2.5" stroke-linecap="round"></path>
+                                         <!-- Area under curve (green overlay) -->
+                                         <path id="taper-area-path" d="M 20,30 Q 100,50 190,100 L 190,100 L 20,100 Z" fill="rgba(30, 99, 243, 0.04)"></path>
+                                         <!-- Interactive points -->
+                                         <circle id="taper-start-point" cx="20" cy="30" r="4" fill="#ffffff" stroke="#1E63F3" stroke-width="1.5"></circle>
+                                         <circle id="taper-end-point" cx="190" cy="100" r="4" fill="#ffffff" stroke="#1E63F3" stroke-width="1.5"></circle>
+                                     </svg>
+                                 </div>
+                                <!-- Simulator Controls -->
+                                <div style="width: 100%; max-width: 240px; display: flex; flex-direction: column; gap: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 0.7rem; color: var(--brand-text-sub, #2C374E);">Daily Cigarettes</span>
+                                        <span id="lbl-taper-cigs" style="font-size: 0.72rem; font-family: monospace; font-weight: 700; color: #1E63F3;">20 / day</span>
+                                    </div>
+                                    <input type="range" id="slider-taper-cigs" min="5" max="40" value="20" style="width: 100%;">
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                                        <span style="font-size: 0.7rem; color: var(--brand-text-sub, #2C374E);">Dependence</span>
+                                        <div style="display: flex; gap: 4px;">
+                                            <button class="taper-bracket-btn" data-factor="1" style="padding: 2px 6px; font-size: 0.6rem; border-radius: 4px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Low</button>
+                                            <button class="taper-bracket-btn active" data-factor="2" style="padding: 2px 6px; font-size: 0.6rem; border-radius: 4px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Med</button>
+                                            <button class="taper-bracket-btn" data-factor="3" style="padding: 2px 6px; font-size: 0.6rem; border-radius: 4px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">High</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">02 / THE PLAN</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">The Tapering Engine</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    Behind the scenes, the Fagerström score (0 to 10) groups the user into a dependence bracket (Low, Medium, or High). This score dynamically calculates a personalized reduction schedule, charting a gradual tapering curve down to zero.
+                                </p>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    The narrative shows the user a visual timeline of their personalized reduction path before they start. Showing a clear, manageable path forward removes the psychological barrier of quitting suddenly and sets realistic expectations.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Card 3: The Reflection (Self-Compassion) -->
+                    <div class="deck-card gallery-slide-card">
+                        <div class="slide-image-wrapper emberquit-deck-card-content">
+                            <div class="emberquit-deck-card-image-wrap" id="heatmap-grid-widget" style="padding: var(--space-sm); background-color: #E2EBF4; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; font-family: 'Inter', sans-serif;">
+                                 <!-- Labeled Calendar grid container -->
+                                 <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 240px; background-color: #ffffff; border-radius: var(--radius-md); border: 1px solid #CAD3E2; padding: 8px; box-sizing: border-box;">
+                                     <!-- Day labels header -->
+                                     <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; width: 100%;">
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">MON</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">TUE</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">WED</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">THU</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">FRI</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">SAT</span>
+                                         <span style="font-size: 0.5rem; font-weight: 700; color: var(--brand-text-sub); font-family: 'Inter', sans-serif; opacity: 0.7;">SUN</span>
+                                     </div>
+                                     <!-- Cells grid container -->
+                                     <div id="heatmap-grid-container" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%;">
+                                         <!-- 7x5 cell grid generated in script -->
+                                     </div>
+                                 </div>
+                                <!-- Trigger Pills selection -->
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; max-width: 240px;">
+                                    <button class="heatmap-trigger-btn active" data-trigger="stress" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(30, 99, 243, 0.2); background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; cursor: pointer; font-family: 'Inter', sans-serif;">Stress</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="coffee" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Coffee</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="social" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Social</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="boredom" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Boredom</button>
+                                </div>
+                            </div>
+                            <div class="emberquit-deck-card-text">
+                                <span class="mono brand-accent-color" style="font-size: 0.75rem; display: block; margin-bottom: var(--space-xs);">03 / THE REFLECTION</span>
+                                <h3 style="font-family: 'Quicksand', sans-serif; color: var(--brand-text); margin: 0 0 var(--space-xs) 0; font-size: 1.4rem; font-weight: 700;">Mapping Patterns</h3>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    When a user logs a cigarette, they select their trigger (e.g., Stress, Coffee, Social). The app aggregates this data to create a personal behavioral heatmap.
+                                </p>
+                                <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub); margin: 0;">
+                                    By shifting the framing from "days clean" to "behavioral patterns," the user gains insight into why they smoke. Emberquit proves that empathetic design, scientific structure, and non-judgmental tracking create a healthier path to habit change.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 4: The Interface Journey (Moodboard & Visuals) -->
+        <section class="story-chapter" style="padding: var(--space-xl) 0; height: auto; overflow: visible; display: block;">
+            <div class="container">
+                <span class="mono brand-accent-color">04 / VISUAL GUIDE</span>
+                <h2 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin: 5px 0 8px 0;">Design System</h2>
+                <p style="color: var(--text-sub); margin: 0 0 var(--space-lg) 0; font-size: 0.95rem;">Visual tokens, interactive material specimens, and design guidelines.</p>
+                         <div class="design-system-container">
+                    <div class="ds-grid">
+                        
+                        <!-- COLUMN 1 -->
+                        <div class="ds-column">
+                            
+                            <!-- Card 1: Typography -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Typography</div>
+                                <!-- Quicksand display -->
+                                <div class="ds-font-specimen quicksand">
+                                    <div class="ds-specimen-label">Display font (Headers, Milestones)</div>
+                                    <div class="ds-font-preview-large">Emberquit</div>
+                                    <div class="ds-font-meta">Quicksand Bold — 2.8rem (h1) / 1.8rem (h2)</div>
+                                    <p class="ds-font-desc">
+                                        Friendly, rounded, and empathetic. Softens medical tracking and celebrates user milestones.
+                                    </p>
+                                </div>
+                                <!-- Inter body -->
+                                <div class="ds-font-specimen inter">
+                                    <div class="ds-specimen-label">System font (Body, Stats, Logs)</div>
+                                    <div class="ds-font-preview-large">Clean Log</div>
+                                    <div class="ds-font-meta">Inter Medium — 0.98rem (Body) / 0.75rem (Muted)</div>
+                                    <p class="ds-font-desc">
+                                        Highly legible, neutral, and structured. Handles time-logging and data variables clearly.
+                                    </p>
+                                </div>
+                                <!-- Space Mono -->
+                                <div class="ds-font-specimen space-mono">
+                                    <div class="ds-specimen-label">Technical font (Milestones, Codes)</div>
+                                    <div class="ds-font-preview-large" style="font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700;">STREAK 12d</div>
+                                    <div class="ds-font-meta">Space Mono Bold — 0.75rem (Label/Pill)</div>
+                                    <p class="ds-font-desc">
+                                        Monospaced and precise. Highlights structured stats and technical blueprint tags.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Craving Triggers -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Craving Triggers (App Dialog)</div>
+                                <div class="ds-trigger-modal">
+                                    <h3 class="ds-trigger-modal-title">What triggered this?</h3>
+                                    <p class="ds-trigger-modal-subtitle">Logging triggers helps you spot patterns over time.</p>
+                                    
+                                    <div class="ds-trigger-modal-grid">
+                                        <!-- Stress Card -->
+                                        <div class="ds-trigger-modal-card" onclick="toggleTriggerDS(this)">
+                                            <div class="ds-tm-icon-wrap">
+                                                <i data-lucide="zap"></i>
+                                            </div>
+                                            <div class="ds-tm-title">Stress</div>
+                                        </div>
+
+                                        <!-- Habit Card -->
+                                        <div class="ds-trigger-modal-card" onclick="toggleTriggerDS(this)">
+                                            <div class="ds-tm-icon-wrap">
+                                                <i data-lucide="refresh-cw"></i>
+                                            </div>
+                                            <div class="ds-tm-title">Habit</div>
+                                        </div>
+
+                                        <!-- Social Card -->
+                                        <div class="ds-trigger-modal-card" onclick="toggleTriggerDS(this)">
+                                            <div class="ds-tm-icon-wrap">
+                                                <i data-lucide="users"></i>
+                                            </div>
+                                            <div class="ds-tm-title">Social</div>
+                                        </div>
+
+                                        <!-- Boredom Card -->
+                                        <div class="ds-trigger-modal-card" onclick="toggleTriggerDS(this)">
+                                            <div class="ds-tm-icon-wrap">
+                                                <i data-lucide="coffee"></i>
+                                            </div>
+                                            <div class="ds-tm-title">Boredom</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ds-trigger-modal-footer">
+                                        <a href="#" class="ds-trigger-modal-skip" onclick="event.preventDefault()">Skip for now</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Box Breathing -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Interactive Element</div>
+                                <div style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                                    <!-- Header with wind icon and subtitle -->
+                                    <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; text-align: left;">
+                                        <div style="padding: 6px; background: rgba(0, 25, 230, 0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-top: 2px;">
+                                            <i data-lucide="wind" style="width: 20px; height: 20px; stroke: #0019e6; stroke-width: 2.5;"></i>
+                                        </div>
+                                        <div>
+                                            <h3 style="font-family: 'Quicksand', sans-serif; font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 4px 0;">Box breathing</h3>
+                                            <p style="font-size: 11.5px; color: #475569; margin: 0; line-height: 1.4; text-align: left;">In 4 · hold 4 · out 4 · hold 4. Calms the nervous system in under a minute.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="ds-breathing-module" id="dsBreathingBox" style="min-height: 180px;">
+                                        <div class="ds-breathing-bg-glow"></div>
+                                        <div class="ds-breathing-circle-outer">
+                                            <div class="ds-breathing-squircle-inner" id="dsBreathingText">Ready</div>
+                                        </div>
+                                    </div>
+                                    <p class="ds-breathing-hint" id="dsBreathingHint" style="margin-bottom: 20px;">Match your breath to the glow.</p>
+                                    <button class="ds-breathing-toggle-btn" id="dsBreathingBtn" onclick="toggleBreathingDS()">Start Box Breathing</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- COLUMN 2 -->
+                        <div class="ds-column">
+                            
+                            <!-- Card 4: Colors & Swatches -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Colors &amp; Swatches</div>
+                                <div class="ds-color-swatch-list">
+                                    <div class="ds-swatch" onclick="copyHexDS('#0019e6')">
+                                        <div class="ds-swatch-color" style="background: #0019e6;"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Primary Intense</div>
+                                            <div class="ds-swatch-value">#0019e6</div>
+                                        </div>
+                                    </div>
+                                    <div class="ds-swatch" onclick="copyHexDS('#3399ff')">
+                                        <div class="ds-swatch-color" style="background: #3399ff;"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Accent Sky</div>
+                                            <div class="ds-swatch-value">#3399ff</div>
+                                        </div>
+                                    </div>
+                                    <div class="ds-swatch" onclick="copyHexDS('#2eb868')">
+                                        <div class="ds-swatch-color" style="background: #2eb868;"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Sage Green</div>
+                                            <div class="ds-swatch-value">#2eb868</div>
+                                        </div>
+                                    </div>
+                                    <div class="ds-swatch" onclick="copyHexDS('#f97316')">
+                                        <div class="ds-swatch-color" style="background: #f97316;"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Ember Orange</div>
+                                            <div class="ds-swatch-value">#f97316</div>
+                                        </div>
+                                    </div>
+                                    <div class="ds-swatch" onclick="copyHexDS('#0A1128')">
+                                        <div class="ds-swatch-color" style="background: #0A1128;"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Midnight Navy</div>
+                                            <div class="ds-swatch-value">#0A1128</div>
+                                        </div>
+                                    </div>
+                                    <div class="ds-swatch" onclick="copyHexDS('#FCFAF6')">
+                                        <div class="ds-swatch-color" style="background: #FCFAF6; border: 1px solid rgba(0,0,0,0.05);"></div>
+                                        <div class="ds-swatch-info">
+                                            <div class="ds-swatch-name">Canvas Base</div>
+                                            <div class="ds-swatch-value">#FCFAF6</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Iconography -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Iconography</div>
+                                <div class="ds-icon-grid">
+                                    <div class="ds-icon-box"><i data-lucide="home"></i><span class="ds-icon-name">Home</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="calendar"></i><span class="ds-icon-name">Log</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="bar-chart-3"></i><span class="ds-icon-name">Insights</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="sparkles"></i><span class="ds-icon-name">Toolkit</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="user"></i><span class="ds-icon-name">Profile</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="flame"></i><span class="ds-icon-name">Ember</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="cigarette"></i><span class="ds-icon-name">Cigarette</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="heart"></i><span class="ds-icon-name">Health</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="wallet"></i><span class="ds-icon-name">Wallet</span></div>
+                                    <div class="ds-icon-box"><i data-lucide="wind"></i><span class="ds-icon-name">Breathe</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 6: Inputs -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Inputs</div>
+                                <div class="ds-inputs-group">
+                                    <div>
+                                        <div class="ds-label-tag">Normal Input</div>
+                                        <input type="text" class="ds-input-field" placeholder="Enter trigger name..." value="Afternoon break">
+                                    </div>
+                                    <div style="margin-top: 12px;">
+                                        <div class="ds-label-tag">Active Input</div>
+                                        <input type="text" class="ds-input-field active" placeholder="Enter trigger name..." value="Commuting stress">
+                                    </div>
+                                    <div style="margin-top: 12px;">
+                                        <div class="ds-label-tag">Error Input</div>
+                                        <input type="text" class="ds-input-field error" placeholder="Enter trigger name..." value="invalid_char%$#">
+                                        <span class="ds-error-msg">⚠️ Invalid characters detected. Please use alphabets.</span>
+                                    </div>
+                                    <div style="margin-top: 12px;">
+                                        <div class="ds-label-tag">Input with Label</div>
+                                        <div class="ds-input-with-label">
+                                            <span class="ds-input-label-inner">TRIGGER NAME</span>
+                                            <input type="text" class="ds-input-field-nested" value="Boredom triggers">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 7: Today's Counter -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Today's Counter</div>
+                                <div class="ds-specimen-label" style="margin-bottom: 12px;">Active Consumption Counter Dial</div>
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0;">
+                                    <div style="position: relative; width: 140px; height: 140px;">
+                                        <svg viewBox="0 0 140 140" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                                            <!-- Background circle track -->
+                                            <circle cx="70" cy="70" r="58" stroke="rgba(10, 17, 40, 0.06)" stroke-width="10" fill="transparent"></circle>
+                                            <!-- Active progress path (5 of 6 = ~83.3% progress) -->
+                                            <circle cx="70" cy="70" r="58" stroke="#0019e6" stroke-width="10" fill="transparent" stroke-dasharray="364.4" stroke-dashoffset="60.7" stroke-linecap="round"></circle>
+                                        </svg>
+                                        <!-- Inner Text values stacked inside the circle -->
+                                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', sans-serif;">
+                                            <span style="font-size: 38px; font-weight: 700; color: #0a1128; line-height: 1;">5</span>
+                                            <span style="font-size: 11px; font-weight: 600; color: #64748b; margin-top: 4px; letter-spacing: 0.02em;">of 6 today</span>
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 12px; font-weight: 600; color: #475569; margin: 16px 0 0 0; font-family: 'Inter', sans-serif; text-align: center; letter-spacing: -0.01em;">
+                                        1 left in your envelope today.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Card 7b: Daily Trend -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Daily Trend</div>
+                                <div style="display: flex; flex-direction: column; text-align: left; margin-bottom: 12px;">
+                                    <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.05em; font-family: 'Inter', sans-serif;">DAILY TREND</span>
+                                    <span style="font-size: 13px; color: #64748b; font-weight: 500; font-family: 'Inter', sans-serif; margin-top: 2px;">Your line vs. your daily cap.</span>
+                                </div>
+                                <div class="ds-trend-chart-container" style="margin-top: 10px;">
+                                    <svg viewBox="0 0 240 140" style="width: 100%; height: auto; overflow: visible;">
+                                        <defs>
+                                            <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#0019e6" stop-opacity="0.2"></stop>
+                                                <stop offset="100%" stop-color="#0019e6" stop-opacity="0.0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Y-Axis Grid Lines & Labels -->
+                                        <line x1="25" y1="15" x2="235" y2="15" stroke="rgba(15, 23, 42, 0.06)" stroke-dasharray="2 2"></line>
+                                        <text x="12" y="18" fill="#64748b" font-size="9" font-family="'Inter', sans-serif" text-anchor="end">8</text>
+                                        
+                                        <line x1="25" y1="42.5" x2="235" y2="42.5" stroke="rgba(15, 23, 42, 0.06)" stroke-dasharray="2 2"></line>
+                                        <text x="12" y="45.5" fill="#64748b" font-size="9" font-family="'Inter', sans-serif" text-anchor="end">6</text>
+                                        
+                                        <line x1="25" y1="70" x2="235" y2="70" stroke="rgba(15, 23, 42, 0.06)" stroke-dasharray="2 2"></line>
+                                        <text x="12" y="73" fill="#64748b" font-size="9" font-family="'Inter', sans-serif" text-anchor="end">4</text>
+                                        
+                                        <line x1="25" y1="97.5" x2="235" y2="97.5" stroke="rgba(15, 23, 42, 0.06)" stroke-dasharray="2 2"></line>
+                                        <text x="12" y="100.5" fill="#64748b" font-size="9" font-family="'Inter', sans-serif" text-anchor="end">2</text>
+                                        
+                                        <line x1="25" y1="125" x2="235" y2="125" stroke="rgba(15, 23, 42, 0.12)"></line>
+                                        <text x="12" y="128" fill="#64748b" font-size="9" font-family="'Inter', sans-serif" text-anchor="end">0</text>
+
+                                        <!-- Green Dashed Cap Line -->
+                                        <path d="M 30,28.75 L 63.3,28.75 L 96.7,28.75 L 130,42.5 L 163.3,42.5 L 196.7,42.5 L 230,42.5" fill="none" stroke="#2eb868" stroke-width="1.8" stroke-dasharray="3 3"></path>
+
+                                        <!-- Blue Gradient Fill Under Curve -->
+                                        <path d="M 30,56.25 C 46.6,42.5 46.6,28.75 63.3,28.75 C 80,28.75 80,42.5 96.7,42.5 C 113.3,42.5 113.3,56.25 130,56.25 C 146.6,56.25 146.6,56.25 163.3,56.25 C 180,56.25 180,42.5 196.7,42.5 C 213.3,42.5 213.3,56.25 230,56.25 L 230,125 L 30,125 Z" fill="url(#trendGradient)"></path>
+
+                                        <!-- Blue Curve Line -->
+                                        <path d="M 30,56.25 C 46.6,42.5 46.6,28.75 63.3,28.75 C 80,28.75 80,42.5 96.7,42.5 C 113.3,42.5 113.3,56.25 130,56.25 C 146.6,56.25 146.6,56.25 163.3,56.25 C 180,56.25 180,42.5 196.7,42.5 C 213.3,42.5 213.3,56.25 230,56.25" fill="none" stroke="#0019e6" stroke-width="2.2"></path>
+
+                                        <!-- Dots on Blue Line -->
+                                        <circle cx="30" cy="56.25" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="63.3" cy="28.75" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="96.7" cy="42.5" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="130" cy="56.25" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="163.3" cy="56.25" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="196.7" cy="42.5" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                        <circle cx="230" cy="56.25" r="4.5" fill="#0019e6" stroke="#ffffff" stroke-width="1.8"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- COLUMN 3 -->
+                        <div class="ds-column">
+                            
+                            <!-- Card 8: Blueprint & Patterns -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Blueprint &amp; Patterns</div>
+                                <div class="ds-pattern-row" style="display: flex; gap: 16px;">
+                                    <!-- Blueprint box -->
+                                    <div class="ds-pattern-box blueprint" style="flex: 1; height: 90px; border-radius: 12px; border: 1px solid rgba(0,25,230,0.15); background-color: #FCFAF6; background-image: radial-gradient(rgba(0, 25, 230, 0.15) 1px, transparent 0); background-size: 10px 10px; display: flex; align-items: center; justify-content: center;">
+                                        <span style="font-size: 10px; font-weight: 600; color: #0019e6; letter-spacing: 0.05em; font-family: monospace;">BLUEPRINT</span>
+                                    </div>
+                                    <!-- Brand Gradient box -->
+                                    <div class="ds-pattern-box gradient" style="flex: 1; height: 90px; border-radius: 12px; background: linear-gradient(135deg, #0019e6, #3399ff); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,25,230,0.2);">
+                                        <span style="font-size: 10px; font-weight: 600; color: #ffffff; letter-spacing: 0.05em; font-family: monospace;">GRADIENT</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 9: Monthly Heatmap -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Monthly Heatmap</div>
+                                <div class="ds-specimen-label" style="margin-bottom: 12px;">Calendar Heatmap Log (Monthly Progress)</div>
+                                <div class="ds-calendar-card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                        <span style="font-size: 13px; font-weight: 700; color: #475569; cursor: pointer;">&lt;</span>
+                                        <span class="ds-calendar-header-title" style="margin: 0; font-size: 14px; font-weight: 700; color: #0f172a; font-family: 'Quicksand', sans-serif;">July 2026</span>
+                                        <span style="font-size: 13px; font-weight: 700; color: #475569; cursor: pointer;">&gt;</span>
+                                    </div>
+                                    <div class="ds-calendar-week-grid">
+                                        <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+                                    </div>
+                                    <div class="ds-calendar-day-grid">
+                                        <!-- July 2026 starts on Wed -->
+                                        <div class="ds-cal-empty"></div><div class="ds-cal-empty"></div><div class="ds-cal-empty"></div>
+                                        <div class="ds-cal-day over-cap">1</div>
+                                        <div class="ds-cal-day over-cap">2</div>
+                                        <div class="ds-cal-day over-cap">3</div>
+                                        <div class="ds-cal-day over-cap">4</div>
+                                        <div class="ds-cal-day over-cap">5</div>
+                                        <div class="ds-cal-day at-cap">6</div>
+                                        <div class="ds-cal-day">7</div>
+                                        <div class="ds-cal-day">8</div>
+                                        <div class="ds-cal-day">9</div>
+                                        <div class="ds-cal-day">10</div>
+                                        <div class="ds-cal-day">11</div>
+                                        <div class="ds-cal-day">12</div>
+                                        <div class="ds-cal-day">13</div>
+                                        <div class="ds-cal-day">14</div>
+                                        <div class="ds-cal-day selected well-under">15</div>
+                                        <div class="ds-cal-day">16</div>
+                                        <div class="ds-cal-day">17</div>
+                                        <div class="ds-cal-day">18</div>
+                                        <div class="ds-cal-day">19</div>
+                                        <div class="ds-cal-day">20</div>
+                                        <div class="ds-cal-day">21</div>
+                                        <div class="ds-cal-day">22</div>
+                                        <div class="ds-cal-day">23</div>
+                                        <div class="ds-cal-day">24</div>
+                                        <div class="ds-cal-day">25</div>
+                                        <div class="ds-cal-day">26</div>
+                                        <div class="ds-cal-day">27</div>
+                                        <div class="ds-cal-day">28</div>
+                                        <div class="ds-cal-day">29</div>
+                                        <div class="ds-cal-day">30</div>
+                                        <div class="ds-cal-day">31</div>
+                                    </div>
+                                    <div class="ds-calendar-legend">
+                                        <span class="ds-legend-item"><span class="ds-legend-dot well-under"></span> well under</span>
+                                        <span class="ds-legend-item"><span class="ds-legend-dot at-cap"></span> at cap</span>
+                                        <span class="ds-legend-item"><span class="ds-legend-dot over-cap"></span> over</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 10: Consumption vs Cap -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Consumption vs Cap</div>
+                                <div class="ds-specimen-label" style="margin-bottom: 12px;">Daily Consumption vs Cap (Bar Chart)</div>
+                                <div class="ds-bar-chart-card">
+                                    <!-- Header Row -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.05em; font-family: 'Inter', sans-serif;">LAST 7 DAYS</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 50px; background-color: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; font-family: 'Inter', sans-serif;">
+                                            <i data-lucide="trending-down" style="width: 12px; height: 12px; stroke: #15803d; stroke-width: 3;"></i> -2 vs yesterday
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Subheader Row -->
+                                    <div style="margin-bottom: 20px; text-align: left;">
+                                        <span style="font-size: 26px; font-weight: 700; color: #0f172a; font-family: 'Inter', sans-serif;">5.4</span>
+                                        <span style="font-size: 13px; color: #64748b; font-weight: 500; font-family: 'Inter', sans-serif;">avg / day</span>
+                                    </div>
+
+                                    <!-- Bar Chart Simulation -->
+                                    <div class="ds-bar-chart-sim">
+                                        <!-- Thu (5 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 75px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 50px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Thu</span>
+                                            <span class="ds-bar-value">5</span>
+                                        </div>
+
+                                        <!-- Fri (7 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 75px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 75px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Fri</span>
+                                            <span class="ds-bar-value">7</span>
+                                        </div>
+
+                                        <!-- Sat (6 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 65px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 65px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Sat</span>
+                                            <span class="ds-bar-value">6</span>
+                                        </div>
+
+                                        <!-- Sun (5 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 62px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 50px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Sun</span>
+                                            <span class="ds-bar-value">5</span>
+                                        </div>
+
+                                        <!-- Mon (5 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 62px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 50px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Mon</span>
+                                            <span class="ds-bar-value">5</span>
+                                        </div>
+
+                                        <!-- Tue (6 cigs) -->
+                                        <div class="ds-bar-col">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 62px;"></div>
+                                                <div class="ds-bar-fill normal" style="height: 62px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Tue</span>
+                                            <span class="ds-bar-value">6</span>
+                                        </div>
+
+                                        <!-- Wed (4 cigs - Highlighted!) -->
+                                        <div class="ds-bar-col highlighted">
+                                            <div class="ds-bar-track">
+                                                <div class="ds-bar-cap-line" style="bottom: 62px;"></div>
+                                                <div class="ds-bar-fill active" style="height: 40px;"></div>
+                                            </div>
+                                            <span class="ds-bar-label">Wed</span>
+                                            <span class="ds-bar-value">4</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Legends Row -->
+                                    <div style="display: flex; gap: 16px; justify-content: flex-start; margin-top: 24px; font-size: 10px; font-weight: 700; color: #64748b; font-family: 'Inter', sans-serif; text-transform: lowercase;">
+                                        <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                            <span style="width: 14px; height: 6px; border-radius: 3px; background-color: #0019e6; display: inline-block;"></span> smoked
+                                        </span>
+                                        <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                            <span style="width: 14px; border-top: 1.5px dashed #2eb868; display: inline-block; height: 0;"></span> daily cap
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 11: Button States -->
+                            <div class="ds-card ds-span-2">
+                                <div class="ds-section-title">Button States</div>
+                                <div class="ds-buttons-layout">
+                                    <div class="ds-btn-state-grid">
+                                        <div></div>
+                                        <div class="ds-btn-header">Normal</div>
+                                        <div class="ds-btn-header">Hover</div>
+                                        <div class="ds-btn-header">Clicked</div>
+                                        
+                                        <!-- Primary Row -->
+                                        <div class="ds-btn-row-label">Primary</div>
+                                        <div><button class="ds-btn-state ds-btn-primary">i smoked</button></div>
+                                        <div><button class="ds-btn-state ds-btn-primary hover">i smoked</button></div>
+                                        <div><button class="ds-btn-state ds-btn-primary active">i smoked</button></div>
+
+                                        <!-- Outline Row -->
+                                        <div class="ds-btn-row-label">Outline</div>
+                                        <div><button class="ds-btn-state ds-btn-outline">I beat it</button></div>
+                                        <div><button class="ds-btn-state ds-btn-outline hover">I beat it</button></div>
+                                        <div><button class="ds-btn-state ds-btn-outline active">I beat it</button></div>
+
+                                        <!-- SOS Row -->
+                                        <div class="ds-btn-row-label">SOS</div>
+                                        <div><button class="ds-btn-state ds-btn-sos">craving sos 🚨</button></div>
+                                        <div><button class="ds-btn-state ds-btn-sos hover">craving sos 🚨</button></div>
+                                        <div><button class="ds-btn-state ds-btn-sos active">craving sos 🚨</button></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 12: Steppers, Progress & Links -->
+                            <div class="ds-card">
+                                <div class="ds-section-title">Steppers, Progress &amp; Links</div>
+                                <div class="ds-progress-links-group" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;">
+                                    
+                                    <!-- Progress Bar Elements -->
+                                    <div class="ds-progress-item">
+                                        <div class="ds-label-tag">Progress Bar Steps</div>
+                                        <div class="ds-stepper">
+                                            <div class="ds-step completed"><i data-lucide="check"></i></div>
+                                            <div class="ds-step-line completed"></div>
+                                            <div class="ds-step active">2</div>
+                                            <div class="ds-step-line"></div>
+                                            <div class="ds-step">3</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Line Progress Bar -->
+                                    <div class="ds-progress-item">
+                                        <div class="ds-label-tag">Line Progress Indicator (Taper Progress)</div>
+                                        <div class="ds-line-progress-bar">
+                                            <div class="ds-line-progress-fill" style="width: 65%;"></div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-top: 4px; font-weight: 600;">
+                                            <span>6.5 cigs/day</span>
+                                            <span>Cap: 10 cigs</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Links -->
+                                    <div class="ds-progress-item">
+                                        <div class="ds-label-tag">Navigation Link Buttons</div>
+                                        <div class="ds-links-row" style="display: flex; gap: 12px;">
+                                            <a href="#projects" class="ds-nav-link" onclick="event.preventDefault()"><i data-lucide="arrow-left"></i> Back</a>
+                                            <a href="#projects" class="ds-nav-link active" onclick="event.preventDefault()">Home <i data-lucide="arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    </div>
+                </div>
+                
+                <!-- Toast Element -->
+                <div class="ds-copy-toast" id="dsToast">Hex Code Copied!</div>
+
+            
+        </section>
+ 
+        <!-- Chapter 4: The Simulator Mockup Reveal (Mockup Pin Section) -->
+        <section class="story-chapter chapter-mockup-pin">
+            <div class="container mockup-reveal-grid">
+                <div class="mockup-reveal-info">
+                    <span class="mono brand-accent-color">05 / THE INTERACTIVE PROTOTYPE</span>
+                    <h2>Experience the Prototype</h2>
+                    <p>
+                        Play with the live, working mobile simulator. Track your smoke-free days, click the menu or action buttons, and test the logging mechanics in real-time.
+                    </p>
+                    <div id="cors-warning-badge" style="display: none; margin-top: var(--space-sm); padding: 12px; border-radius: var(--radius-sm); background-color: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.4); font-size: 0.85rem; color: #f87171; line-height: 1.4;">
+                        <strong>Note:</strong> Browser security (CORS) blocks loading the simulator under local <code>file://</code> paths. Open this page through a local server (e.g. VS Code Live Server) to see it live.
+                    </div>
+                    <div class="cta-row" style="margin-top: var(--space-md);">
+                        <a href="../Projects/emberquit.html" target="_blank" class="btn-pop btn-pop-primary">Open Fullscreen ↗</a>
+                    </div>
+                </div>
+                <div class="mockup-reveal-viewport-container">
+                    <div class="revealed-device-wrapper">
+                        <!-- Zoomed Phone Mockup using real transparent PNG image -->
+                        <div class="iphone13-mockup-wrapper zoomed-mockup">
+                            <!-- The real transparent phone frame on top -->
+                            <img class="iphone13-frame-img" src="img/iphone13_frame.png" alt="iPhone 13 Mockup Frame">
+                            <!-- The iframe placed behind the frame image -->
+                            <div class="phone-viewport">
+                                <iframe class="zoomed-iframe" src="../Projects/emberquit.html?skipOnboarding=true" title="Emberquit Live Prototype" width="100%" height="100%"></iframe>
+                                <div class="viewport-mask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+ 
+    </main>
+ 
+    <!-- Floating Island Footer -->
+    <footer class="project-footer-island">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+            <span class="mono" style="font-size: 0.72rem; color: var(--brand-text-sub, #2C374E); opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+            <a href="restease.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #1E63F3); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">Next Project: Restease →</a>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+    <script src="js/project-detail.js"></script>
+
+    <!-- Custom page-specific widgets and scroll animation logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // 1. Scroll-Linked Text Highlighting (Chapter 2)
+            // ==========================================
+            const paragraphs = document.querySelectorAll('.chapter-narrative p');
+            paragraphs.forEach(p => {
+                const words = p.textContent.split(' ');
+                p.innerHTML = words.map(word => `<span class="scroll-word" style="opacity: 0.25; transition: opacity 0.3s, text-shadow 0.3s;">${word}</span>`).join(' ');
+                
+                const spans = p.querySelectorAll('.scroll-word');
+                gsap.to(spans, {
+                    opacity: 1,
+                    textShadow: "0 0 8px rgba(30, 99, 243, 0.4)",
+                    stagger: 0.02,
+                    scrollTrigger: {
+                        trigger: p,
+                        start: "top 80%",
+                        end: "bottom 40%",
+                        scrub: true
+                    }
+                });
+            });
+
+            // ==========================================
+            // 2. Fagerström Conversational Onboarding Quiz Widget (Card 1)
+            // ==========================================
+            const questions = [
+                { text: "How soon after waking do you smoke your first cigarette?", options: ["Within 5 min", "6-30 min", "31-60 min", "After 60 min"], scores: [3, 2, 1, 0] },
+                { text: "Do you find it difficult to refrain in forbidden areas?", options: ["Yes", "No"], scores: [1, 0] },
+                { text: "Which cigarette would you hate most to give up?", options: ["First one in morning", "Any other"], scores: [1, 0] },
+                { text: "How many cigarettes a day do you smoke?", options: ["10 or less", "11-20", "21-30", "31 or more"], scores: [0, 1, 2, 3] },
+                { text: "Do you smoke more in morning than rest of day?", options: ["Yes", "No"], scores: [1, 0] },
+                { text: "Do you smoke if you are ill in bed most of the day?", options: ["Yes", "No"], scores: [1, 0] }
+            ];
+
+            let currentQIdx = 0;
+            let totalScore = 0;
+
+            const qProgress = document.getElementById('quiz-progress');
+            const qText = document.getElementById('quiz-question-text');
+            const qOptions = document.getElementById('quiz-options-container');
+            const qQuestionContainer = document.getElementById('quiz-question-container');
+            const qResultContainer = document.getElementById('quiz-result-container');
+            const qBracket = document.getElementById('quiz-result-bracket');
+            const qScore = document.getElementById('quiz-result-score');
+            const qReset = document.getElementById('btn-reset-quiz');
+
+            function loadQuestion() {
+                if (currentQIdx < questions.length) {
+                    const q = questions[currentQIdx];
+                    qProgress.textContent = `QUESTION ${currentQIdx + 1} / 6`;
+                    qText.textContent = q.text;
+                    qOptions.innerHTML = '';
+                    
+                    q.options.forEach((opt, idx) => {
+                        const btn = document.createElement('button');
+                        btn.textContent = opt;
+                        btn.style.width = '100%';
+                        btn.style.padding = '8px 10px';
+                        btn.style.fontSize = '0.68rem';
+                        btn.style.textAlign = 'left';
+                        btn.style.border = '1px solid rgba(14, 22, 41, 0.15)';
+                        btn.style.borderRadius = '8px';
+                        btn.style.backgroundColor = 'rgba(14, 22, 41, 0.04)';
+                        btn.style.color = '#0E1629';
+                        btn.style.fontFamily = "'Inter', sans-serif";
+                        btn.style.cursor = 'pointer';
+                        btn.style.transition = 'background-color 0.2s, border-color 0.2s';
+                        
+                        btn.addEventListener('mouseenter', () => {
+                            btn.style.backgroundColor = 'rgba(30, 99, 243, 0.1)';
+                            btn.style.borderColor = 'rgba(30, 99, 243, 0.3)';
+                        });
+                        btn.addEventListener('mouseleave', () => {
+                            btn.style.backgroundColor = 'rgba(14, 22, 41, 0.04)';
+                            btn.style.borderColor = 'rgba(14, 22, 41, 0.15)';
+                        });
+                        btn.addEventListener('click', () => {
+                            totalScore += q.scores[idx];
+                            currentQIdx++;
+                            // Fade out & load next question
+                            gsap.fromTo(qQuestionContainer, { opacity: 1 }, {
+                                opacity: 0, duration: 0.15, onComplete: () => {
+                                    loadQuestion();
+                                    gsap.to(qQuestionContainer, { opacity: 1, duration: 0.2 });
+                                }
+                            });
+                        });
+                        qOptions.appendChild(btn);
+                    });
+                } else {
+                    showResults();
+                }
+            }
+
+            function showResults() {
+                qQuestionContainer.style.display = 'none';
+                qResultContainer.style.display = 'flex';
+                qScore.textContent = `${totalScore}/10`;
+                
+                let bracket = "LOW DEPENDENCE";
+                if (totalScore >= 7) {
+                    bracket = "HIGH DEPENDENCE";
+                } else if (totalScore >= 4) {
+                    bracket = "MEDIUM DEPENDENCE";
+                }
+                qBracket.textContent = bracket;
+                
+                // Sync result to Taper simulator bracket automatically
+                const factorIdx = totalScore >= 7 ? 2 : (totalScore >= 4 ? 1 : 0);
+                const bracketBtns = document.querySelectorAll('.taper-bracket-btn');
+                bracketBtns.forEach((btn, idx) => {
+                    if (idx === factorIdx) {
+                        btn.classList.add('active');
+                        btn.style.backgroundColor = '#1E63F3';
+                        btn.style.color = '#ffffff';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.style.backgroundColor = 'rgba(14, 22, 41, 0.04)';
+                        btn.style.color = '#2C374E';
+                    }
+                });
+                
+                // Trigger curve recalculation
+                const cigs = parseInt(document.getElementById('slider-taper-cigs').value);
+                updateTaperCurve(cigs, factorIdx + 1);
+            }
+
+            if (qReset) {
+                qReset.addEventListener('click', () => {
+                    currentQIdx = 0;
+                    totalScore = 0;
+                    qResultContainer.style.display = 'none';
+                    qQuestionContainer.style.display = 'flex';
+                    loadQuestion();
+                });
+            }
+
+            // Init quiz
+            if (qQuestionContainer) {
+                loadQuestion();
+            }
+
+            // ==========================================
+            // 3. Taper Plan SVG Curve Simulator Widget (Card 2)
+            // ==========================================
+            const taperSlider = document.getElementById('slider-taper-cigs');
+            const taperBracketBtns = document.querySelectorAll('.taper-bracket-btn');
+            
+            function updateTaperCurve(cigs, bracket) {
+                const factorMap = { 1: 0.25, 2: 0.55, 3: 0.9 };
+                const factor = factorMap[bracket] || 0.55;
+                
+                // Normalizing initial coordinate: 40 cigs -> height of 10 (top), 5 cigs -> height of 90 (bottom)
+                const startY = 100 - (cigs * 2);
+                const cpX = 100;
+                const cpY = startY + (100 - startY) * factor;
+                
+                const pathD = `M 20,${startY} Q ${cpX},${cpY} 190,100`;
+                const areaD = `M 20,${startY} Q ${cpX},${cpY} 190,100 L 190,100 L 20,100 Z`;
+                
+                gsap.to("#taper-curve-path", { attr: { d: pathD }, duration: 0.4, ease: "power2.out" });
+                gsap.to("#taper-area-path", { attr: { d: areaD }, duration: 0.4, ease: "power2.out" });
+                gsap.to("#taper-start-point", { attr: { cy: startY }, duration: 0.4, ease: "power2.out" });
+                
+                document.getElementById('lbl-taper-cigs').textContent = `${cigs} / day`;
+            }
+
+            if (taperSlider) {
+                taperSlider.addEventListener('input', (e) => {
+                    const activeBtn = document.querySelector('.taper-bracket-btn.active');
+                    const bracket = activeBtn ? parseInt(activeBtn.getAttribute('data-factor')) : 2;
+                    updateTaperCurve(parseInt(e.target.value), bracket);
+                });
+            }
+
+            taperBracketBtns.forEach(btn => {
+                // Ensure initial visual states
+                if (btn.classList.contains('active')) {
+                    btn.style.backgroundColor = '#1E63F3';
+                    btn.style.color = '#ffffff';
+                }
+                btn.addEventListener('click', () => {
+                    taperBracketBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.backgroundColor = 'rgba(14, 22, 41, 0.04)';
+                        b.style.color = '#2C374E';
+                    });
+                    btn.classList.add('active');
+                    btn.style.backgroundColor = '#1E63F3';
+                    btn.style.color = '#ffffff';
+                    
+                    const bracket = parseInt(btn.getAttribute('data-factor'));
+                    const cigs = parseInt(taperSlider.value);
+                    updateTaperCurve(cigs, bracket);
+                });
+            });
+
+            // ==========================================
+            // 4. Trigger Heatmap Grid Widget (Card 3)
+            // ==========================================
+            const heatmapContainer = document.getElementById('heatmap-grid-container');
+            const triggerBtns = document.querySelectorAll('.heatmap-trigger-btn');
+
+            const triggerMatrices = {
+                stress:  [0.1, 0.4, 0.2, 0.8, 0.1, 0.9, 0.2, 0.3, 0.6, 0.2, 0.9, 0.1, 0.4, 0.1, 0.8, 0.2, 0.5, 0.1, 0.9, 0.3, 0.6, 0.2, 0.1, 0.4, 0.9, 0.2, 0.8, 0.1, 0.1, 0.7, 0.2, 0.9, 0.1, 0.3, 0.8],
+                coffee:  [0.9, 0.1, 0.8, 0.2, 0.7, 0.1, 0.9, 0.1, 0.2, 0.8, 0.1, 0.9, 0.2, 0.8, 0.1, 0.9, 0.2, 0.8, 0.1, 0.7, 0.2, 0.9, 0.1, 0.8, 0.2, 0.8, 0.1, 0.9, 0.8, 0.1, 0.9, 0.2, 0.7, 0.1, 0.9],
+                social:  [0.1, 0.2, 0.1, 0.3, 0.2, 0.8, 0.9, 0.1, 0.2, 0.1, 0.2, 0.3, 0.7, 0.9, 0.1, 0.2, 0.2, 0.1, 0.3, 0.8, 0.9, 0.2, 0.1, 0.2, 0.1, 0.4, 0.7, 0.8, 0.1, 0.2, 0.1, 0.3, 0.2, 0.9, 0.9],
+                boredom: [0.4, 0.5, 0.6, 0.3, 0.4, 0.2, 0.1, 0.5, 0.6, 0.4, 0.5, 0.3, 0.2, 0.1, 0.4, 0.5, 0.6, 0.4, 0.5, 0.3, 0.1, 0.5, 0.4, 0.6, 0.3, 0.4, 0.2, 0.1, 0.6, 0.5, 0.4, 0.3, 0.5, 0.2, 0.1]
+            };
+
+            // Build cells (7 columns x 5 rows = 35 cells)
+            if (heatmapContainer) {
+                heatmapContainer.innerHTML = '';
+                for (let i = 0; i < 35; i++) {
+                    const cell = document.createElement('div');
+                    cell.style.aspectRatio = '1';
+                    cell.style.borderRadius = '3px';
+                    cell.style.backgroundColor = 'rgba(14, 22, 41, 0.02)';
+                    cell.style.border = '1px solid rgba(14, 22, 41, 0.06)';
+                    cell.style.transition = 'background-color 0.4s, box-shadow 0.4s';
+                    heatmapContainer.appendChild(cell);
+                }
+                updateHeatmap('stress');
+            }
+
+            function updateHeatmap(trigger) {
+                const matrix = triggerMatrices[trigger] || triggerMatrices.stress;
+                const cells = heatmapContainer.querySelectorAll('div');
+                cells.forEach((cell, idx) => {
+                    const value = matrix[idx];
+                    // Scale opacity from value (0.1 to 0.9)
+                    cell.style.backgroundColor = `rgba(30, 99, 243, ${value * 0.95})`;
+                    if (value > 0.7) {
+                        cell.style.boxShadow = '0 0 6px rgba(30, 99, 243, 0.3)';
+                    } else {
+                        cell.style.boxShadow = 'none';
+                    }
+                });
+            }
+
+            triggerBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    triggerBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.style.backgroundColor = 'rgba(14, 22, 41, 0.04)';
+                        b.style.borderColor = 'rgba(14, 22, 41, 0.15)';
+                        b.style.color = '#2C374E';
+                    });
+                    btn.classList.add('active');
+                    btn.style.backgroundColor = 'rgba(30, 99, 243, 0.1)';
+                    btn.style.borderColor = 'rgba(30, 99, 243, 0.2)';
+                    btn.style.color = '#1E63F3';
+                    updateHeatmap(btn.getAttribute('data-trigger'));
+                });
+            });
+
+            // ==========================================
+            // 5. Layered Stats Metric Card Entry Animation
+            // ==========================================
+            gsap.fromTo('.layered-card', 
+                { opacity: 0, y: 15 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    stagger: 0.15, 
+                    duration: 0.5, 
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: '.emberquit-metric-card',
+                        start: 'top 85%'
+                    }
+                }
+            );
+
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // ==========================================
+            // Emberquit Design System Interactive Code
+            // ==========================================
+            window.copyHexDS = function(value) {
+                navigator.clipboard.writeText(value).then(() => {
+                    const toast = document.getElementById('dsToast');
+                    toast.textContent = `Copied: ${value}`;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2000);
+                });
+            }
+
+            window.toggleTriggerDS = function(element) {
+                element.classList.toggle('active');
+            }
+
+            let dsBreatheInterval = null;
+            let dsIsBreathing = false;
+            window.toggleBreathingDS = function() {
+                const box = document.getElementById('dsBreathingBox');
+                const btn = document.getElementById('dsBreathingBtn');
+                const text = document.getElementById('dsBreathingText');
+
+                dsIsBreathing = !dsIsBreathing;
+
+                if (dsIsBreathing) {
+                    box.classList.add('active');
+                    btn.textContent = "Stop";
+                    btn.classList.add('active');
+
+                    const phases = [
+                        { text: "Inhale...", time: 0 },
+                        { text: "Hold...", time: 4000 },
+                        { text: "Exhale...", time: 8000 },
+                        { text: "Hold...", time: 12000 }
+                    ];
+
+                    let cycleIdx = 0;
+                    text.textContent = phases[cycleIdx].text;
+
+                    dsBreatheInterval = setInterval(() => {
+                        cycleIdx = (cycleIdx + 1) % 4;
+                        text.textContent = phases[cycleIdx].text;
+                    }, 4000);
+                } else {
+                    clearInterval(dsBreatheInterval);
+                    box.classList.remove('active');
+                    btn.textContent = "Start Box Breathing";
+                    btn.classList.remove('active');
+                    text.textContent = "Ready";
+                }
+            }
+
+        });
+    </script>
+
+
+</body></html>

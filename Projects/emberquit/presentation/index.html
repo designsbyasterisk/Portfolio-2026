@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emberquit - Scientific Tapering Presentation</title>
+  <link rel="stylesheet" href="slides.css">
+
+  <meta name="description" content="Detailed view of Home | Shreya Kulkarni"></head>
+<body>
+  <!-- Presentation Wrapper -->
+  <div class="presentation-container">
+    
+    <!-- Slide 1: Title Slide (Dark) -->
+    <section class="slide dark-slide active" id="slide-1">
+      <div class="noise-overlay"></div>
+      <div class="glow-blob bg-primary-glow" style="width: 400px; height: 400px; top: 10%; right: 10%;"></div>
+      <div class="glow-blob bg-accent-glow" style="width: 300px; height: 300px; bottom: 10%; left: 10%; animation-delay: -3s;"></div>
+      
+      <div class="slide-content title-layout">
+        <div class="brand-tag">
+          <span class="icon">🔥</span> EMBERQUIT
+        </div>
+        <h1 class="hero-title animate-title">Smoke Less,<br><span class="gradient-text">Gradually.</span></h1>
+        <p class="hero-subtitle animate-subtitle">A clinical, companion-driven tapering app built to help users step down from smoking without the cold-turkey shock.</p>
+        <div class="start-instruction">Press <span class="key">Space</span> or <span class="key">→</span> to start presentation</div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Pain Points (Dark) -->
+    <section class="slide dark-slide" id="slide-2">
+      <div class="noise-overlay"></div>
+      <div class="slide-content header-and-grid">
+        <header class="slide-header">
+          <div class="header-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <h2>Pain Points</h2>
+        </header>
+
+        <div class="pain-points-grid">
+          <!-- Card 1 (Accent Colored) -->
+          <div class="pain-card accent-card">
+            <div class="card-number">01.</div>
+            <div class="card-shape leaf-shape"></div>
+            <h3>Inefficient cold-turkey workflows</h3>
+            <p>95% of unassisted cold-turkey quit attempts fail due to intense, immediate withdrawal shock.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="pain-card">
+            <div class="card-number">02.</div>
+            <div class="card-shape ring-shape"></div>
+            <h3>High cognitive cost of tracking</h3>
+            <p>Manually calculating caps, cigarettes, and savings creates friction that leads to dropouts.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="pain-card">
+            <div class="card-number">03.</div>
+            <div class="card-shape arc-shape"></div>
+            <h3>Fragmented support tools</h3>
+            <p>Users must jump between calculators, calendars, and breathing timers to cope with urges.</p>
+          </div>
+          <!-- Card 4 -->
+          <div class="pain-card">
+            <div class="card-number">04.</div>
+            <div class="card-shape slice-shape"></div>
+            <h3>Limited data insights</h3>
+            <p>Failing to connect daily triggers (coffee, stress) to smoking spikes prevents behavior change.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Pushing Boundaries (Light) -->
+    <section class="slide light-slide" id="slide-3">
+      <div class="slide-content split-layout">
+        <!-- Left Column -->
+        <div class="left-col">
+          <div class="header-icon-circle light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <span class="pill-category">NEXT-GEN</span>
+          <h2 class="col-title">Pushing<br><span class="muted-blue-text">boundaries.</span></h2>
+          <p class="col-description">Emberquit redefines the quitting experience by translating raw clinical data into an emotional, interactive journey. Using an adaptive algorithm, the app calculates a personalized, gradual reduction schedule tailored to the user's exact level of chemical dependence.</p>
+          
+          <div class="col-pill-buttons">
+            <span class="pill-btn">TAPER ALGORITHM</span>
+            <span class="pill-btn outline">NATIVE MOBILE APP</span>
+          </div>
+        </div>
+
+        <!-- Right Column (Device & Background Shapes) -->
+        <div class="right-col">
+          <div class="half-arch-bg"></div>
+          <div class="blue-circle-bg"></div>
+          <!-- Real iPhone Screenshot Mockup -->
+          <div class="iphone-frame">
+            <img src="../screenshots/12_dashboard_seeded.png" class="screenshot-img" alt="Emberquit Dashboard">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Clinical Assessment (Dark) -->
+    <section class="slide dark-slide" id="slide-4">
+      <div class="noise-overlay"></div>
+      <div class="slide-content header-and-split">
+        <header class="slide-header">
+          <div class="header-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <h2>Clinical Foundation</h2>
+        </header>
+
+        <div class="assessment-split">
+          <div class="assessment-text-col">
+            <span class="badge-tag">THE FAGERSTRÖM METHOD</span>
+            <h3>Measuring Chemical Dependence</h3>
+            <p>Emberquit uses the **Fagerström Test for Nicotine Dependence**, a gold-standard clinical questionnaire, to evaluate the user’s physical addiction level. This assessment runs dynamically during onboarding:</p>
+            <ul>
+              <li><strong>Time to first smoke:</strong> How quickly the user smokes after waking (strongest indicator of physical dependency).</li>
+              <li><strong>Refraining difficulty:</strong> Difficulty staying smoke-free in forbidden areas.</li>
+              <li><strong>Daily volume:</strong> Average cigarettes smoked per day.</li>
+              <li><strong>Waking hours:</strong> Frequency of smoking in the morning vs. rest of day.</li>
+            </ul>
+          </div>
+          <div class="assessment-viz-col">
+            <div class="score-card">
+              <span class="score-label">Fagerström Score</span>
+              <span class="score-number">7<span class="score-total">/10</span></span>
+              <span class="score-level high">High Dependence</span>
+            </div>
+            <div class="duration-impact-box">
+              <div class="impact-row">
+                <span class="impact-level">Low Score (0-3)</span>
+                <span class="impact-result">6-Week Taper</span>
+              </div>
+              <div class="impact-row">
+                <span class="impact-level">Medium Score (4-6)</span>
+                <span class="impact-result">10-Week Taper</span>
+              </div>
+              <div class="impact-row active">
+                <span class="impact-level">High Score (7-10)</span>
+                <span class="impact-result">14-Week Taper</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Taper Logic (Dark) -->
+    <section class="slide dark-slide" id="slide-5">
+      <div class="noise-overlay"></div>
+      <div class="slide-content header-and-split">
+        <header class="slide-header">
+          <div class="header-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <h2>Decay Logic</h2>
+        </header>
+
+        <div class="assessment-split">
+          <div class="assessment-text-col">
+            <span class="badge-tag">MATHEMATICAL MODELING</span>
+            <h3>Adaptive Exponential Decay</h3>
+            <p>To reduce withdrawal shocks, the tapering schedule is computed using a **non-linear, exponential ease-out decay curve** rather than a linear reduction. This keeps the early reductions gentle for higher dependence levels.</p>
+            <div class="formula-container">
+              <span class="formula-title">Cap Calculation Formula:</span>
+              <code class="formula-math">Cap(day) = Baseline * (1 - (day / totalDays))^exp</code>
+            </div>
+            <p class="formula-explanation">Where the exponent `exp` shifts based on dependence (High = 1.8, Medium = 1.4, Low = 1.1). A higher exponent creates a flatter curve at the start, granting the brain more time to adapt before stepping down further.</p>
+          </div>
+          
+          <div class="assessment-viz-col">
+            <!-- SVG Curve Chart -->
+            <div class="svg-chart-container">
+              <div class="chart-header">
+                <span>Cigarettes Cap over Time (10-Week Plan)</span>
+              </div>
+              <svg viewBox="0 0 300 150" class="curve-svg">
+                <defs>
+                  <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="hsl(230, 100%, 45%)" stop-opacity="0.3"></stop>
+                    <stop offset="100%" stop-color="hsl(210, 100%, 60%)" stop-opacity="0.0"></stop>
+                  </linearGradient>
+                </defs>
+                <grid stroke="#ffffff" stroke-opacity="0.05" stroke-dasharray="3 3"></grid>
+                <path d="M 30,120 L 270,120" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"></path>
+                <path d="M 30,20 L 30,120" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1.5"></path>
+                <!-- Linear Reference (Dashed) -->
+                <path d="M 30,30 L 270,120" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4 4" stroke-width="1.5"></path>
+                <!-- Exponential Curve -->
+                <path d="M 30,30 C 80,120 170,120 270,120" stroke="hsl(210, 100%, 60%)" fill="none" stroke-width="3"></path>
+                <path d="M 30,30 C 80,120 170,120 270,120 L 270,120 L 30,120 Z" fill="url(#chartGradient)"></path>
+                <!-- Labels -->
+                <text x="30" y="135" class="chart-text">Day 0</text>
+                <text x="250" y="135" class="chart-text">Day 70 (0 Cigs)</text>
+                <text x="5" y="35" class="chart-text">10</text>
+                <text x="5" y="125" class="chart-text">0</text>
+              </svg>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot dashed"></span> Linear (Aggressive)</span>
+                <span class="legend-item"><span class="legend-dot active"></span> Exponential Taper (Gentle)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Overlapping Circles (Dark) -->
+    <section class="slide dark-slide" id="slide-6">
+      <div class="noise-overlay"></div>
+      <div class="slide-content header-and-split">
+        <header class="slide-header">
+          <div class="header-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <h2>Limitless Possibilities</h2>
+        </header>
+
+        <div class="assessment-split">
+          <div class="assessment-text-col flex-center">
+            <h3>Scientific tapering for successful outcomes</h3>
+            <p>Emberquit connects behavioral therapy techniques with biometric progression to create a self-sustaining loop. By celebrating milestones and saving money locally, the app replaces the chemical dopamine of nicotine with visual reward loops.</p>
+            <div class="col-pill-buttons" style="margin-top: 1.5rem;">
+              <span class="pill-btn outline">TRACTION</span>
+            </div>
+          </div>
+          
+          <div class="assessment-viz-col circles-container-col">
+            <!-- Overlapping Circles Layout matching Slide 3 of Template -->
+            <div class="bubbles-wrapper">
+              <!-- Small Circle -->
+              <div class="bubble-circle small-bubble">
+                <span class="bubble-metric">₹350</span>
+                <span class="bubble-label">Saved / Pack</span>
+              </div>
+              <!-- Medium Circle -->
+              <div class="bubble-circle medium-bubble">
+                <span class="bubble-metric">70%</span>
+                <span class="bubble-label">Vitality Boost</span>
+              </div>
+              <!-- Large Circle (Main Accent) -->
+              <div class="bubble-circle large-bubble">
+                <span class="bubble-leaf-icon">🍂</span>
+                <span class="bubble-metric">10 Wks</span>
+                <span class="bubble-label">Average Taper</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Engagement Loop (Light) -->
+    <section class="slide light-slide" id="slide-7">
+      <div class="slide-content split-layout">
+        <!-- Left Column -->
+        <div class="left-col">
+          <div class="header-icon-circle light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          </div>
+          <span class="pill-category">INTERACTIVE INTERACTION</span>
+          <h2 class="col-title">The Urge<br><span class="muted-blue-text">coping loop.</span></h2>
+          <p class="col-description">Cravings peak in exactly 4 minutes. Emberquit offers built-in Cognitive Behavioral Therapy (CBT) tools to bridge this critical window, allowing the user to stay under cap without willpower depletion.</p>
+          
+          <ul class="cbt-list">
+            <li><strong>Box Breathing:</strong> An interactive breathing guide (In 4, Hold 4, Out 4, Hold 4) to suppress autonomic nervous system arousal.</li>
+            <li><strong>Story Library:</strong> Deeply engaging, short stories written to distract the mind during the peak 4 minutes of a craving.</li>
+            <li><strong>Companion Sprite:</strong> A digital seedling ("Ember") that grows as the user earns XP for beating cravings, creating a visual mascot to protect.</li>
+          </ul>
+        </div>
+
+        <!-- Right Column (Coping Visuals) -->
+        <div class="right-col flex-center">
+          <div class="coping-phone-mockup">
+            <img src="../screenshots/20_toolkit_breathing.png" class="screenshot-img" alt="Box Breathing Guide">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary (Dark) -->
+    <section class="slide dark-slide" id="slide-8">
+      <div class="noise-overlay"></div>
+      <div class="glow-blob bg-primary-glow" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15;"></div>
+      
+      <div class="slide-content summary-layout">
+        <h2 class="summary-title">A Taper to <span class="gradient-text">Freedom.</span></h2>
+        <p class="summary-subtitle">Emberquit merges clinical science, mathematical decay models, and behavioral game design to make smoking cessation gentle, measurable, and highly successful.</p>
+        
+        <div class="summary-stats-row">
+          <div class="summary-stat-box">
+            <span class="stat-number">100%</span>
+            <span class="stat-text">Local &amp; Private</span>
+          </div>
+          <div class="summary-stat-box">
+            <span class="stat-number">0</span>
+            <span class="stat-text">Cold-Turkey Shock</span>
+          </div>
+          <div class="summary-stat-box">
+            <span class="stat-number">₹3,000+</span>
+            <span class="stat-text">Avg. Monthly Savings</span>
+          </div>
+        </div>
+        
+        <div class="footer-brand">
+          <span>🔥</span> Emberquit cessation framework.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide Navigation Controls -->
+    <div class="navigation-controls">
+      <button class="nav-btn prev-btn" id="prev-btn" title="Previous Slide (←)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      <div class="slide-indicator">
+        <span class="current-indicator">1</span> / <span class="total-indicator">8</span>
+      </div>
+      <button class="nav-btn next-btn" id="next-btn" title="Next Slide (→ / Space)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
+      <button class="fullscreen-btn" id="fullscreen-btn" title="Toggle Fullscreen (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+    </div>
+
+  </div>
+
+  <script src="slides.js"></script>
+
+
+</body></html>

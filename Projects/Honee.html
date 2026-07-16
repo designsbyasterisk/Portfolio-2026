@@ -1,0 +1,2470 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HONÉE — Honey, Please</title>
+  <meta name="description" content="Premium honey-inspired lipcare. Gloss, oil, scrub, and balm for a daily ritual.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;display=swap" rel="stylesheet" integrity="sha384-Kv/wbuWeA6jH3lM52gvweyxdVvd8sne1+GFxGL/Z8HAiG8jgpPdhh65E5W5V03AP" crossorigin="anonymous">
+
+  <style>
+    /* CSS Variables & Styling Tokens */
+    @font-face {
+      font-family: "TAN Grandeur";
+      src: url("public/fonts/TANGrandeur.woff2") format("woff2"),
+           url("public/fonts/TANGrandeur.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "TAN Grandeur";
+      src: url("public/fonts/TANGrandeur-Alt.woff2") format("woff2"),
+           url("public/fonts/TANGrandeur-Alt.woff") format("woff");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    :root {
+      --cream: #FFF3E3;
+      --honey: #F6C453;
+      --caramel: #C68A5A;
+      --cocoa: #5C3A2A;
+      --cocoa-deep: #42281D;
+      --background: var(--cream);
+      --foreground: var(--cocoa);
+      --border: rgba(92, 58, 42, 0.15);
+      --font-display: "TAN Grandeur", "Cormorant Garamond", serif;
+      --font-sans: "DM Sans", sans-serif;
+      --shadow-warm: 0 30px 80px -30px rgba(198, 138, 90, 0.3);
+      --shadow-soft: 0 10px 40px -15px rgba(92, 58, 42, 0.15);
+      --radius: 0px;
+      --transition: cubic-bezier(0.22, 1, 0.36, 1);
+      
+      --muted: oklch(0.93 0.025 78);
+      --muted-foreground: oklch(0.48 0.04 45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-color: var(--border);
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.4s var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    /* Typography Utilities */
+    .font-display {
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .italic {
+      font-style: italic;
+    }
+
+    .text-caramel {
+      color: var(--caramel);
+    }
+
+    /* Nav Bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: rgba(255, 243, 227, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(92, 58, 42, 0.1);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    @media (min-width: 768px) {
+      .logo-img {
+        height: 48px;
+      }
+    }
+
+    nav {
+      display: none;
+      flex: 1;
+      gap: 32px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(92, 58, 42, 0.8);
+    }
+
+    @media (min-width: 768px) {
+      nav {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      cursor: pointer;
+      transition: color 0.4s var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--foreground);
+    }
+
+    .nav-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(92, 58, 42, 0.8);
+    }
+
+    .cart-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(92, 58, 42, 0.8);
+      transition: color 0.4s var(--transition);
+    }
+
+    .cart-btn:hover {
+      color: var(--foreground);
+    }
+
+    /* Pages Container */
+    .pages-container {
+      position: relative;
+      min-height: 80vh;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.8s var(--transition) forwards;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Button styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background-color: var(--foreground);
+      color: var(--background);
+      padding: 16px 28px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-weight: 500;
+      border: 1px solid var(--foreground);
+      cursor: pointer;
+      transition: all 0.4s var(--transition);
+    }
+
+    .btn:hover {
+      background-color: var(--caramel);
+      border-color: var(--caramel);
+      color: var(--cream);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--foreground);
+      border-bottom: 1px solid rgba(92, 58, 42, 0.6);
+      padding: 4px 0;
+      display: inline-block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      transition: all 0.4s var(--transition);
+    }
+
+    .btn-secondary:hover {
+      color: var(--caramel);
+      border-color: var(--caramel);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 64px 0;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 80px 0 96px;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .hero-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 40px;
+      }
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+      .hero-text {
+        grid-column: span 7;
+      }
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 11vw;
+      letter-spacing: -0.02em;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 5.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 6.5rem;
+      }
+    }
+
+    .hero-desc {
+      max-width: 448px;
+      font-size: 16px;
+      color: rgba(92, 58, 42, 0.75);
+      margin-top: 40px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-image-container {
+      position: relative;
+      display: flex;
+      box-shadow: var(--shadow-warm);
+    }
+
+    @media (min-width: 768px) {
+      .hero-image-container {
+        grid-column: span 5;
+      }
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 2s var(--transition);
+    }
+
+    .hero-image-container:hover .hero-img {
+      transform: scale(1.05);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: -16px;
+      left: -16px;
+      background-color: var(--honey);
+      color: var(--cocoa);
+      padding: 12px 16px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    /* Marquee Banner */
+    .marquee {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 24px 0;
+      background-color: oklch(0.93 0.04 78);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      font-size: 24px;
+      white-space: nowrap;
+      font-family: var(--font-display);
+    }
+    @media (min-width: 768px) {
+      .marquee-item {
+        font-size: 40px;
+      }
+    }
+
+    .marquee-star {
+      color: var(--caramel);
+    }
+
+    /* Products Section */
+    .products-section {
+      padding: 96px 0;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 64px;
+    }
+
+    @media (min-width: 768px) {
+      .section-header {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+    }
+
+    .section-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 48px;
+      }
+    }
+
+    .product-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 24px;
+        row-gap: 64px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .product-card {
+      cursor: pointer;
+      display: block;
+    }
+
+    .product-img-wrapper {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      background-color: var(--muted);
+    }
+
+    .product-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--transition);
+    }
+
+    .product-card:hover .product-card-img {
+      transform: scale(1.05);
+    }
+
+    .product-type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .product-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    .product-tagline {
+      color: rgba(92, 58, 42, 0.6);
+    }
+
+    /* Philosophy Banner (Story Strip) */
+    .philosophy {
+      background-color: var(--foreground);
+      color: var(--background);
+      padding: 112px 0;
+      text-align: center;
+    }
+
+    .philosophy-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .philosophy-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(255, 243, 227, 0.6);
+      margin-bottom: 40px;
+    }
+
+    .philosophy-title {
+      font-size: 36px;
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .philosophy-title {
+        font-size: 72px;
+      }
+    }
+
+    .philosophy-desc {
+      max-width: 576px;
+      margin: 0 auto 48px;
+      font-size: 16px;
+      color: rgba(255, 243, 227, 0.75);
+    }
+
+    @media (min-width: 768px) {
+      .philosophy-desc {
+        font-size: 18px;
+      }
+    }
+
+    .philosophy-btn {
+      color: var(--cream);
+      border-color: rgba(255, 243, 227, 0.6);
+    }
+
+    .philosophy-btn:hover {
+      color: var(--honey);
+      border-color: var(--honey);
+    }
+
+    /* Daily Ritual Teaser */
+    .ritual-teaser {
+      padding: 96px 0;
+    }
+
+    .ritual-grid {
+      display: grid;
+      gap: 64px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .ritual-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .ritual-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .ritual-title {
+      font-size: 36px;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 768px) {
+      .ritual-title {
+        font-size: 48px;
+      }
+    }
+
+    .ritual-desc {
+      max-width: 448px;
+      font-size: 16px;
+      color: rgba(92, 58, 42, 0.75);
+    }
+
+    @media (min-width: 768px) {
+      .ritual-desc {
+        font-size: 18px;
+      }
+    }
+
+    .ritual-image-wrapper {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* About Page Styles */
+    .about-header {
+      padding: 96px 0 48px;
+      text-align: center;
+    }
+
+    .about-title {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+
+    @media (min-width: 768px) {
+      .about-title {
+        font-size: 64px;
+      }
+    }
+
+    .about-story {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 128px;
+      font-size: 18px;
+      color: rgba(92, 58, 42, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .about-img-large {
+      grid-column: span 12;
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow-warm);
+    }
+
+    @media (min-width: 768px) {
+      .about-img-large {
+        grid-column: span 7;
+        grid-row: span 2;
+        aspect-ratio: auto;
+        min-height: 640px;
+      }
+    }
+
+    .about-img-small-1 {
+      grid-column: span 7;
+      aspect-ratio: 4/5;
+      box-shadow: var(--shadow-warm);
+    }
+
+    @media (min-width: 768px) {
+      .about-img-small-1 {
+        grid-column: span 5;
+      }
+    }
+
+    .about-img-small-2 {
+      grid-column: span 5;
+      aspect-ratio: 4/5;
+      box-shadow: var(--shadow-warm);
+      align-self: end;
+    }
+
+    @media (min-width: 768px) {
+      .about-img-small-2 {
+        grid-column: span 5;
+      }
+    }
+
+    .about-traceability {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 40px;
+      margin-bottom: 96px;
+    }
+
+    .trace-line {
+      height: 1px;
+      flex-grow: 1;
+      background-color: rgba(92, 58, 42, 0.15);
+    }
+
+    .trace-text {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      color: rgba(92, 58, 42, 0.6);
+      white-space: nowrap;
+    }
+
+    .about-details {
+      display: grid;
+      gap: 64px;
+      padding-bottom: 96px;
+    }
+
+    @media (min-width: 768px) {
+      .about-details {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .details-item h3 {
+      font-size: 28px;
+      margin-bottom: 24px;
+    }
+
+    .details-item p {
+      margin-bottom: 16px;
+      color: rgba(92, 58, 42, 0.85);
+    }
+
+    /* Accordion / FAQ */
+    .faq-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-bottom: 128px;
+    }
+
+    .faq-title {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .faq-title {
+        font-size: 48px;
+      }
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 24px 0;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 18px;
+      color: var(--foreground);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .accordion-icon {
+      transition: transform 0.4s var(--transition);
+      font-size: 20px;
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--transition);
+    }
+
+    .accordion-content-inner {
+      padding-bottom: 24px;
+      font-size: 16px;
+      color: rgba(92, 58, 42, 0.85);
+      line-height: 1.6;
+    }
+
+    /* Journal Page Styles */
+    .journal-header {
+      padding: 96px 0 48px;
+      text-align: center;
+    }
+
+    .journal-title {
+      font-size: 36px;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 768px) {
+      .journal-title {
+        font-size: 64px;
+      }
+    }
+
+    .journal-desc {
+      max-width: 576px;
+      margin: 32px auto 0;
+      font-size: 16px;
+      color: rgba(92, 58, 42, 0.75);
+    }
+
+    @media (min-width: 768px) {
+      .journal-desc {
+        font-size: 18px;
+      }
+    }
+
+    .collage-section {
+      background-color: oklch(0.97 0.02 85);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 0;
+    }
+
+    @media (min-width: 768px) {
+      .collage-section {
+        padding: 96px 0;
+      }
+    }
+
+    .collage-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      aspect-ratio: 3/4;
+    }
+
+    .collage-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .collage-swatch {
+      position: absolute;
+      width: 32%;
+      height: auto;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    .collage-label {
+      position: absolute;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .collage-label-box {
+      display: inline-block;
+      background-color: var(--caramel);
+      color: var(--cream);
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.4s var(--transition);
+    }
+
+    @media (min-width: 768px) {
+      .collage-label-box {
+        padding: 12px 24px;
+        font-size: 20px;
+      }
+    }
+
+    .collage-label:hover .collage-label-box {
+      background-color: var(--foreground);
+    }
+
+    .collage-label-time {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-top: 4px;
+    }
+
+    .journal-notes {
+      padding: 96px 0;
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 64px;
+    }
+
+    @media (min-width: 768px) {
+      .notes-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .note-item {
+      display: flex;
+      gap: 20px;
+    }
+
+    .note-num {
+      font-size: 40px;
+      line-height: 1;
+      color: var(--caramel);
+    }
+
+    .note-content h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .note-desc {
+      color: rgba(92, 58, 42, 0.8);
+      margin-bottom: 16px;
+    }
+
+    .note-ritual {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(92, 58, 42, 0.55);
+      margin-bottom: 24px;
+    }
+
+    .note-link {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .note-link:hover {
+      color: var(--caramel);
+    }
+
+    /* Contact Page Styles */
+    .contact-header {
+      padding: 96px 0 48px;
+      text-align: center;
+    }
+
+    .contact-title {
+      font-size: 36px;
+      line-height: 1.25;
+    }
+
+    @media (min-width: 768px) {
+      .contact-title {
+        font-size: 64px;
+      }
+    }
+
+    .contact-desc {
+      font-size: 18px;
+      color: rgba(92, 58, 42, 0.80);
+      max-width: 672px;
+      margin: 32px auto 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 64px;
+      padding-bottom: 128px;
+    }
+
+    @media (min-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 2fr 3fr;
+      }
+    }
+
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .info-block-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-bottom: 12px;
+    }
+
+    .info-block-content {
+      font-size: 18px;
+      color: rgba(92, 58, 42, 0.85);
+    }
+
+    .info-block-content a:hover {
+      color: var(--caramel);
+    }
+
+    .contact-form {
+      background-color: oklch(0.96 0.02 75);
+      padding: 32px;
+      box-shadow: var(--shadow-warm);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .contact-form {
+        padding: 48px;
+      }
+    }
+
+    .form-row {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-weight: 500;
+    }
+
+    .form-control {
+      height: 38px;
+      border: 1px solid var(--border);
+      background-color: transparent;
+      padding: 0 12px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--foreground);
+      transition: border-color 0.4s var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--caramel);
+    }
+
+    textarea.form-control {
+      height: auto;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    select.form-control {
+      background-color: var(--background);
+    }
+
+    /* Product Page view Layout */
+    .product-detail-grid {
+      display: grid;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .product-detail-grid {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 64px;
+      }
+      .product-gallery {
+        grid-column: span 7;
+      }
+      .product-info-panel {
+        grid-column: span 5;
+      }
+      .sticky-panel {
+        position: sticky;
+        top: 112px;
+      }
+    }
+
+    /* Footer Section */
+    footer {
+      border-top: 1px solid var(--border);
+      background-color: oklch(0.93 0.03 75);
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .footer-col-1 {
+        grid-column: span 5;
+      }
+      .footer-col-2 {
+        grid-column: span 3;
+      }
+      .footer-col-3 {
+        grid-column: span 2;
+      }
+      .footer-col-4 {
+        grid-column: span 2;
+      }
+    }
+
+    .footer-links-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(92, 58, 42, 0.6);
+      margin-bottom: 16px;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .footer-link-action {
+      cursor: pointer;
+      transition: color 0.4s var(--transition);
+    }
+
+    .footer-link-action:hover {
+      color: var(--caramel);
+    }
+
+    /* Slide-out Cart Drawer */
+    .cart-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(92, 58, 42, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--transition);
+    }
+
+    .cart-drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 440px;
+      height: 100%;
+      background-color: var(--background);
+      z-index: 50;
+      box-shadow: -10px 0 40px rgba(92, 58, 42, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.5s var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer-overlay.open .cart-drawer {
+      transform: translateX(0);
+    }
+
+    .cart-drawer-header {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-drawer-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+    }
+
+    .cart-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--foreground);
+    }
+
+    .cart-items-container {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 16px;
+    }
+
+    .cart-item-img-wrapper {
+      width: 80px;
+      height: 96px;
+      overflow: hidden;
+      background-color: var(--muted);
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cart-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .cart-item-price {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-top: 4px;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+
+    .qty-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--foreground);
+    }
+
+    .qty-val {
+      font-size: 13px;
+      padding: 0 12px;
+    }
+
+    .cart-remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(92, 58, 42, 0.5);
+      transition: color 0.4s var(--transition);
+    }
+
+    .cart-remove-btn:hover {
+      color: var(--foreground);
+    }
+
+    .cart-empty-message {
+      text-align: center;
+      margin: auto;
+    }
+
+    .cart-drawer-footer {
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .cart-summary-total {
+      font-family: var(--font-display);
+      font-size: 24px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 400;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 360px;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .toast {
+      background-color: var(--foreground);
+      color: var(--background);
+      padding: 16px 20px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(92, 58, 42, 0.25);
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: auto;
+      animation: toastIn 0.5s var(--transition) forwards;
+      border-left: 4px solid var(--honey);
+    }
+
+    @keyframes toastIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .toast.fade-out {
+      animation: toastOut 0.5s var(--transition) forwards;
+    }
+
+    @keyframes toastOut {
+      to { transform: translateY(20px); opacity: 0; }
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+  </style>
+<style>::-webkit-scrollbar { display: none !important; } html, body { -ms-overflow-style: none !important; scrollbar-width: none !important; }</style></head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav-wrapper">
+      <nav>
+        <span class="nav-link" data-page="shop" onclick="switchPage('shop')">Shop</span>
+        <span class="nav-link" data-page="about" onclick="switchPage('about')">About</span>
+        <span class="nav-link" data-page="journal" onclick="switchPage('journal')">Journal</span>
+      </nav>
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <a href="#" class="nav-logo" data-page="home" onclick="event.preventDefault(); switchPage('home')">
+          <img src="Honee website/src/assets/honee-logo.png" alt="HONÉE" class="logo-img">
+        </a>
+      </div>
+
+      <!-- Right Nav -->
+      <div class="nav-right">
+        <span class="nav-link hidden md:inline" data-page="contact" onclick="switchPage('contact')">Contact</span>
+        <button class="cart-btn" onclick="toggleCartDrawer()">
+          <span>Bag</span><span id="nav-cart-count"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PAGES CONTAINER -->
+  <div class="pages-container">
+    
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-text">
+            <div>
+              <p class="hero-tag">The Honey Ritual — Vol. 01</p>
+              <h1 class="hero-title font-display">
+                <span style="display:block;">Honey,</span>
+                <span style="display:block;" class="italic text-caramel">Please.</span>
+              </h1>
+              <p class="hero-desc">
+                Lipcare composed like couture. Honey-inspired botanicals, slow-rendered textures, and a finish that lingers like late afternoon light.
+              </p>
+            </div>
+            <div class="hero-actions">
+              <button class="btn" onclick="switchPage('shop')">Shop the Collection →</button>
+              <span class="btn-secondary" style="cursor: pointer;" onclick="switchPage('about')">Our Story</span>
+            </div>
+          </div>
+          <div class="hero-image-container">
+            <img src="Honee website/src/assets/hero-collection.jpg" alt="HONÉE collection" class="hero-img">
+            <div class="hero-badge">New — Four-Piece Ritual</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARQUEE -->
+      <section class="marquee">
+        <div class="marquee-track">
+          <div class="marquee-item">
+            <span>Honey, Look Here</span><span class="marquee-star">✺</span>
+            <span class="italic">Honey, Good Night</span><span class="marquee-star">✺</span>
+            <span>Honey, Drippin'</span><span class="marquee-star">✺</span>
+            <span class="italic">Honey, All Day</span><span class="marquee-star">✺</span>
+          </div>
+          <div class="marquee-item">
+            <span>Honey, Look Here</span><span class="marquee-star">✺</span>
+            <span class="italic">Honey, Good Night</span><span class="marquee-star">✺</span>
+            <span>Honey, Drippin'</span><span class="marquee-star">✺</span>
+            <span class="italic">Honey, All Day</span><span class="marquee-star">✺</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED PRODUCTS -->
+      <section class="container products-section">
+        <div class="section-header">
+          <div>
+            <p class="section-tag" style="margin-bottom: 10px;">The Collection</p>
+            <h2 class="section-title font-display">
+              Four pieces.<br>
+              <span class="italic text-caramel">One ritual.</span>
+            </h2>
+          </div>
+          <span class="btn-secondary" style="cursor: pointer; self-align: flex-end;" onclick="switchPage('shop')">View All →</span>
+        </div>
+
+        <div class="product-grid" id="home-featured-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- PHILOSOPHY BANNER -->
+      <section class="philosophy">
+        <div class="container philosophy-wrapper">
+          <p class="philosophy-tag">Our Philosophy</p>
+          <h2 class="philosophy-title font-display">
+            Slow as honey.<br>
+            <span class="italic" style="color: var(--honey);">Made to linger.</span>
+          </h2>
+          <p class="philosophy-desc">
+            Every formula is rendered in small batches with honey-inspired botanicals and a quiet sense of patience. Nothing rushed. Nothing wasted. Just lips, softened.
+          </p>
+          <span class="btn-secondary philosophy-btn" style="cursor: pointer;" onclick="switchPage('about')">Read the Story</span>
+        </div>
+      </section>
+
+      <!-- RITUAL TEASER -->
+      <section class="container ritual-teaser">
+        <div class="ritual-grid">
+          <div class="ritual-content">
+            <p class="section-tag" style="margin-bottom: 0px;">The Daily Ritual</p>
+            <h2 class="ritual-title font-display">
+              Sunrise to<br>
+              <span class="italic text-caramel">soft sleep.</span>
+            </h2>
+            <p class="ritual-desc">
+              Four pieces, four small gestures — a balm to wake with, a gloss for the daylight, a scrub before the pillow, and an oil to drift off in. Read the whole ritual in the Journal.
+            </p>
+            <span class="btn-secondary" style="cursor: pointer;" onclick="switchPage('journal')">Read The Honey Ritual →</span>
+          </div>
+          <div class="ritual-image-wrapper">
+            <img src="Honee website/src/assets/products/oil-1.webp" alt="Honey, Drippin' lip oil" class="hero-img">
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SHOP PAGE -->
+    <div class="page" id="page-shop">
+      <section class="container products-section">
+        <div class="section-header" style="margin-top: 48px;">
+          <div>
+            <p class="section-tag" style="margin-bottom: 10px;">The Collection</p>
+            <h2 class="section-title font-display">
+              Four pieces.<br>
+              <span class="italic text-caramel">One ritual.</span>
+            </h2>
+          </div>
+        </div>
+        <div class="product-grid" id="shop-all-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+    </div>
+
+    <!-- PRODUCT DETAILS PAGE -->
+    <div class="page" id="page-product">
+      <!-- Rendered dynamically on navigation -->
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="page" id="page-about">
+      <section class="container about-header">
+        <p class="section-tag" style="margin-bottom: 16px;">Our Story</p>
+        <h2 class="about-title font-display">
+          A small house,<br>
+          <span class="italic text-caramel">built on honey.</span>
+        </h2>
+      </section>
+
+      <section class="about-story font-sans">
+        <p>
+          HONÉE began with a single jar of raw honey on a kitchen counter and a question: why doesn't lipcare feel like something we look forward to?
+        </p>
+        <p>
+          We rendered our first formulas slowly — by hand, in small batches — pairing honey-inspired botanicals with the kind of quiet textures that ask you to take a breath before you apply them. Each product carries a name like a sentence: an invitation, a wink, a small daily promise.
+        </p>
+        <p>
+          We don't make a hundred things. We make four. Each one earns its place in your morning, your afternoon, your before-bed ritual. Honey, look here. Honey, all day. Honey, drippin'. Honey, good night.
+        </p>
+        <p class="font-display text-caramel italic" style="font-size: 32px; margin-top: 16px;">Honey, please.</p>
+      </section>
+
+      <!-- ABOUT IMAGES -->
+      <section class="container" style="padding-bottom: 96px;">
+        <div class="about-grid">
+          <div class="about-img-large">
+            <img src="Honee website/src/assets/about/beekeeper-frame.jpg" alt="Beekeeper inspecting a honeycomb frame at golden hour" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="about-img-small-1">
+            <img src="Honee website/src/assets/about/honeycomb.jpg" alt="Raw honeycomb dripping between hands" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="about-img-small-2">
+            <img src="Honee website/src/assets/about/beekeeper-hive.jpg" alt="Beekeeper lifting a brood frame from the hive" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        <div class="about-traceability">
+          <div class="trace-line"></div>
+          <p class="trace-text">From hive to lip — every batch traceable</p>
+          <div class="trace-line"></div>
+        </div>
+
+        <div class="about-details">
+          <div class="details-item" id="shipping" style="scroll-margin-top: 96px;">
+            <p class="section-tag" style="margin-bottom: 24px;">Shipping</p>
+            <h3 class="font-display" style="font-size: 36px; margin-bottom: 24px;">Slow, careful, traceable.</h3>
+            <p>Orders ship within 2–3 business days from our small studio. Standard delivery arrives in 4–7 business days; express in 2–3.</p>
+            <p>Complimentary standard shipping on orders over $60. International shipping available to most countries — duties calculated at checkout.</p>
+          </div>
+          <div class="details-item" id="returns" style="scroll-margin-top: 96px;">
+            <p class="section-tag" style="margin-bottom: 24px;">Returns</p>
+            <h3 class="font-display" style="font-size: 36px; margin-bottom: 24px;">Thirty quiet days.</h3>
+            <p>If a product isn't right for you, return it within 30 days of delivery — opened or unopened — for a full refund. We'll send a prepaid label.</p>
+            <p>Damaged in transit? Write to us at <a class="underline" href="mailto:care@honee.co" style="text-decoration: underline;">care@honee.co</a> within 7 days and we'll replace it immediately.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Accordion -->
+      <section class="container faq-section" id="faq" style="scroll-margin-top: 96px;">
+        <p class="section-tag" style="text-align: center; margin-bottom: 24px;">FAQ</p>
+        <h2 class="faq-title font-display">
+          Honey,<br>
+          <span class="italic text-caramel">ask away.</span>
+        </h2>
+        <div id="faq-accordion-container">
+          <!-- Accordion items will be generated here -->
+        </div>
+      </section>
+    </div>
+
+    <!-- JOURNAL PAGE -->
+    <div class="page" id="page-journal">
+      <section class="container journal-header">
+        <p class="section-tag" style="margin-bottom: 40px;">Journal — Vol. 01</p>
+        <h2 class="journal-title font-display">
+          A 4-Step<br>
+          <span class="italic text-caramel">Honey Ritual.</span>
+        </h2>
+        <p class="journal-desc">
+          Sunrise to soft sleep. Four small gestures, each composed to leave your lips a little better than it found them.
+        </p>
+      </section>
+
+      <!-- COLLAGE STRIP -->
+      <section class="collage-section">
+        <div class="container">
+          <div class="collage-wrapper" id="collage-wrapper">
+            <!-- Dotted connector line -->
+            <svg class="collage-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 50,18 L 50,40 L 50,62 L 50,84" stroke="currentColor" stroke-width="1" stroke-dasharray="0.5 2" fill="none" style="color: rgba(92, 58, 42, 0.4); vector-effect: non-scaling-stroke;" stroke-linecap="round"></path>
+              <circle cx="50" cy="18" r="0.7" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(92, 58, 42, 0.6); vector-effect: non-scaling-stroke;"></circle>
+              <circle cx="50" cy="40" r="0.7" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(92, 58, 42, 0.6); vector-effect: non-scaling-stroke;"></circle>
+              <circle cx="50" cy="62" r="0.7" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(92, 58, 42, 0.6); vector-effect: non-scaling-stroke;"></circle>
+              <circle cx="50" cy="84" r="0.7" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(92, 58, 42, 0.6); vector-effect: non-scaling-stroke;"></circle>
+            </svg>
+
+            <!-- Swatches & Labels (Rendered dynamically) -->
+          </div>
+          <p style="margin-top: 48px; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.28em; color: rgba(92, 58, 42, 0.6);">
+            * Reapply liberally. Honey forgives.
+          </p>
+        </div>
+      </section>
+
+      <!-- RITUAL NOTES -->
+      <section class="container journal-notes">
+        <div class="notes-grid" id="journal-notes-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="container" style="padding-bottom: 96px; text-align: center;">
+        <p class="section-tag">The Whole Ritual</p>
+        <h2 class="font-display" style="font-size: 48px; line-height: 1.3;">
+          Four pieces.<br>
+          <span class="italic text-caramel">One slow, golden day.</span>
+        </h2>
+        <button class="btn" style="margin-top: 40px;" onclick="switchPage('shop')">Shop the Collection</button>
+      </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page" id="page-contact">
+      <section class="container contact-header">
+        <p class="section-tag" style="margin-bottom: 16px;">Corporate Gifting &amp; Bulk Orders</p>
+        <h2 class="contact-title font-display">
+          Let's make<br>
+          <span class="italic text-caramel">something sweet.</span>
+        </h2>
+        <p class="contact-desc">
+          Hosting an event, building a welcome kit, or stocking your shelves? We partner on custom gifting, branded packaging, and wholesale quantities starting at 25 units.
+        </p>
+      </section>
+
+      <section class="container contact-grid">
+        <div class="contact-info-panel">
+          <div>
+            <p class="info-block-tag">Email</p>
+            <a href="mailto:gifting@honee.co" class="font-display info-block-content" style="font-size: 24px;">gifting@honee.co</a>
+          </div>
+          <div>
+            <p class="info-block-tag">Studio</p>
+            <p class="info-block-content">
+              14 Apiary Lane<br>
+              Brooklyn, NY 11211<br>
+              Mon – Fri, 10 – 6
+            </p>
+          </div>
+          <div>
+            <p class="info-block-tag">Lead time</p>
+            <p class="info-block-content">
+              Standard bulk orders ship in 2 – 3 weeks. Custom branded gifting: 4 – 6 weeks from approval.
+            </p>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contact-inquiry-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-name">Name</label>
+              <input type="text" id="c-name" class="form-control" required="">
+            </div>
+            <div class="form-group">
+              <label for="c-company">Company</label>
+              <input type="text" id="c-company" class="form-control">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-email">Email</label>
+              <input type="email" id="c-email" class="form-control" required="">
+            </div>
+            <div class="form-group">
+              <label for="c-qty">Estimated quantity</label>
+              <input type="text" id="c-qty" class="form-control" placeholder="e.g. 100 units">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="c-type">Type of inquiry</label>
+            <select id="c-type" class="form-control">
+              <option value="gifting">Corporate gifting</option>
+              <option value="event">Event favors</option>
+              <option value="wholesale">Wholesale / retail</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="c-msg">Tell us about your project</label>
+            <textarea id="c-msg" class="form-control" rows="5" required=""></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: fit-content;" id="contact-submit-btn">Send inquiry</button>
+        </form>
+      </section>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-32">
+    <div class="container" style="padding-top: 80px; padding-bottom: 80px;">
+      <div class="footer-grid">
+        <div class="footer-col-1">
+          <h3 class="font-display" style="font-size: 48px; md:font-size: 60px; line-height: 1.2;">
+            Honey,<br>Please.
+          </h3>
+          <p style="margin-top: 24px; font-size: 14px; color: var(--muted-foreground); max-width: 320px;">
+            A quiet ritual for the lips. Crafted in small batches with honey-inspired botanicals.
+          </p>
+        </div>
+        <div class="footer-col-2">
+          <p class="footer-links-title">Shop</p>
+          <ul class="footer-links-list">
+            <li><span class="footer-link-action" onclick="switchPage('shop')">All Products</span></li>
+            <li><span class="footer-link-action" onclick="navigateToProduct('honey-look-here')">Lip Gloss</span></li>
+            <li><span class="footer-link-action" onclick="navigateToProduct('honey-drippin')">Lip Oil</span></li>
+            <li><span class="footer-link-action" onclick="navigateToProduct('honey-all-day')">Lip Balm</span></li>
+            <li><span class="footer-link-action" onclick="navigateToProduct('honey-good-night')">Lip Scrub</span></li>
+          </ul>
+        </div>
+        <div class="footer-col-3">
+          <p class="footer-links-title">House</p>
+          <ul class="footer-links-list">
+            <li><span class="footer-link-action" onclick="switchPage('about')">About</span></li>
+            <li><span class="footer-link-action" onclick="switchPage('journal')">Journal</span></li>
+            <li><span class="footer-link-action" onclick="switchPage('contact')">Contact</span></li>
+          </ul>
+        </div>
+        <div class="footer-col-4">
+          <p class="footer-links-title">Care</p>
+          <ul class="footer-links-list">
+            <li><span class="footer-link-action" onclick="switchPage('about'); scrollToId('shipping');">Shipping</span></li>
+            <li><span class="footer-link-action" onclick="switchPage('about'); scrollToId('returns');">Returns</span></li>
+            <li><span class="footer-link-action" onclick="switchPage('about'); scrollToId('faq');">FAQ</span></li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(92, 58, 42, 0.15); display: flex; flex-direction: row; justify-content: space-between; text-transform: uppercase; font-size: 11px; letter-spacing: 0.22em; color: rgba(92, 58, 42, 0.5);">
+        <p>© 2026 HONÉE</p>
+        <p>Made with honey</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BAG (CART) DRAWER -->
+  <div class="cart-drawer-overlay" id="cart-overlay" onclick="handleOverlayClick(event)">
+    <div class="cart-drawer" id="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3 class="cart-drawer-title">Your Bag</h3>
+        <button class="cart-close-btn" onclick="toggleCartDrawer()">Close</button>
+      </div>
+
+      <div class="cart-items-container" id="cart-items-wrapper">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="cart-drawer-footer" id="cart-footer-panel">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JAVASCRIPT STATE & INTERACTIVITY -->
+  <script>
+    // Product Database
+    const products = [
+      {
+        slug: "honey-look-here",
+        name: "Honey, Look Here",
+        tagline: "Lip Gloss",
+        type: "Daily Gloss",
+        price: 24,
+        shortDescription: "A lightweight daily gloss that hydrates, softens, and adds shine — never heavy, never sticky.",
+        description: "Infused with honey-inspired nourishment, Honey, Look Here delivers a natural glossy finish suited to everyday wear. Reapply anytime, anywhere — the formula glides on smoothly and never overstays its welcome.",
+        ritual: "Apply over bare lips or layer atop colour for a soft, mirrored finish.",
+        ingredients: ["Honey extract", "Squalane", "Vitamin E", "Jojoba oil"],
+        images: ["src/assets/products/gloss-1.webp", "src/assets/products/gloss-2.webp", "src/assets/products/gloss-3.webp"]
+      },
+      {
+        slug: "honey-good-night",
+        name: "Honey, Good Night",
+        tagline: "Lip Scrub",
+        type: "Overnight Scrub",
+        price: 28,
+        shortDescription: "A gentle overnight scrub that exfoliates without irritation and restores softness by morning.",
+        description: "Honey, Good Night turns the bedtime routine into a quiet ritual. Sugar fines lift away dryness while honey-inspired emollients comfort and restore. Wake up to lips that feel renewed.",
+        ritual: "Massage a small amount onto lips before bed. Leave on overnight or wipe gently after a minute.",
+        ingredients: ["Cane sugar", "Honey extract", "Shea butter", "Sweet almond oil"],
+        images: ["src/assets/products/scrub-1.jpg", "src/assets/products/scrub-2.webp", "src/assets/products/scrub-3.jpg"]
+      },
+      {
+        slug: "honey-drippin",
+        name: "Honey, Drippin'",
+        tagline: "Lip Oil",
+        type: "Nourishing Oil",
+        price: 26,
+        shortDescription: "A weightless oil that drenches lips in shine and moisture, never greasy.",
+        description: "Honey, Drippin' moves with you. The brush-tip applicator paints on a slick of nourishment with a glossy, dimensional finish — wear it alone or over colour.",
+        ritual: "Sweep the brush across lips. Reapply throughout the day as desired.",
+        ingredients: ["Honey extract", "Marula oil", "Rosehip oil", "Vitamin E"],
+        images: ["src/assets/products/oil-1.webp", "src/assets/products/oil-2.webp", "src/assets/products/oil-3.webp"]
+      },
+      {
+        slug: "honey-all-day",
+        name: "Honey, All Day",
+        tagline: "Lip Balm",
+        type: "Everyday Balm",
+        price: 18,
+        shortDescription: "A pocket-sized balm built for comfort and lasting hydration.",
+        description: "Honey, All Day protects from dryness with a soft, breathable veil. Honey-inspired ingredients soften and smooth, while the slim profile slips into any pocket or bag.",
+        ritual: "Glide on whenever lips need it. Reapply liberally.",
+        ingredients: ["Honey extract", "Beeswax", "Shea butter", "Coconut oil"],
+        images: ["src/assets/products/balm-1.webp", "src/assets/products/balm-2.webp", "src/assets/products/balm-3.webp"]
+      }
+    ];
+
+    // FAQ Accordion Data
+    const faqData = [
+      { q: "Where does your honey come from?", a: "All of our honey is sourced from a small collective of family-run apiaries in the foothills of New Zealand and the Mediterranean. Every batch is raw, unfiltered, and traceable to the hive it came from." },
+      { q: "Are your products organic?", a: "Every botanical ingredient we use is certified organic. Our base oils, butters, and waxes carry COSMOS Organic certification, and we never use synthetic fragrance, parabens, or petroleum derivatives." },
+      { q: "Is HONÉE cruelty-free?", a: "Always. We are Leaping Bunny certified and never test on animals — not our formulas, not our ingredients, not at any stage. Our beeswax and honey are gathered using ethical, low-intervention practices that prioritize hive health." },
+      { q: "Which skin types can use HONÉE?", a: "All of them. Our formulas are designed for sensitive, dry, combination, and oily skin alike. The honey base is naturally antibacterial and humectant, making it gentle even on reactive or post-procedure lips." },
+      { q: "Is HONÉE vegan?", a: "Our products contain honey and beeswax, so they are not vegan. They are vegetarian, and every bee-derived ingredient is ethically sourced from apiaries that prioritize hive welfare over yield." },
+      { q: "Are the products safe during pregnancy?", a: "Yes. We avoid retinoids, salicylic acid, and essential oils flagged as pregnancy-cautious. As always, we recommend checking with your doctor if you have specific concerns." },
+      { q: "How long does each product last?", a: "With daily use, the balm and gloss last about 3–4 months, the oil 2–3 months, and the scrub 6 months. Each product is good for 12 months after opening." },
+      { q: "Do you offer corporate gifting or bulk orders?", a: "We do — visit our contact page to start a conversation about custom gifting, event favors, or wholesale." }
+    ];
+
+    // Journal Steps
+    const journalSteps = [
+      {
+        num: "1.",
+        label: "BALM",
+        time: "AM · 07:00",
+        body: "A clean slate, a slow breath, a balm that protects without ceremony. Honey, All Day glides on like sunrise — warm and built to last until the world is fully awake.",
+        ritual: "Glide on bare lips. Layer again before stepping outside.",
+        productSlug: "honey-all-day",
+        productName: "Honey, All Day",
+        productTagline: "Lip Balm",
+        swatch: "src/assets/ritual/swatch-balm.png",
+        swatchTop: "2%",
+        swatchLeft: "0%",
+        swatchSize: "38%",
+        swatchRotate: -8,
+        labelTop: "18%",
+        labelSide: "right"
+      },
+      {
+        num: "2.",
+        label: "GLOSS",
+        time: "NOON · 12:30",
+        body: "Midday is for being seen. Sweep on Honey, Look Here for a mirrored finish that catches the light without weight or stick.",
+        ritual: "Apply over bare lips or atop colour. Reapply at golden hour.",
+        productSlug: "honey-look-here",
+        productName: "Honey, Look Here",
+        productTagline: "Lip Gloss",
+        swatch: "src/assets/ritual/swatch-gloss.png",
+        swatchTop: "26%",
+        swatchLeft: "60%",
+        swatchSize: "34%",
+        swatchRotate: 14,
+        labelTop: "40%",
+        labelSide: "left"
+      },
+      {
+        num: "3.",
+        label: "SCRUB",
+        time: "PM · 21:30",
+        body: "Before the pillow, a small ritual. Massage Honey, Good Night in slow circles — sugar fines lift the day away, honey-inspired emollients leave only softness behind.",
+        ritual: "Massage in slow circles for one minute. Wipe or leave overnight.",
+        productSlug: "honey-good-night",
+        productName: "Honey, Good Night",
+        productTagline: "Lip Scrub",
+        swatch: "src/assets/ritual/swatch-scrub.png",
+        swatchTop: "52%",
+        swatchLeft: "4%",
+        swatchSize: "32%",
+        swatchRotate: 6,
+        labelTop: "62%",
+        labelSide: "right"
+      },
+      {
+        num: "4.",
+        label: "OIL",
+        time: "NIGHT · 22:00",
+        body: "After the scrub, the drink. Paint Honey, Drippin' across newly-smoothed lips and let it do its slow work overnight. Wake to lips that feel poured, not patched.",
+        ritual: "Sweep the brush across lips as the last step before sleep.",
+        productSlug: "honey-drippin",
+        productName: "Honey, Drippin'",
+        productTagline: "Lip Oil",
+        swatch: "src/assets/ritual/swatch-oil.png",
+        swatchTop: "70%",
+        swatchLeft: "62%",
+        swatchSize: "32%",
+        swatchRotate: -12,
+        labelTop: "84%",
+        labelSide: "left"
+      }
+    ];
+
+    // Global States
+    let currentPage = 'home';
+    let cart = [];
+    let activeProductSlug = '';
+
+    // Initialize application
+    document.addEventListener("DOMContentLoaded", () => {
+      loadCartFromLocalStorage();
+      renderFeaturedProducts();
+      renderAllProducts();
+      renderFAQAccordion();
+      renderJournalCollage();
+      renderJournalNotes();
+      setupNavigation();
+      updateCartUI();
+    });
+
+    // Navigation setup
+    function setupNavigation() {
+      const links = document.querySelectorAll(".nav-link, .nav-logo");
+      links.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const pageTarget = link.getAttribute("data-page") || 'home';
+          switchPage(pageTarget);
+        });
+      });
+    }
+
+    function switchPage(pageId) {
+      // Clear active class from all links
+      document.querySelectorAll(".nav-link").forEach(link => {
+        if (link.getAttribute("data-page") === pageId) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      // Toggle page views
+      document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+      });
+      
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) {
+        targetPage.classList.add("active");
+        currentPage = pageId;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function navigateToProduct(slug) {
+      activeProductSlug = slug;
+      renderProductPage(slug);
+      switchPage('product');
+    }
+
+    function scrollToId(elementId) {
+      setTimeout(() => {
+        const targetElement = document.getElementById(elementId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+
+    // Render Featured Products (Homepage)
+    function renderFeaturedProducts() {
+      const container = document.getElementById("home-featured-grid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      products.forEach(p => {
+        const card = createProductCard(p);
+        container.appendChild(card);
+      });
+    }
+
+    // Render All Products (Shop page)
+    function renderAllProducts() {
+      const container = document.getElementById("shop-all-grid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      products.forEach(p => {
+        const card = createProductCard(p);
+        container.appendChild(card);
+      });
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.onclick = () => navigateToProduct(product.slug);
+
+      card.innerHTML = `
+        <div class="product-img-wrapper">
+          <img src="${product.images[0]}" alt="${product.name}" class="product-card-img" loading="lazy">
+        </div>
+        <p class="product-type">${product.type}</p>
+        <h3 class="product-name font-display">${product.name}</h3>
+        <div class="product-info">
+          <span class="product-tagline">${product.tagline}</span>
+          <span>$${product.price}</span>
+        </div>
+      `;
+      return card;
+    }
+
+    // Render Product Page Detail View dynamically
+    function renderProductPage(slug) {
+      const p = products.find(prod => prod.slug === slug);
+      if (!p) return;
+
+      const productPageContainer = document.getElementById("page-product");
+      
+      // Gallery Stack
+      let galleryHTML = "";
+      p.images.forEach((img, i) => {
+        galleryHTML += `
+          <div style="aspect-ratio: 4/5; overflow: hidden; background-color: var(--muted); margin-bottom: 16px; box-shadow: var(--shadow-soft);">
+            <img src="${img}" alt="${p.name} ${i + 1}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        `;
+      });
+
+      // Ingredients list
+      let ingredientsHTML = "";
+      p.ingredients.forEach(ing => {
+        ingredientsHTML += `<li style="display: flex; gap: 12px;"><span style="color: var(--caramel);">—</span>${ing}</li>`;
+      });
+
+      // Format Name parts
+      const parts = p.name.split(",");
+      const firstPart = parts[0] + ",";
+      const secondPart = parts[1] ? parts[1].trim() + "." : "";
+
+      // Suggested Products grid (Pair With)
+      const others = products.filter(prod => prod.slug !== p.slug);
+      let pairHTML = "";
+      others.forEach(other => {
+        pairHTML += `
+          <div class="product-card" onclick="navigateToProduct('${other.slug}')">
+            <div class="product-img-wrapper">
+              <img src="${other.images[0]}" alt="${other.name}" class="product-card-img" loading="lazy">
+            </div>
+            <h3 class="font-display" style="font-size: 24px; margin-top: 16px;">${other.name}</h3>
+            <p style="font-size: 14px; color: var(--muted-foreground); margin-top: 4px;">${other.tagline} — $${other.price}</p>
+          </div>
+        `;
+      });
+
+      productPageContainer.innerHTML = `
+        <section class="container" style="padding-top: 40px; padding-bottom: 96px;">
+          <span class="btn-secondary" style="cursor: pointer; font-size: 11px; margin-bottom: 32px;" onclick="switchPage('shop')">← Shop</span>
+          
+          <div class="product-detail-grid">
+            <!-- Gallery Stack -->
+            <div class="product-gallery">
+              ${galleryHTML}
+            </div>
+
+            <!-- Sticky Info Panel -->
+            <div class="product-info-panel">
+              <div class="sticky-panel">
+                <p class="section-tag" style="margin-bottom: 40px;">${p.type}</p>
+                <h1 class="font-display" style="font-size: 48px; line-height: 1.3;">
+                  ${firstPart}<br>
+                  <span class="italic text-caramel">${secondPart}</span>
+                </h1>
+                <p style="margin-top: 24px; font-size: 16px; color: rgba(92, 58, 42, 0.8); line-height: 1.7;">${p.description}</p>
+                
+                <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end;">
+                  <span class="font-display" style="font-size: 28px;">$${p.price}</span>
+                  <span class="modal-meta" style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(92, 58, 42, 0.5);">15 ml — small batch</span>
+                </div>
+
+                <button class="btn" style="width: 100%; margin-top: 24px;" onclick="addToCart('${p.slug}')">Add to Bag</button>
+
+                <div style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 32px; display: flex; flex-direction: column; gap: 24px;">
+                  <div>
+                    <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(92, 58, 42, 0.6); margin-bottom: 12px;">Ritual</p>
+                    <p style="font-size: 14px; color: var(--foreground); line-height: 1.6;">${p.ritual}</p>
+                  </div>
+                  <div>
+                    <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em; color: rgba(92, 58, 42, 0.6); margin-bottom: 12px;">Honey-inspired notes</p>
+                    <ul style="font-size: 14px; display: flex; flex-direction: column; gap: 6px; list-style: none;">
+                      ${ingredientsHTML}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Suggested -->
+        <section class="container" style="border-top: 1px solid var(--border); padding-top: 96px; padding-bottom: 96px;">
+          <p class="section-tag" style="margin-bottom: 24px;">Pair With</p>
+          <h2 class="font-display" style="font-size: 36px; margin-bottom: 48px;">
+            Continue the <span class="italic text-caramel">ritual</span>.
+          </h2>
+          <div class="product-grid">
+            ${pairHTML}
+          </div>
+        </section>
+      `;
+    }
+
+    // Render FAQ Accordion
+    function renderFAQAccordion() {
+      const container = document.getElementById("faq-accordion-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      faqData.forEach((item, idx) => {
+        const accItem = document.createElement("div");
+        accItem.className = "accordion-item";
+        
+        accItem.innerHTML = `
+          <button class="accordion-trigger font-display" onclick="toggleAccordion(this)">
+            <span>${item.q}</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-content-inner font-sans">
+              ${item.a}
+            </div>
+          </div>
+        `;
+        container.appendChild(accItem);
+      });
+    }
+
+    function toggleAccordion(trigger) {
+      const item = trigger.parentElement;
+      const content = trigger.nextElementSibling;
+      const isActive = item.classList.contains("active");
+
+      // Close all other accordion items
+      const siblingItems = item.parentElement.querySelectorAll(".accordion-item");
+      siblingItems.forEach(sib => {
+        sib.classList.remove("active");
+        const sibContent = sib.querySelector(".accordion-content");
+        if (sibContent) sibContent.style.maxHeight = null;
+      });
+
+      if (!isActive) {
+        item.classList.add("active");
+        content.style.maxHeight = content.scrollHeight + "px";
+      } else {
+        item.classList.remove("active");
+        content.style.maxHeight = null;
+      }
+    }
+
+    // Render Journal Collage
+    function renderJournalCollage() {
+      const wrapper = document.getElementById("collage-wrapper");
+      if (!wrapper) return;
+
+      journalSteps.forEach(s => {
+        // Render Swatch
+        const img = document.createElement("img");
+        img.src = s.swatch;
+        img.alt = `${s.productName} swatch`;
+        img.className = "collage-swatch";
+        img.style.top = s.swatchTop;
+        img.style.left = s.swatchLeft;
+        img.style.width = s.swatchSize;
+        img.style.transform = `rotate(${s.swatchRotate}deg)`;
+        wrapper.appendChild(img);
+
+        // Render Label
+        const label = document.createElement("div");
+        label.className = "collage-label";
+        label.style.top = s.labelTop;
+        
+        if (s.labelSide === "right") {
+          label.style.left = "calc(50% + 20px)";
+        } else {
+          label.style.right = "calc(50% + 20px)";
+          label.style.textAlign = "right";
+        }
+
+        label.innerHTML = `
+          <div class="collage-label-box font-display" onclick="navigateToProduct('${s.productSlug}')">
+            ${s.num} ${s.label}
+          </div>
+          <span class="collage-label-time">${s.time}</span>
+        `;
+        wrapper.appendChild(label);
+      });
+    }
+
+    // Render Journal Notes List
+    function renderJournalNotes() {
+      const container = document.getElementById("journal-notes-grid");
+      if (!container) return;
+      container.innerHTML = "";
+
+      journalSteps.forEach(s => {
+        const item = document.createElement("div");
+        item.className = "note-item";
+        item.innerHTML = `
+          <span class="note-num font-display">${s.num}</span>
+          <div class="note-content">
+            <p class="product-type" style="margin-bottom: 8px;">${s.time} · ${s.label}</p>
+            <h3 class="font-display" style="font-size: 24px; margin-bottom: 12px;">${s.productName}</h3>
+            <p class="note-desc" style="color: rgba(92, 58, 42, 0.8); line-height: 1.6; margin-bottom: 16px;">${s.body}</p>
+            <p class="note-ritual">Ritual · ${s.ritual}</p>
+            <span class="note-link font-display" style="cursor: pointer;" onclick="navigateToProduct('${s.productSlug}')">
+              Shop ${s.productTagline} <span>→</span>
+            </span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // Shopping Bag (Cart) Operations
+    function toggleCartDrawer() {
+      const overlay = document.getElementById("cart-overlay");
+      if (overlay.classList.contains("open")) {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      } else {
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target.id === "cart-overlay") {
+        toggleCartDrawer();
+      }
+    }
+
+    function addToCart(slug) {
+      const p = products.find(prod => prod.slug === slug);
+      if (!p) return;
+
+      const existingItem = cart.find(item => item.slug === slug);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          slug: p.slug,
+          name: p.name,
+          tagline: p.tagline,
+          price: p.price,
+          image: p.images[0],
+          quantity: 1
+        });
+      }
+
+      saveCartToLocalStorage();
+      updateCartUI();
+      showToast(`Added ${p.name} to Bag`);
+    }
+
+    function changeQuantity(slug, delta) {
+      const item = cart.find(i => i.slug === slug);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.slug !== slug);
+      }
+
+      saveCartToLocalStorage();
+      updateCartUI();
+    }
+
+    function removeCartItem(slug) {
+      const item = cart.find(i => i.slug === slug);
+      cart = cart.filter(i => i.slug !== slug);
+      saveCartToLocalStorage();
+      updateCartUI();
+      if (item) {
+        showToast(`Removed ${item.name} from Bag`);
+      }
+    }
+
+    function updateCartUI() {
+      const countBadge = document.getElementById("nav-cart-count");
+      const wrapper = document.getElementById("cart-items-wrapper");
+      const footerPanel = document.getElementById("cart-footer-panel");
+
+      // Calculate totals
+      let totalQty = 0;
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        totalQty += item.quantity;
+        subtotal += item.price * item.quantity;
+      });
+
+      // Update badge: matches BAG (x) rendering
+      countBadge.innerHTML = totalQty > 0 ? ` (${totalQty})` : "";
+
+      // Update Items list
+      if (cart.length === 0) {
+        wrapper.innerHTML = `
+          <div class="cart-empty-message">
+            <p class="font-display" style="font-size: 24px; md:font-size: 30px;">Empty as a winter hive.</p>
+            <p class="mt-3 text-sm style="color: var(--muted-foreground);" style="margin-top: 12px; margin-bottom: 24px;">Add a little sweetness.</p>
+            <span class="btn-secondary" style="cursor: pointer;" onclick="toggleCartDrawer(); switchPage('shop');">Shop the collection</span>
+          </div>
+        `;
+        footerPanel.innerHTML = "";
+      } else {
+        let itemsHTML = "";
+        cart.forEach(item => {
+          itemsHTML += `
+            <div class="cart-item">
+              <div class="cart-item-img-wrapper">
+                <img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">
+              </div>
+              <div class="cart-item-details">
+                <div class="cart-item-header">
+                  <div>
+                    <h4 class="cart-item-name">${item.name}</h4>
+                    <p class="cart-item-price">$${item.price}</p>
+                  </div>
+                </div>
+                <div class="cart-item-actions">
+                  <div class="quantity-selector">
+                    <button class="qty-btn" onclick="changeQuantity('${item.slug}', -1)">-</button>
+                    <span class="qty-val">${item.quantity}</span>
+                    <button class="qty-btn" onclick="changeQuantity('${item.slug}', 1)">+</button>
+                  </div>
+                  <button class="cart-remove-btn" onclick="removeCartItem('${item.slug}')">Remove</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        wrapper.innerHTML = itemsHTML;
+
+        // Footer panel with totals
+        footerPanel.innerHTML = `
+          <div class="cart-summary-row">
+            <span class="uppercase tracking-[0.18em]" style="font-size: 11px;">Subtotal</span>
+            <span class="cart-summary-total">$${subtotal.toFixed(2)}</span>
+          </div>
+          <button class="btn checkout-btn" onclick="handleCheckout()">Checkout</button>
+          <p class="footer-copyright" style="text-align: center; margin-top: 16px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;">
+            Shipping calculated at checkout
+          </p>
+        `;
+      }
+    }
+
+    function handleCheckout() {
+      if (cart.length === 0) {
+        showToast("Your bag is empty", "error");
+        return;
+      }
+      showToast("Thank you! Connecting to checkout...");
+      setTimeout(() => {
+        showToast("Checkout simulation complete — clearing bag.");
+        cart = [];
+        saveCartToLocalStorage();
+        updateCartUI();
+        toggleCartDrawer();
+      }, 1500);
+    }
+
+    // Local Storage Helpers
+    function saveCartToLocalStorage() {
+      localStorage.setItem("honee_bag", JSON.stringify(cart));
+    }
+
+    function loadCartFromLocalStorage() {
+      const stored = localStorage.getItem("honee_bag");
+      if (stored) {
+        try {
+          cart = JSON.parse(stored);
+        } catch (e) {
+          cart = [];
+        }
+      }
+    }
+
+    // Forms Handlers
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("contact-submit-btn");
+      btn.textContent = "Sending…";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        showToast("Thank you — we'll be in touch within 2 business days.");
+        btn.textContent = "Send inquiry";
+        btn.disabled = false;
+        document.getElementById("contact-inquiry-form").reset();
+      }, 1000);
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById("newsletter-email").value;
+      showToast("Welcome to the ritual circle.");
+      document.getElementById("newsletter-email").value = "";
+    }
+
+    // Toast Notifications System
+    function showToast(message, type = 'success') {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      
+      container.appendChild(toast);
+
+      // Trigger animation fade-out
+      setTimeout(() => {
+        toast.classList.add("fade-out");
+        toast.addEventListener("animationend", () => {
+          toast.remove();
+        });
+      }, 3000);
+    }
+  </script>
+
+
+</body></html>

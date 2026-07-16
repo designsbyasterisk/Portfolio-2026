@@ -1,0 +1,126 @@
+{
+  "race": "Formula 1 Grand Prix de Monaco 2024",
+  "date": "2024-05-26",
+  "weather": "Dry",
+  "temp": 22,
+  "laps": 78,
+  "status": "Completed",
+  "round": 8,
+  "raceTime": "2:23:15.554",
+  "pole": "Leclerc",
+  "fastestLap": { "driver": "Hamilton", "abbr": "HAM", "time": "1:14.165", "lap": 63, "speed": "161.979 km/h" },
+
+  "grid": [
+    { "pos": 1,  "driver": "Leclerc",    "abbr": "LEC", "team": "Ferrari" },
+    { "pos": 2,  "driver": "Piastri",    "abbr": "PIA", "team": "McLaren" },
+    { "pos": 3,  "driver": "Sainz",      "abbr": "SAI", "team": "Ferrari" },
+    { "pos": 4,  "driver": "Norris",     "abbr": "NOR", "team": "McLaren" },
+    { "pos": 5,  "driver": "Russell",    "abbr": "RUS", "team": "Mercedes" },
+    { "pos": 6,  "driver": "Verstappen", "abbr": "VER", "team": "Red Bull Racing" },
+    { "pos": 7,  "driver": "Hamilton",   "abbr": "HAM", "team": "Mercedes" },
+    { "pos": 8,  "driver": "Tsunoda",    "abbr": "TSU", "team": "RB" },
+    { "pos": 9,  "driver": "Albon",      "abbr": "ALB", "team": "Williams" },
+    { "pos": 10, "driver": "Gasly",      "abbr": "GAS", "team": "Alpine" },
+    { "pos": 11, "driver": "Alonso",     "abbr": "ALO", "team": "Aston Martin" },
+    { "pos": 12, "driver": "Ricciardo",  "abbr": "RIC", "team": "RB" },
+    { "pos": 13, "driver": "Bottas",     "abbr": "BOT", "team": "Kick Sauber" },
+    { "pos": 14, "driver": "Stroll",     "abbr": "STR", "team": "Aston Martin" },
+    { "pos": 15, "driver": "Sargeant",   "abbr": "SAR", "team": "Williams" },
+    { "pos": 16, "driver": "Zhou",       "abbr": "ZHO", "team": "Kick Sauber" },
+    { "pos": 17, "driver": "Ocon",       "abbr": "OCO", "team": "Alpine" },
+    { "pos": 18, "driver": "Hulkenberg", "abbr": "HUL", "team": "Haas" },
+    { "pos": 19, "driver": "Perez",      "abbr": "PER", "team": "Red Bull Racing" },
+    { "pos": 20, "driver": "Magnussen",  "abbr": "MAG", "team": "Haas" }
+  ],
+
+  "results": [
+    { "pos": 1,  "driver": "Leclerc",    "abbr": "LEC", "team": "Ferrari",          "gridPos": 1,  "time": "2:23:15.554", "gap": null,         "laps": 78, "points": 25, "bestLap": "1:14.924", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 2,  "driver": "Piastri",    "abbr": "PIA", "team": "McLaren",          "gridPos": 2,  "time": null,          "gap": "+7.152s",    "laps": 78, "points": 18, "bestLap": "1:14.973", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 3,  "driver": "Sainz",      "abbr": "SAI", "team": "Ferrari",          "gridPos": 3,  "time": null,          "gap": "+7.585s",    "laps": 78, "points": 15, "bestLap": "1:15.107", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 4,  "driver": "Norris",     "abbr": "NOR", "team": "McLaren",          "gridPos": 4,  "time": null,          "gap": "+8.650s",    "laps": 78, "points": 12, "bestLap": "1:15.372", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 5,  "driver": "Russell",    "abbr": "RUS", "team": "Mercedes",         "gridPos": 5,  "time": null,          "gap": "+13.309s",   "laps": 78, "points": 10, "bestLap": "1:15.560", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 6,  "driver": "Verstappen", "abbr": "VER", "team": "Red Bull Racing",  "gridPos": 6,  "time": null,          "gap": "+13.853s",   "laps": 78, "points": 8,  "bestLap": "1:15.577", "status": "Finished",   "tyre": "Hard" },
+    { "pos": 7,  "driver": "Hamilton",   "abbr": "HAM", "team": "Mercedes",         "gridPos": 7,  "time": null,          "gap": "+14.908s",   "laps": 78, "points": 7,  "bestLap": "1:14.165", "status": "Finished",   "tyre": "Hard",   "fastestLap": true },
+    { "pos": 8,  "driver": "Tsunoda",    "abbr": "TSU", "team": "RB",               "gridPos": 8,  "time": null,          "gap": "+1 LAP",     "laps": 77, "points": 4,  "bestLap": "1:15.744", "status": "Finished",   "tyre": "Hard" },
+    { "pos": 9,  "driver": "Albon",      "abbr": "ALB", "team": "Williams",         "gridPos": 9,  "time": null,          "gap": "+1 LAP",     "laps": 77, "points": 2,  "bestLap": "1:16.017", "status": "Finished",   "tyre": "Hard" },
+    { "pos": 10, "driver": "Gasly",      "abbr": "GAS", "team": "Alpine",           "gridPos": 10, "time": null,          "gap": "+1 LAP",     "laps": 77, "points": 1,  "bestLap": "1:16.421", "status": "Finished",   "tyre": "Hard" },
+    { "pos": 11, "driver": "Alonso",     "abbr": "ALO", "team": "Aston Martin",     "gridPos": 11, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:16.624", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 12, "driver": "Ricciardo",  "abbr": "RIC", "team": "RB",               "gridPos": 12, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:16.733", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 13, "driver": "Bottas",     "abbr": "BOT", "team": "Kick Sauber",      "gridPos": 13, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:16.935", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 14, "driver": "Stroll",     "abbr": "STR", "team": "Aston Martin",     "gridPos": 14, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:17.123", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 15, "driver": "Sargeant",   "abbr": "SAR", "team": "Williams",         "gridPos": 15, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:17.241", "status": "Finished",   "tyre": "Medium" },
+    { "pos": 16, "driver": "Zhou",       "abbr": "ZHO", "team": "Kick Sauber",      "gridPos": 16, "time": null,          "gap": "+2 LAPS",    "laps": 76, "points": 0,  "bestLap": "1:17.456", "status": "Finished",   "tyre": "Medium" },
+    { "pos": "NC", "driver": "Ocon",     "abbr": "OCO", "team": "Alpine",           "gridPos": 17, "time": null,          "gap": "DNF",        "laps": 21, "points": 0,  "bestLap": "1:17.580", "status": "Accident",   "tyre": "Soft",   "retirementLap": 21, "note": "Collision with Gasly (teammate), +10s penalty" },
+    { "pos": "NC", "driver": "Hulkenberg","abbr": "HUL", "team": "Haas",            "gridPos": 18, "time": null,          "gap": "DNF",        "laps": 0,  "points": 0,  "bestLap": null,       "status": "Accident",   "tyre": "Soft",   "retirementLap": 1,  "note": "Lap 1 crash — Perez/Magnussen collision at Sainte Dévote" },
+    { "pos": "NC", "driver": "Perez",    "abbr": "PER", "team": "Red Bull Racing",  "gridPos": 19, "time": null,          "gap": "DNF",        "laps": 0,  "points": 0,  "bestLap": null,       "status": "Accident",   "tyre": "Soft",   "retirementLap": 1,  "note": "Lap 1 crash — contact with Magnussen at Sainte Dévote, red flag" },
+    { "pos": "NC", "driver": "Magnussen","abbr": "MAG", "team": "Haas",             "gridPos": 20, "time": null,          "gap": "DNF",        "laps": 0,  "points": 0,  "bestLap": null,       "status": "Accident",   "tyre": "Soft",   "retirementLap": 1,  "note": "Lap 1 crash — caused collision with Perez at Sainte Dévote" }
+  ],
+
+  "incidents": [
+    {
+      "lap": 1,
+      "drivers": ["Perez", "Magnussen", "Hulkenberg"],
+      "type": "crash",
+      "turn": "Sainte Dévote",
+      "description": "Magnussen moved across Perez going up the hill out of Sainte Dévote. Contact between the two brought out a red flag. Hulkenberg was collected in the incident. All three retired. Red Bull estimated £2.5-3M damage to Perez's car.",
+      "raceImpact": "Red flag — lap 1. All cars returned to grid. Drivers allowed to change tyres.",
+      "severity": "Critical",
+      "x": -13, "z": -308
+    },
+    {
+      "lap": 1,
+      "drivers": ["Sainz", "Piastri"],
+      "type": "collision",
+      "turn": "Casino Square",
+      "description": "Sainz made contact with Piastri's McLaren and suffered a puncture. Sainz dropped to P16 but was reinstated to P3 after the red flag reset grid order.",
+      "raceImpact": "Sainz puncture — returned to P3 after red flag reset",
+      "severity": "Major",
+      "x": -55, "z": 140
+    },
+    {
+      "lap": 1,
+      "drivers": ["Ocon", "Gasly"],
+      "type": "collision",
+      "turn": "Portier",
+      "description": "Ocon squeezed into the path of teammate Gasly as the Alpines exited Portier, pitching his own car upward. Gasly survived and finished P10. Ocon retired on lap 21 and received a 10-second post-race penalty.",
+      "raceImpact": "Ocon DNF on lap 21. Gasly P10. Ocon penalised 5-place grid drop for Canada.",
+      "severity": "Major",
+      "x": -97, "z": -200
+    },
+    {
+      "lap": 63,
+      "drivers": ["Hamilton"],
+      "type": "fastest_lap",
+      "turn": "Full lap",
+      "description": "Lewis Hamilton set the fastest lap of the race on lap 63 with a 1:14.165, earning 1 bonus championship point.",
+      "raceImpact": "+1 point (fastest lap)",
+      "severity": "Info",
+      "x": 4, "z": -320
+    }
+  ],
+
+  "circuit": {
+    "name": "Circuit de Monaco",
+    "location": "Monte Carlo, Monaco",
+    "length": 3.337,
+    "turns": 19,
+    "drsZones": 1,
+    "type": "Street Circuit",
+    "firstRace": 1950,
+    "lapRecord": "1:10.166",
+    "lapRecordHolder": "Leclerc",
+    "lapRecordYear": 2023,
+    "overtakingIndex": "2/10",
+    "elevation": "+42m / -8m",
+    "safetyCarAvg": 1.4
+  },
+
+  "notes": [
+    "First Monaco GP win for a Monégasque driver since Louis Chiron in 1931",
+    "First race in F1 World Championship history where top 10 finished in exact grid order",
+    "Red flag on lap 1 allowed all drivers to change tyres — eliminated pit stop strategy",
+    "Leclerc's first win since the 2022 Austrian Grand Prix",
+    "Haas disqualified from qualifying (DRS breach) but permitted to race",
+    "Piastri's first podium of the 2024 season"
+  ]
+}

@@ -1,0 +1,1476 @@
+/* ==========================================================================
+   DESIGN SYSTEM - CORE STYLESHEET
+   Aesthetics: Neo-Geometric Modernism (Symmetrical Shapes only - White & Navy)
+   Fonts: Clash Display (Display) & Montserrat (Body)
+   ========================================================================== */
+
+/* Font imports */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & Root Variables
+   -------------------------------------------------------------------------- */
+:root {
+    /* Color Palette - Fresh, Seamless */
+    --bg-canvas: #eff2ff;       /* Cool white/blue-gray background */
+    --bg-card: #FFFFFF;         /* Pure white cards */
+    --text-main: #0A1128;       /* Deep Midnight Navy */
+    --text-sub: #3B486B;        /* Muted Navy for paragraphs */
+    
+    /* Playful Accent Swatches */
+    --color-highlighter: #FFD200; /* Highlighter Golden Yellow */
+    --color-blue: #2A65D4;        /* Deeper Vibrant Hyper Blue for WCAG 4.5:1 contrast */
+    --color-tangerine: #FD7903;   /* Acid Tangerine Orange */
+    
+    /* Active Accent (Dynamic Swapping via JS) */
+    --accent: var(--color-blue);
+    --accent-text: var(--color-blue);
+    --accent-contrast: #FFFFFF;
+    --accent-glow: rgba(42, 101, 212, 0.12);
+
+    /* Fonts */
+    --font-display: 'Clash Display', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+
+    /* Transition Speeds */
+    --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-normal: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Spacing Grid */
+    --space-xs: 8px;
+    --space-sm: 16px;
+    --space-md: 24px;
+    --space-lg: 48px;
+    --space-xl: 80px;
+    --radius-pill: 50px;
+}
+
+/* Accent Theme Modifiers */
+body.theme-highlighter {
+    --accent: var(--color-highlighter);
+    --accent-contrast: #0A1128;
+    --accent-glow: rgba(255, 210, 0, 0.2);
+    --accent-text: #8F6B00; /* High contrast Dark Gold (passes 4.5:1 on white/cream) */
+}
+
+body.theme-blue {
+    --accent: var(--color-blue);
+    --accent-contrast: #FFFFFF;
+    --accent-glow: rgba(42, 101, 212, 0.12);
+    --accent-text: var(--color-blue);
+}
+
+body.theme-tangerine {
+    --accent: var(--color-tangerine);
+    --accent-contrast: var(--text-main);
+    --accent-glow: rgba(253, 121, 3, 0.15);
+    --accent-text: #C23E00; /* High contrast Dark Orange (passes 5.0:1 on white/cream) */
+}
+
+/* --------------------------------------------------------------------------
+   2. Resets & Document Setup
+   -------------------------------------------------------------------------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color var(--transition-slow);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Blueprint Grid Background */
+.pattern-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, rgba(10, 17, 40, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(10, 17, 40, 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* --------------------------------------------------------------------------
+   3. Typography Specs (Clash Display + Montserrat)
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: var(--space-sm);
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+}
+
+h1 {
+    font-size: clamp(2.8rem, 6.5vw, 5rem);
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.01em;
+    position: relative;
+    display: inline-block;
+    margin-bottom: var(--space-md);
+}
+
+h3 {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+}
+
+p {
+    margin-bottom: var(--space-sm);
+    color: var(--text-sub);
+    font-weight: 500;
+    font-size: 0.98rem;
+}
+
+.text-lead {
+    font-size: clamp(1.1rem, 2vw, 1.2rem);
+    font-weight: 550;
+    line-height: 1.5;
+    color: var(--text-sub);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all var(--transition-fast);
+}
+
+/* Highlighter marker effect - symmetrical beveled */
+.text-highlight {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    padding: 0 6px;
+}
+
+.text-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 46%;
+    background-color: var(--color-highlighter);
+    z-index: -1;
+    clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 100%, 0 100%);
+}
+
+/* Symmetrical Label badges */
+.label-pill {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Seamless Symmetrical Containers
+   -------------------------------------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: var(--space-md);
+}
+
+.grid-pop {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-md);
+}
+
+/* Base Card structure */
+.pop-card {
+    background-color: var(--bg-card);
+    padding: var(--space-md);
+    transition: background-color var(--transition-normal);
+}
+
+@media (hover: hover) {
+    .pop-card:hover {
+        background-color: rgba(240, 246, 244, 0.95);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. Bento Grid Layout System (Rounded Symmetrical Tiles)
+   -------------------------------------------------------------------------- */
+:root {
+    --bento-radius: 16px;
+    --bento-gap: 20px;
+    --bento-border: 1px solid rgba(10, 17, 40, 0.05);
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--bento-gap);
+    width: 100%;
+}
+
+.bento-card {
+    background-color: var(--bg-card);
+    border-radius: var(--bento-radius);
+    border: var(--bento-border);
+    padding: var(--space-md);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: color var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal);
+}
+
+/* Symmetrical circular and rounded tiles inside bento */
+.bento-circle {
+    border-radius: 50% !important;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Column spanning helper classes */
+.col-1 { grid-column: span 1; }
+.col-2 { grid-column: span 2; }
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; }
+.col-7 { grid-column: span 7; }
+.col-8 { grid-column: span 8; }
+.col-9 { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* Bento card hover style - subtle border highlight only */
+@media (hover: hover) {
+    .bento-card:hover {
+        border-color: var(--accent);
+    }
+}
+
+@media (max-width: 992px) {
+    .bento-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+        grid-column: span 6;
+    }
+    .col-5 {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bento-gap);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   5. Jigsaw Mask Layout (Config 2024 Geometric Primitives)
+   -------------------------------------------------------------------------- */
+.jigsaw-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    height: 340px;
+    width: 100%;
+    max-width: 340px;
+    position: relative;
+}
+
+.jigsaw-item {
+    background-color: var(--bg-card);
+    overflow: hidden;
+    position: relative;
+    transition: transform var(--transition-normal);
+}
+
+.jigsaw-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jigsaw-item:nth-child(1) {
+    border-radius: 20px;
+    height: 95%;
+}
+
+.jigsaw-item:nth-child(2) {
+    border-radius: 50%;
+    height: 85%;
+    margin-top: 15%;
+}
+
+.jigsaw-item:nth-child(3) {
+    border-radius: 20px;
+    height: 90%;
+    margin-top: 5%;
+}
+
+@media (hover: hover) {
+    .jigsaw-item:hover {
+        transform: scale(1.06) rotate(1deg);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6. Curved Scribble SVG Draw Effect
+   -------------------------------------------------------------------------- */
+.scribble-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.scribble-path {
+    stroke: var(--accent-text);
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke var(--transition-slow);
+}
+
+/* --------------------------------------------------------------------------
+   7. Playful UI & Buttons (Chamfered Fills)
+   -------------------------------------------------------------------------- */
+/* Symmetrical Chamfered Buttons */
+.btn-pop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    position: relative;
+    gap: 8px;
+}
+
+.btn-pop-primary {
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+    transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+@media (hover: hover) {
+    .btn-pop-primary:hover {
+        background-color: var(--text-main);
+        color: var(--bg-canvas);
+    }
+
+    .btn-pop-secondary:hover {
+        background-color: var(--accent);
+        color: var(--accent-contrast);
+    }
+}
+
+/* Symmetrical tags */
+.pill-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-pill);
+    color: var(--text-main);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.pill-tag.active {
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+}
+@media (hover: hover) {
+    .pill-tag:hover {
+        background-color: var(--accent);
+        color: var(--accent-contrast);
+    }
+}
+
+/* Status indicator badge */
+.pulse-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.pulse-circle {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-tangerine);
+    border-radius: 50%;
+    position: relative;
+}
+
+.pulse-circle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: inherit;
+    animation: badge-pulse 1.8s infinite ease-out;
+}
+
+@keyframes badge-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.6); opacity: 0; }
+}
+
+
+/* --------------------------------------------------------------------------
+   9. GSAP Horizontal Scroll Layout (Pin panels)
+   -------------------------------------------------------------------------- */
+.horizontal-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    color: var(--bg-canvas);
+    margin-bottom: var(--space-xl);
+}
+
+.horizontal-scroll-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 400vw;
+    height: 90vh;
+}
+
+.horizontal-scroll-panel {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-lg);
+    flex-shrink: 0;
+    position: relative;
+}
+
+.horizontal-scroll-panel p {
+    color: rgba(10, 17, 40, 0.7);
+}
+
+/* Project Card layout nested in horizontal scroll panel */
+.horizontal-project-card {
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
+    padding: var(--space-xl);
+    width: 92%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-xl);
+    text-align: left;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.horizontal-project-media {
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: calc(var(--bento-radius) - 8px);
+    overflow: hidden;
+    position: relative;
+}
+
+.horizontal-project-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-normal);
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .horizontal-project-media img {
+        transform: scale(1.04);
+    }
+}
+
+.horizontal-project-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.horizontal-project-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.horizontal-project-tag {
+    background-color: rgba(10, 17, 40, 0.08);
+    color: var(--text-main);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    white-space: nowrap;
+}
+
+/* Centered Logo/Logotype styling inside Thumbnails */
+.project-logo-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    z-index: 2;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    box-sizing: border-box;
+    transition: transform var(--transition-normal), text-shadow var(--transition-normal);
+}
+
+.project-logo-text.serif-title {
+    font-family: "TAN Grandeur", "Cormorant Garamond", serif;
+    text-transform: none;
+    font-weight: 400;
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .project-logo-text {
+        transform: scale(1.06);
+    }
+}
+
+/* Case Study Link styles */
+.case-study-link {
+    color: var(--accent);
+    transition: color var(--transition-fast);
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Project-Specific Theme Variables and Styles
+   -------------------------------------------------------------------------- */
+
+/* Emberquit Card Theme */
+.card-emberquit {
+    background-color: #CFD8E4 !important;
+    color: #0E1629 !important;
+    border: 1px solid rgba(14, 22, 41, 0.08) !important;
+    box-shadow: 0 12px 36px rgba(14, 22, 41, 0.08);
+}
+.card-emberquit h3,
+.card-emberquit p,
+.card-emberquit .horizontal-project-tag {
+    color: #0E1629 !important;
+}
+.card-emberquit p {
+    color: #586174 !important;
+}
+.card-emberquit .label-pill {
+    background-color: #1E63F3 !important;
+    color: #ffffff !important;
+}
+.card-emberquit .horizontal-project-tag {
+    background-color: rgba(30, 99, 243, 0.08) !important;
+    border: 1px solid rgba(30, 99, 243, 0.15) !important;
+    color: #1E63F3 !important;
+}
+.card-emberquit .case-study-link {
+    color: #1E63F3 !important;
+}
+@media (hover: hover) {
+    .card-emberquit:hover .case-study-link {
+        color: #0E1629 !important;
+    }
+}
+.card-emberquit .project-logo-text {
+    color: #ffffff !important;
+    text-shadow: 0 4px 12px rgba(0, 26, 230, 0.5);
+}
+
+/* Restease Card Theme */
+.card-restease {
+    background-color: #f4f6f3 !important;
+    color: #24361e !important;
+    border: 1px solid rgba(36, 54, 30, 0.1) !important;
+    box-shadow: 0 12px 36px rgba(36, 54, 30, 0.05);
+}
+.card-restease h3,
+.card-restease p,
+.card-restease .horizontal-project-tag {
+    color: #24361e !important;
+}
+.card-restease p {
+    color: #4b5e43 !important;
+}
+.card-restease .label-pill {
+    background-color: #ff4f00 !important;
+    color: #ffffff !important;
+}
+.card-restease .horizontal-project-tag {
+    background-color: rgba(255, 79, 0, 0.08) !important;
+    border: 1px solid rgba(255, 79, 0, 0.15) !important;
+    color: #ff4f00 !important;
+}
+.card-restease .case-study-link {
+    color: #ff4f00 !important;
+}
+@media (hover: hover) {
+    .card-restease:hover .case-study-link {
+        color: #24361e !important;
+    }
+}
+.card-restease .project-logo-text {
+    color: #ffffff;
+    text-shadow: 0 4px 12px rgba(255, 79, 0, 0.3);
+}
+
+/* F1 Dashboard Card Theme */
+.card-f1 {
+    background-color: #f4f4f5 !important;
+    color: #09090b !important;
+    border: 1px solid rgba(9, 9, 11, 0.08) !important;
+    box-shadow: 0 12px 36px rgba(9, 9, 11, 0.04);
+}
+.card-f1 h3,
+.card-f1 p,
+.card-f1 .horizontal-project-tag {
+    color: #09090b !important;
+}
+.card-f1 p {
+    color: #52525b !important;
+}
+.card-f1 .label-pill {
+    background-color: #e10600 !important;
+    color: #ffffff !important;
+}
+.card-f1 .horizontal-project-tag {
+    background-color: rgba(225, 6, 0, 0.08) !important;
+    border: 1px solid rgba(225, 6, 0, 0.15) !important;
+    color: #e10600 !important;
+}
+.card-f1 .case-study-link {
+    color: #e10600 !important;
+}
+@media (hover: hover) {
+    .card-f1:hover .case-study-link {
+        color: #09090b !important;
+    }
+}
+.card-f1 .project-logo-text {
+    color: #e10600;
+    text-shadow: 0 4px 16px rgba(225, 6, 0, 0.4);
+}
+
+/* Honee Card Theme */
+.card-honee {
+    background-color: #fff3e3 !important;
+    color: #5c3a2a !important;
+    border: 1px solid rgba(92, 58, 42, 0.08) !important;
+    box-shadow: 0 12px 36px rgba(92, 58, 42, 0.06);
+}
+.card-honee h3,
+.card-honee p,
+.card-honee .horizontal-project-tag {
+    color: #5c3a2a !important;
+}
+.card-honee p {
+    color: rgba(92, 58, 42, 0.75) !important;
+}
+.card-honee .label-pill {
+    background-color: #d99f0d !important;
+    color: #ffffff !important;
+}
+.card-honee .horizontal-project-tag {
+    background-color: rgba(92, 58, 42, 0.06) !important;
+    border: 1px solid rgba(92, 58, 42, 0.12) !important;
+    color: #5c3a2a !important;
+}
+.card-honee .case-study-link {
+    color: #5c3a2a !important;
+}
+@media (hover: hover) {
+    .card-honee:hover .case-study-link {
+        color: #d99f0d !important;
+    }
+}
+.card-honee .project-logo-text {
+    color: #5c3a2a;
+    text-shadow: 0 4px 12px rgba(217, 159, 13, 0.2);
+}
+
+@media (max-width: 768px) {
+    .horizontal-scroll-wrapper {
+        width: 100vw;
+        height: auto;
+        flex-direction: column;
+    }
+    .horizontal-scroll-panel {
+        width: 100vw;
+        height: auto;
+        padding: var(--space-md) 0;
+    }
+    .horizontal-project-card {
+        grid-template-columns: 1fr;
+        width: 90%;
+        padding: var(--space-md) !important;
+    }
+    .phone-mockup {
+        width: 120px !important;
+        height: 240px !important;
+        border-width: 5px !important;
+        border-radius: 18px !important;
+    }
+    .phone-screen {
+        border-radius: 13px !important;
+    }
+    .double-phone-wrapper {
+        gap: 8px !important;
+        padding: 5px !important;
+    }
+    .double-phone-wrapper .phone-mockup {
+        width: 85px !important;
+        height: 170px !important;
+        border-width: 4px !important;
+        border-radius: 14px !important;
+    }
+    .double-phone-wrapper .phone-screen {
+        border-radius: 10px !important;
+    }
+    .desktop-mockup {
+        width: 95% !important;
+        height: 90% !important;
+        border-width: 5px !important;
+    }
+    .desktop-header {
+        height: 16px !important;
+    }
+    .desktop-dots {
+        gap: 3px !important;
+        margin-right: 8px !important;
+    }
+    .desktop-dots span {
+        width: 5px !important;
+        height: 5px !important;
+    }
+    .desktop-url {
+        font-size: 0.45rem !important;
+        padding: 1px 12px !important;
+    }
+    .horizontal-progress-tracker {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding: var(--space-sm) var(--space-md) !important;
+        align-items: center !important;
+        width: 100% !important;
+        background-color: var(--text-main) !important;
+    }
+    .project-indicator-bar-wrapper {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    #current-project-desc {
+        text-align: center !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 1280px) and (min-width: 769px) {
+    .horizontal-project-card {
+        padding: var(--space-lg);
+        gap: var(--space-lg);
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   10. Playful Custom Cursor (Diamond/Rhombus Theme)
+   -------------------------------------------------------------------------- */
+.cursor-playful {
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: width var(--transition-fast), height var(--transition-fast), background-color var(--transition-slow), opacity 0.3s ease;
+}
+
+.cursor-trail {
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-main);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    transition: transform 0.1s ease-out, opacity 0.3s ease;
+}
+
+.cursor-playful.hovering {
+    width: 42px;
+    height: 42px;
+    background-color: var(--color-highlighter);
+    opacity: 0.65;
+}
+
+/* Rotating Ornaments */
+.spinning-star {
+    display: inline-block;
+    cursor: default;
+    color: var(--accent);
+    transition: color var(--transition-slow);
+}
+
+@media (hover: hover) {
+    .spinning-star:hover,
+    .bento-card:hover .spinning-star {
+        animation: spin-slow 2.5s linear infinite;
+    }
+}
+
+/* Navbar Logo SVG Hover Animation state */
+.logo svg #Frame_1,
+.logo svg #Frame_8 {
+    animation-play-state: paused !important;
+}
+.logo:hover svg #Frame_1,
+.logo:hover svg #Frame_8 {
+    animation-play-state: running !important;
+}
+
+@keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Theme pickers */
+.theme-picker-container {
+    display: inline-flex;
+    background-color: var(--bg-canvas);
+    padding: 4px;
+    gap: 4px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(10, 17, 40, 0.08);
+}
+
+.theme-picker-dot {
+    width: 26px;
+    height: 26px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.theme-picker-dot.active {
+    transform: scale(1.12) rotate(45deg);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--text-sub);
+    border-radius: var(--radius-pill);
+}
+@media (hover: hover) {
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+    }
+}
+
+/* ==========================================================================
+   CODE-GENERATED PROJECT THUMBNAILS STYLE
+   ========================================================================== */
+.project-thumb-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: var(--space-md);
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    transition: transform var(--transition-normal);
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .project-thumb-container {
+        transform: scale(1.04);
+    }
+}
+
+/* Blueprint pattern background for thumbnails */
+.project-thumb-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 30px 30px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    opacity: 0.8;
+    z-index: 1;
+}
+
+/* Emberquit Thumbnail */
+.thumb-emberquit {
+    background: linear-gradient(135deg, #001ae6 0%, #1D61FC 100%);
+    color: #ffffff;
+}
+
+/* Restease Thumbnail */
+.thumb-restease {
+    background: linear-gradient(135deg, #0a081e 0%, #030213 100%);
+    color: #ffffff;
+}
+.thumb-restease .project-thumb-bg {
+    background-image: 
+        linear-gradient(to right, rgba(255, 79, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 79, 0, 0.08) 1px, transparent 1px);
+}
+
+/* F1 Telemetry Thumbnail */
+.thumb-f1 {
+    background: linear-gradient(135deg, #09090b 0%, #1c1c1f 100%);
+    color: #e10600;
+}
+.thumb-f1 .project-thumb-bg {
+    background-image: 
+        linear-gradient(to right, rgba(225, 6, 0, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(225, 6, 0, 0.06) 1px, transparent 1px);
+}
+
+/* Honee Thumbnail */
+.thumb-honee {
+    background: linear-gradient(135deg, #fff3e3 0%, #f6c453 100%);
+    color: #5c3a2a;
+}
+.thumb-honee .project-thumb-bg {
+    background-image: 
+        linear-gradient(to right, rgba(92, 58, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(92, 58, 42, 0.05) 1px, transparent 1px);
+}
+
+/* Typography styles */
+.thumb-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    z-index: 2;
+    margin-bottom: var(--space-sm);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1.15;
+}
+.thumb-title.serif-title {
+    font-family: "TAN Grandeur", "Cormorant Garamond", serif;
+    text-transform: none;
+    font-weight: 400;
+}
+
+/* Thumbnail Pill Tags */
+.thumb-tags {
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.thumb-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    letter-spacing: 0.06em;
+}
+.thumb-honee .thumb-tag {
+    background-color: rgba(92, 58, 42, 0.06);
+    border: 1px solid rgba(92, 58, 42, 0.12);
+    color: #5c3a2a;
+}
+.thumb-f1 .thumb-tag {
+    background-color: rgba(225, 6, 0, 0.08);
+    border: 1px solid rgba(225, 6, 0, 0.16);
+    color: #ffffff;
+}
+.thumb-restease .thumb-tag {
+    background-color: rgba(129, 140, 248, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    color: #818cf8;
+}
+
+/* ==========================================================================
+   STORYTELLING SCROLL EXPERIENCES & INTERACTIVE ELEMENTS
+   ========================================================================== */
+
+/* Rotating Text Orbiting Badge */
+.circular-text-badge {
+    transform-origin: center;
+    will-change: transform;
+}
+
+/* Horizontal Scroll Progress Tracker */
+.horizontal-progress-tracker {
+    position: absolute;
+    top: 36px;
+    left: var(--space-md);
+    right: var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    pointer-events: none;
+    font-family: var(--font-display);
+    padding: 0 var(--space-sm);
+}
+
+.project-indicator-text {
+    color: var(--bg-canvas);
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-indicator-text span {
+    color: var(--accent);
+    transition: color var(--transition-slow);
+}
+
+.project-indicator-bar-wrapper {
+    flex-grow: 1;
+    max-width: 280px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.16);
+    margin: 0 var(--space-md);
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#project-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent);
+    transition: background-color var(--transition-slow);
+}
+
+#current-project-desc {
+    color: rgba(250, 246, 238, 0.8);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: right;
+    max-width: 380px;
+    font-family: var(--font-body);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* 3D Bento Card Perspective */
+.bento-grid {
+    perspective: 1000px;
+}
+
+.bento-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* Pure CSS Smartphone Device Mockup Frame */
+.phone-mockup {
+    position: relative;
+    width: 155px;
+    height: 310px;
+    background-color: #000;
+    border: 8px solid var(--text-main);
+    border-radius: 26px;
+    box-shadow: 0 16px 36px rgba(10, 17, 40, 0.22);
+    margin: auto;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform var(--transition-normal);
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: #000;
+    position: relative;
+}
+
+.phone-screen video, 
+.phone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.phone-speaker {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42px;
+    height: 5px;
+    background-color: var(--text-main);
+    border-radius: 3px;
+    z-index: 10;
+}
+
+.phone-home-button {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 2px;
+    z-index: 10;
+}
+
+/* Double overlapping phones layout */
+.double-phone-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 2;
+    position: relative;
+}
+
+.double-phone-wrapper .phone-mockup {
+    width: 132px;
+    height: 264px;
+    border-width: 6px;
+    border-radius: 22px;
+    margin: 0;
+}
+
+.double-phone-wrapper .phone-1 {
+    transform: translateY(-12px) rotate(-3.5deg);
+}
+
+.double-phone-wrapper .phone-2 {
+    transform: translateY(12px) rotate(3.5deg);
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .double-phone-wrapper .phone-1 {
+        transform: translateY(-16px) rotate(-6deg) scale(1.03);
+    }
+
+    .horizontal-project-card:hover .double-phone-wrapper .phone-2 {
+        transform: translateY(16px) rotate(6deg) scale(1.03);
+    }
+}
+
+/* Pure CSS Browser/Desktop Device Mockup Frame */
+.desktop-mockup {
+    width: 90%;
+    height: 84%;
+    background-color: #121212;
+    border: 7px solid var(--text-main);
+    border-radius: 10px;
+    box-shadow: 0 20px 42px rgba(10, 17, 40, 0.25);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 2;
+    position: relative;
+    transition: transform var(--transition-normal);
+}
+
+.desktop-header {
+    height: 22px;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.desktop-dots {
+    display: flex;
+    gap: 5px;
+    margin-right: 14px;
+}
+
+.desktop-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-red { background-color: #ff5f56; }
+.dot-yellow { background-color: #ffbd2e; }
+.dot-green { background-color: #27c93f; }
+
+.desktop-url {
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.45);
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 2px 28px;
+    border-radius: 4px;
+    flex-grow: 1;
+    max-width: 200px;
+    text-align: center;
+    margin: 0 auto;
+    letter-spacing: 0.02em;
+}
+
+.desktop-screen {
+    flex-grow: 1;
+    background-color: #000;
+    position: relative;
+}
+
+.desktop-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .desktop-mockup {
+        transform: translateY(-6px) scale(1.02);
+    }
+}
+
+/* Parallax scroll portal viewport */
+.parallax-portal-img-wrapper {
+    transition: transform var(--transition-normal);
+}
+
+@media (hover: hover) {
+    .horizontal-project-card:hover .parallax-portal-img-wrapper {
+        transform: scale(1.02);
+    }
+}
+
+/* Timeline SVG draw overrides */
+.timeline-svg-draw {
+    overflow: visible;
+}
+
+#timeline-draw-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke var(--transition-slow);
+}
+
+/* Floating Glassmorphic Header */
+header.floating-header {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 800px;
+    background-color: #ffffff; /* Pure white background */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(10, 17, 40, 0.08);
+    border-radius: 50px;
+    z-index: 1010;
+    box-shadow: 0 10px 30px rgba(10, 17, 40, 0.05);
+    transition: background-color var(--transition-slow), border-color var(--transition-slow), box-shadow var(--transition-normal);
+}
+
+header.floating-header .container {
+    padding: 8px 24px !important;
+}
+
+/* Directional Navigation Arrows */
+.scroll-indicator-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(10, 17, 40, 0.08);
+    color: var(--text-main);
+    background-color: var(--bg-card);
+    transition: all var(--transition-normal);
+    animation: arrow-float-vertical 2s infinite ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(10, 17, 40, 0.03);
+}
+
+@media (hover: hover) {
+    .scroll-indicator-arrow:hover {
+        background-color: var(--accent);
+        color: var(--accent-contrast);
+        border-color: var(--accent);
+        transform: translateY(2px) scale(1.03);
+    }
+
+    .scroll-indicator-arrow.arrow-horizontal:hover {
+        transform: translateX(2px) scale(1.03);
+    }
+}
+
+.scroll-indicator-arrow.arrow-horizontal {
+    animation: arrow-float-horizontal 2s infinite ease-in-out;
+}
+
+@keyframes arrow-float-vertical {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+@keyframes arrow-float-horizontal {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+}
+
+/* CTA Bento Card Layout */
+.cta-bento-card {
+    background-color: var(--bg-card);
+}
+
+.cta-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: var(--space-lg);
+    align-items: center;
+    text-align: left;
+}
+
+.cta-content {
+    max-width: 600px;
+}
+
+.cta-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    header.floating-header {
+        top: 10px;
+        width: calc(100% - 20px);
+    }
+    .cta-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        text-align: center;
+    }
+    .cta-content {
+        max-width: 100%;
+    }
+    .cta-action {
+        justify-content: center;
+    }
+}
