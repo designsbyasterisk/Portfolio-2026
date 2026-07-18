@@ -81,6 +81,7 @@ body.theme-tangerine {
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    scroll-padding-top: 80px; /* Offset for fixed floating header */
 }
 
 body {
@@ -1461,6 +1462,15 @@ header.floating-header .container {
     header.floating-header {
         top: 10px;
         width: calc(100% - 20px);
+    }
+    header.floating-header .container {
+        padding: 8px 16px !important;
+    }
+    header.floating-header nav {
+        gap: var(--space-sm) !important;
+    }
+    .bento-card {
+        padding: var(--space-sm) var(--space-md) !important; /* Less layout squeezing on small screens */
     }
     .cta-grid {
         grid-template-columns: 1fr;

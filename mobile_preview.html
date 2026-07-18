@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Viewport Simulator — designsbyasterisk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #0f172a;
+            --bg-sidebar: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 320px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-text {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+        }
+
+        .select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-select:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-select.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Simulator display workspace */
+        .workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        }
+
+        .controls-bar {
+            position: absolute;
+            top: 24px;
+            display: flex;
+            gap: 16px;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .control-btn.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Device Phone Mockup Frame styling */
+        .device-container {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+            border: 12px solid #27272a;
+            border-radius: 48px;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Simulated Phone Speaker/Notch */
+        .device-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 25px;
+            background-color: #27272a;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .device-notch::before {
+            content: '';
+            width: 50px;
+            height: 4px;
+            background-color: #3f3f46;
+            border-radius: 999px;
+            margin-bottom: 4px;
+        }
+
+        .device-container.landscape .device-notch {
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            transform-origin: top left;
+            width: 100px;
+            height: 20px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            margin-left: -20px;
+        }
+
+        /* iframe Viewport container */
+        .viewport-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: #fff;
+            display: block;
+        }
+
+        /* Rotate transition helper */
+        .landscape {
+            transform: rotate(0deg); /* Trigger animations if needed */
+        }
+        
+        .info-pill {
+            margin-top: 24px;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Control Panel -->
+    <div class="sidebar">
+        <div class="logo-wrap">
+            <div style="background-color: var(--accent); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Quicksand', sans-serif;">*</div>
+            <span class="logo-text">designsbyasterisk</span>
+        </div>
+
+        <!-- 1. Page Selector -->
+        <div class="select-group">
+            <h3 class="section-title">Select Page</h3>
+            <button class="btn-select active" onclick="loadPage('index.html', this)">
+                Home Page <span>🏠</span>
+            </button>
+            <button class="btn-select" onclick="loadPage('resume.html', this)">
+                Resume / About <span>📄</span>
+            </button>
+            <button class="btn-select" onclick="loadPage('project-details/emberquit.html', this)">
+                Emberquit Case Study <span>🚭</span>
+            </button>
+            <button class="btn-select" onclick="loadPage('project-details/restease.html', this)">
+                Restease Case Study <span>🛏️</span>
+            </button>
+            <button class="btn-select" onclick="loadPage('project-details/honee.html', this)">
+                Honee Case Study <span>🍯</span>
+            </button>
+            <button class="btn-select" onclick="loadPage('project-details/f1_dashboard.html', this)">
+                F1 Dashboard Case Study <span>🏎️</span>
+            </button>
+        </div>
+
+        <!-- 2. Device Selector -->
+        <div class="select-group">
+            <h3 class="section-title">Select Device</h3>
+            <button id="btn-dev-1" class="btn-select active" onclick="setDevice(390, 844, 'iPhone 13 / 14', this)">
+                iPhone 13 / 14 <span style="font-size: 0.8rem; color: var(--text-sub)">390 × 844</span>
+            </button>
+            <button id="btn-dev-2" class="btn-select" onclick="setDevice(320, 568, 'iPhone SE (Narrow)', this)">
+                iPhone SE (Narrow) <span style="font-size: 0.8rem; color: var(--text-sub)">320 × 568</span>
+            </button>
+            <button id="btn-dev-3" class="btn-select" onclick="setDevice(768, 1024, 'iPad / Tablet', this)">
+                iPad / Tablet <span style="font-size: 0.8rem; color: var(--text-sub)">768 × 1024</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Workspace Area -->
+    <div class="workspace">
+        
+        <!-- Quick Control Actions -->
+        <div class="controls-bar">
+            <button class="control-btn" onclick="toggleOrientation()">
+                🔄 Rotate View
+            </button>
+            <button class="control-btn" onclick="refreshIframe()">
+                🔁 Refresh Page
+            </button>
+        </div>
+
+        <!-- The Simulated Device Frame -->
+        <div id="device-wrapper" class="device-container" style="width: 390px; height: 844px;">
+            <div id="notch" class="device-notch"></div>
+            <iframe id="preview-iframe" class="viewport-frame" src="index.html" title="Mobile Web Viewport Preview"></iframe>
+        </div>
+
+        <!-- Metadata Info -->
+        <div id="device-info" class="info-pill">
+            Active Device: iPhone 13 / 14 (390px × 844px) - Portrait
+        </div>
+    </div>
+
+    <script>
+        let currentWidth = 390;
+        let currentHeight = 844;
+        let isLandscape = false;
+        let currentDeviceName = "iPhone 13 / 14";
+
+        const iframe = document.getElementById('preview-iframe');
+        const deviceWrapper = document.getElementById('device-wrapper');
+        const deviceInfo = document.getElementById('device-info');
+        const notch = document.getElementById('notch');
+
+        function loadPage(url, button) {
+            iframe.src = url;
+            // Update active state in sidebar
+            const pageButtons = button.parentElement.querySelectorAll('.btn-select');
+            pageButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function setDevice(w, h, name, button) {
+            currentWidth = w;
+            currentHeight = h;
+            currentDeviceName = name;
+            
+            // Update active state in sidebar
+            const deviceButtons = button.parentElement.querySelectorAll('.btn-select');
+            deviceButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // If iPad, hide the notch because it doesn't fit standard phone speaker layout
+            if (name.includes('iPad')) {
+                notch.style.display = 'none';
+                deviceWrapper.style.borderRadius = '24px';
+                deviceWrapper.style.borderWidth = '16px';
+            } else {
+                notch.style.display = 'flex';
+                deviceWrapper.style.borderRadius = '48px';
+                deviceWrapper.style.borderWidth = '12px';
+            }
+
+            updateLayout();
+        }
+
+        function toggleOrientation() {
+            isLandscape = !isLandscape;
+            updateLayout();
+        }
+
+        function refreshIframe() {
+            iframe.contentWindow.location.reload();
+        }
+
+        function updateLayout() {
+            let targetWidth = isLandscape ? currentHeight : currentWidth;
+            let targetHeight = isLandscape ? currentWidth : currentHeight;
+
+            // Apply orientation modifier class to device container
+            if (isLandscape) {
+                deviceWrapper.classList.add('landscape');
+            } else {
+                deviceWrapper.classList.remove('landscape');
+            }
+
+            // If screen height is too small for desktop viewport, scale down the frame visually using CSS Transform Scale
+            const windowHeight = window.innerHeight;
+            const neededHeight = targetHeight + 120; // account for margin and controls
+            
+            if (neededHeight > windowHeight) {
+                const scale = (windowHeight - 120) / targetHeight;
+                deviceWrapper.style.transform = `scale(${scale})`;
+            } else {
+                deviceWrapper.style.transform = 'scale(1)';
+            }
+
+            deviceWrapper.style.width = targetWidth + 'px';
+            deviceWrapper.style.height = targetHeight + 'px';
+
+            deviceInfo.innerText = `Active Device: ${currentDeviceName} (${targetWidth}px × ${targetHeight}px) - ${isLandscape ? 'Landscape' : 'Portrait'}`;
+        }
+
+        // Adjust scale on window resize
+        window.addEventListener('resize', updateLayout);
+        updateLayout();
+    </script>
+</body>
+</html>

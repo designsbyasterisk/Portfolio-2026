@@ -6,6 +6,12 @@
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap');
 
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding-top: 80px; /* Offset for fixed floating header */
+}
+
 :root {
     --bg-canvas: #f4f4f6;
     --bg-card: #ffffff;
@@ -633,6 +639,7 @@ li {
     align-items: center;
     position: relative;
     box-sizing: border-box;
+    scroll-margin-top: 90px; /* Prevents sticky header overlaps when target is focused */
     z-index: 2;
 }
 
@@ -2784,6 +2791,43 @@ body.theme-brand .scroll-indicator-arrow:hover {
     .flow-arrow {
         transform: rotate(90deg);
         margin: 8px 0;
+    }
+    
+    /* Mobile Header adjustments */
+    header.floating-header {
+        top: 10px;
+        width: calc(100% - 20px);
+    }
+    header.floating-header .container {
+        padding: 8px 16px !important;
+    }
+    header.floating-header nav {
+        gap: var(--space-sm) !important;
+    }
+    
+    /* Typography adjustments on mobile */
+    h1, .brand-hero-title {
+        font-size: clamp(2.2rem, 8vw, 3.5rem) !important;
+    }
+    h2, .mockup-reveal-info h2, .narrative-block h2, .gallery-pin-header h2, .deck-info-panel h2 {
+        font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+    }
+    p, .narrative-block p, .mockup-reveal-info p, .deck-info-panel p {
+        font-size: 0.95rem !important; /* Extremely readable font size on mobile */
+        line-height: 1.6 !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .iphone13-mockup-wrapper.zoomed-mockup, 
+    .restease-mockup-wrapper,
+    .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
+        width: 280px !important;
+        height: 447px !important; /* Scale down proportionally (280 * 1.595) */
+    }
+    .iphone13-mockup-wrapper .phone-viewport,
+    .restease-mockup-wrapper .phone-viewport {
+        border-radius: 18px !important;
     }
 }
 
