@@ -30,8 +30,8 @@
     --accent-glow: rgba(42, 101, 212, 0.12);
 
     /* Fonts */
-    --font-display: 'Clash Display', sans-serif;
-    --font-body: 'Montserrat', sans-serif;
+    --font-display: 'Clash Display', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
     /* Transition Speeds */
     --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
