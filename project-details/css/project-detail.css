@@ -92,7 +92,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1248px;
     margin: 0 auto;
     padding: 0 var(--space-md);
 }
@@ -686,7 +686,7 @@ li {
     color: var(--accent);
     border: 1px solid var(--accent);
     padding: 6px 16px;
-    border-radius: 50px;
+    border-radius: 6px;
     margin-bottom: var(--space-sm);
     display: inline-block;
     background-color: rgba(43, 218, 122, 0.05);
@@ -759,7 +759,7 @@ li {
 .chapter-narrative .container {
     height: 100%;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1248px;
     margin: 0 auto;
 }
 
@@ -924,7 +924,7 @@ li {
 .gallery-horizontal-track {
     display: flex;
     gap: var(--space-lg);
-    padding: 0 max(var(--space-md), calc((100vw - 1200px) / 2 + var(--space-md)));
+    padding: 0 max(var(--space-md), calc((100vw - 1248px) / 2 + var(--space-md)));
     will-change: transform;
     align-items: stretch;
 }
@@ -1001,7 +1001,7 @@ li {
 .chapter-mockup-pin .container {
     height: 100%;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1248px;
     margin: 0 auto;
 }
 
@@ -1695,7 +1695,7 @@ li {
 }
 
 /* Intermediate Responsive Sizing for medium viewports (e.g. tablets, small laptops) */
-@media (max-width: 1200px) {
+@media (max-width: 1248px) {
     .gallery-slide-card {
         width: 600px;
     }
@@ -2279,7 +2279,7 @@ li {
     box-shadow: 0 0 5px #00e676;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1248px) {
     .deck-grid-container {
         grid-template-columns: 1fr;
         height: auto;
@@ -2635,7 +2635,7 @@ body.theme-brand .scroll-indicator-arrow:hover {
 }
 
 /* Responsive refinements for layout stacking & scroll snaps */
-@media (max-width: 1200px) {
+@media (max-width: 1248px) {
     .stacked-deck-wrapper {
         width: 100%;
         max-width: 680px;

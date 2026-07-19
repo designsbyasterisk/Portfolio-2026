@@ -5,6 +5,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Disable automatic browser scroll restoration on reload to prevent GSAP pin overlap glitches
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // Register ScrollTrigger plugin with GSAP
     gsap.registerPlugin(ScrollTrigger);
 
@@ -106,47 +112,105 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ----------------------------------------------------------------------
-       4. GSAP Horizontal Scroll Showcase with Card Parallax
+       4. GSAP Horizontal Scroll Showcase (Responsive via MatchMedia)
        ---------------------------------------------------------------------- */
     const scrollWrapper = document.querySelector('.horizontal-scroll-wrapper');
     const scrollContainer = document.querySelector('.horizontal-scroll-container');
-    let scrollTween;
 
     if (scrollWrapper && scrollContainer) {
-        // Main pinning horizontal transition
-        scrollTween = gsap.to(scrollWrapper, {
-            x: () => -(scrollWrapper.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: scrollContainer,
-                pin: true,
-                scrub: 1,
-                start: "top top",
-                end: () => "+=" + (scrollWrapper.scrollWidth - window.innerWidth),
-                invalidateOnRefresh: true
-            }
-        });
+        // Dynamic helper to calculate exact scroll distance so last panel (HONÉE) centers perfectly on screen
+        const getEndScroll = () => {
+            const lastPanel = scrollWrapper.querySelector('.horizontal-scroll-panel:last-child');
+            if (!lastPanel) return scrollWrapper.scrollWidth - window.innerWidth;
+            const lastPanelCenter = lastPanel.offsetLeft + (lastPanel.offsetWidth / 2);
+            const viewportCenter = window.innerWidth / 2;
+            return Math.max(0, lastPanelCenter - viewportCenter);
+        };
 
-        // Horizontal Parallax Card Motion (cards slide and scale into place)
-        const panels = gsap.utils.toArray('.horizontal-scroll-panel');
-        panels.forEach((panel) => {
-            const card = panel.querySelector('.horizontal-project-card');
-            if (card) {
-                gsap.fromTo(card, 
-                    { scale: 0.92, x: 60, opacity: 0.8 },
-                    {
-                        scale: 1,
-                        x: 0,
-                        opacity: 1,
-                        scrollTrigger: {
+        ScrollTrigger.matchMedia({
+            // Desktop & Laptop Viewports (769px and above)
+            "(min-width: 769px)": function() {
+                const scrollTween = gsap.to(scrollWrapper, {
+                    x: () => -getEndScroll(),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: scrollContainer,
+                        pin: true,
+                        scrub: 1,
+                        start: "top top",
+                        end: () => "+=" + getEndScroll(),
+                        invalidateOnRefresh: true,
+                        anticipatePin: 1
+                    }
+                });
+
+                // Horizontal project card entrance motion
+                const panels = gsap.utils.toArray('.horizontal-scroll-panel');
+                panels.forEach((panel) => {
+                    const card = panel.querySelector('.horizontal-project-card');
+                    if (card) {
+                        gsap.fromTo(card, 
+                            { scale: 0.94, opacity: 0.85 },
+                            {
+                                scale: 1,
+                                opacity: 1,
+                                scrollTrigger: {
+                                    trigger: panel,
+                                    containerAnimation: scrollTween,
+                                    start: "left 85%",
+                                    end: "left 20%",
+                                    scrub: 0.5
+                                }
+                            }
+                        );
+                    }
+
+                    // Update project indicator tracker text per panel
+                    const projectNum = panel.dataset.projectNum;
+                    const projectDesc = panel.dataset.projectDesc;
+                    if (projectNum && projectDesc) {
+                        ScrollTrigger.create({
                             trigger: panel,
                             containerAnimation: scrollTween,
-                            start: "left 90%",
-                            end: "left 15%",
-                            scrub: 0.8
-                        }
+                            start: "left 75%",
+                            end: "right 25%",
+                            onEnter: () => updateProjectTrackerText(projectNum, projectDesc),
+                            onEnterBack: () => updateProjectTrackerText(projectNum, projectDesc)
+                        });
                     }
-                );
+                });
+
+                // Theme background transition (Light -> Midnight Navy -> Light)
+                ScrollTrigger.create({
+                    trigger: scrollContainer,
+                    start: "top 60%",
+                    end: () => "+=" + (getEndScroll() + window.innerHeight * 0.8),
+                    onEnter: () => gsap.to("body", { backgroundColor: "#0A1128", color: "#FAF6EE", duration: 0.4 }),
+                    onLeaveBack: () => gsap.to("body", { backgroundColor: "var(--bg-canvas)", color: "#0A1128", duration: 0.4 }),
+                    onLeave: () => gsap.to("body", { backgroundColor: "var(--bg-canvas)", color: "#0A1128", duration: 0.4 }),
+                    onEnterBack: () => gsap.to("body", { backgroundColor: "#0A1128", color: "#FAF6EE", duration: 0.4 })
+                });
+
+                function updateProjectTrackerText(num, desc) {
+                    const numEl = document.getElementById("current-project-num");
+                    const descEl = document.getElementById("current-project-desc");
+                    const barEl = document.getElementById("project-progress-bar");
+                    if (numEl && descEl) {
+                        numEl.textContent = num;
+                        descEl.textContent = desc;
+
+                        const numVal = parseInt(num, 10);
+                        if (barEl && !isNaN(numVal)) {
+                            const pct = (numVal / 4) * 100;
+                            gsap.to(barEl, { width: pct + "%", duration: 0.35, ease: "power2.out" });
+                        }
+
+                        gsap.fromTo([numEl, descEl], 
+                            { opacity: 0, y: 6 }, 
+                            { opacity: 1, y: 0, duration: 0.3, stagger: 0.04, ease: "power2.out" }
+                        );
+                    }
+                }
             }
         });
     }
@@ -155,123 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
        4.5. Interactive Storytelling Scroll Additions
        ---------------------------------------------------------------------- */
     
-    // ==========================================
-    // A. INTERACTIVE PARTICLE CANVAS BACKDROP
-    // ==========================================
-    const canvas = document.getElementById('hero-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null };
-        const numParticles = 80;
-
-        // Resize canvas to full screen
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Track cursor coordinates
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        // Particle class definition
-        class Particle {
-            constructor() {
-                this.reset(true);
-            }
-
-            reset(init = false) {
-                this.x = Math.random() * canvas.width;
-                this.y = init ? Math.random() * canvas.height : -10;
-                this.size = Math.random() * 2.2 + 0.8;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.3 + 0.15; // Slow drift down
-                this.baseAlpha = Math.random() * 0.35 + 0.15;
-                this.alpha = this.baseAlpha;
-                this.color = 'rgba(42, 101, 212, '; // Hyper blue default
-            }
-
-            update() {
-                // Apply subtle random drift
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Mouse interaction: swirl and attract to mouse
-                if (mouse.x !== null && mouse.y !== null) {
-                    const dx = mouse.x - this.x;
-                    const dy = mouse.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180) {
-                        const force = (180 - dist) / 180;
-                        // Attracted to cursor with a tangential orbit swirl
-                        this.x += (dx / dist) * force * 1.5 + (dy / dist) * force * 0.5;
-                        this.y += (dy / dist) * force * 1.5 - (dx / dist) * force * 0.5;
-                    }
-                }
-
-                // If scrolled past hero, particles fade down or reset
-                if (this.y > canvas.height) {
-                    this.reset(false);
-                }
-            }
-
-            draw() {
-                // Smooth interpolation to snap columns on scroll (materializing grid)
-                const morphVal = particleState.morph; // morph is between 0 and 1
-                let drawX = this.x;
-                let drawY = this.y;
-                let drawAlpha = this.alpha;
-
-                if (morphVal > 0.01) {
-                    // Snap towards nearest 40px grid line (matching pattern-bg)
-                    const gridCol = Math.round(this.x / 40) * 40;
-                    drawX = this.x * (1 - morphVal) + gridCol * morphVal;
-                    
-                    // Interpolate color dynamically between vibrant blue (42, 101, 212) and cream white (250, 246, 238)
-                    const r = Math.round(42 * (1 - morphVal) + 250 * morphVal);
-                    const g = Math.round(101 * (1 - morphVal) + 246 * morphVal);
-                    const b = Math.round(212 * (1 - morphVal) + 238 * morphVal);
-                    this.color = `rgba(${r}, ${g}, ${b}, `;
-                    drawAlpha = this.baseAlpha * (1 - morphVal * 0.6); // Keep it subtle when morphed
-                } else {
-                    this.color = 'rgba(42, 101, 212, ';
-                    drawAlpha = this.alpha;
-                }
-
-                ctx.beginPath();
-                ctx.arc(drawX, drawY, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color + drawAlpha + ')';
-                ctx.fill();
-            }
-        }
-
-        // Initialize particles
-        for (let i = 0; i < numParticles; i++) {
-            particles.push(new Particle());
-        }
-
-        // Main animation loop
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-    }
-
     // ==========================================
     // B. ROTATING TEXT ORBITER (Scroll-Linked)
     // ==========================================
@@ -316,8 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     projectsBgTl.to("body", { backgroundColor: "#0A1128", color: "#FAF6EE" })
-                .to(particleState, { morph: 1, ease: "none" }, 0)
-                .to(".parallax-shape", { borderColor: "rgba(250, 246, 238, 0.12)" }, 0)
+                
                 .to(".showcase-header h2 span", { color: "#FAF6EE" }, 0);
 
     // Transition 2: Midnight Navy -> White for Section 02 (Work History)
@@ -331,8 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     experienceBgTl.to("body", { backgroundColor: "var(--bg-canvas)", color: "#0A1128" })
-                  .to(particleState, { morph: 0, ease: "none" }, 0)
-                  .to(".parallax-shape", { borderColor: "rgba(10, 17, 40, 0.08)" }, 0)
+                  
                   .to(".showcase-header h2 span", { color: "#0A1128" }, 0);
 
     // ==========================================
@@ -350,101 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrub: true
             }
         });
-
-        // Trigger dynamic subtitle cross-fades per panel entry
-        const panels = gsap.utils.toArray('.horizontal-scroll-panel');
-        panels.forEach((panel) => {
-            const projectNum = panel.dataset.projectNum;
-            const projectDesc = panel.dataset.projectDesc;
-
-            if (projectNum && projectDesc) {
-                ScrollTrigger.create({
-                    trigger: panel,
-                    containerAnimation: scrollTween,
-                    start: "left 65%",
-                    end: "right 35%",
-                    onEnter: () => {
-                        updateProjectTrackerText(projectNum, projectDesc, 5);
-                    },
-                    onEnterBack: () => {
-                        updateProjectTrackerText(projectNum, projectDesc, -5);
-                    }
-                });
-            }
-        });
-
-        function updateProjectTrackerText(num, desc, yOffset) {
-            const numEl = document.getElementById("current-project-num");
-            const descEl = document.getElementById("current-project-desc");
-            if (numEl && descEl) {
-                numEl.textContent = num;
-                descEl.textContent = desc;
-
-                gsap.fromTo([numEl, descEl], 
-                    { opacity: 0, y: yOffset }, 
-                    { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: "power2.out" }
-                );
-            }
-        }
     }
-
-
-
-    // ==========================================
-    // G. PARALLAX SHAPES & HONEE IMAGE PORTALS
-    // ==========================================
-    const honeeImg = document.querySelector('.parallax-portal-img');
-    if (honeeImg && scrollTween) {
-        gsap.fromTo(honeeImg, 
-            { yPercent: -15, scale: 1.05 },
-            {
-                yPercent: 15,
-                scale: 1.12,
-                scrollTrigger: {
-                    trigger: ".thumb-honee",
-                    containerAnimation: scrollTween,
-                    start: "left 100%",
-                    end: "right 0%",
-                    scrub: true
-                }
-            }
-        );
-    }
-
-    // Background floating elements scroll parallax
-    gsap.to(".shape-1", {
-        y: 200,
-        rotation: 220,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-1",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
-    gsap.to(".shape-2", {
-        y: -240,
-        rotation: -180,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-2",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
-    gsap.to(".shape-3", {
-        y: 280,
-        rotation: 120,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-3",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
 
     // Heading word-by-word reveal transitions
     const revealHeaders = document.querySelectorAll('.showcase-header h2');
@@ -1056,3 +907,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setupSplitPortfolioElement(el);
     });
 });
+
+// Refresh ScrollTrigger after fonts and all media assets load completely to prevent overlap bugs
+window.addEventListener('load', () => {
+    ScrollTrigger.refresh(true);
+});
+if (document.fonts) {
+    document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+    });
+}

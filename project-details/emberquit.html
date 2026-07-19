@@ -552,7 +552,7 @@
         .ds-btn-state.ds-btn-primary { 
             background: #0019e6; 
             color: #fff; 
-            border-radius: 9999px;
+            border-radius: 6px;
         }
         .ds-btn-state.ds-btn-primary.hover {
             background: #1a33ff;
@@ -978,7 +978,7 @@
         }
         .ds-bar-fill {
             width: 100%;
-            border-radius: 999px 999px 0 0;
+            border-radius: 6px 999px 0 0;
             z-index: 1;
             position: relative;
             transition: height 0.4s ease;
@@ -1144,12 +1144,12 @@
     <div class="pattern-bg"></div>
 
     <!-- Interactive Canvas backdrop -->
-    <canvas id="project-canvas"></canvas>
+    
     
     <!-- Floating Parallax Shapes -->
-    <div class="parallax-shape shape-1" style="position: absolute; top: 12%; right: 5%; width: 60px; height: 60px; border: 2px dashed rgba(10, 17, 40, 0.06); border-radius: 50%; pointer-events: none; z-index: -1;"></div>
-    <div class="parallax-shape shape-2" style="position: absolute; top: 48%; left: 3%; width: 80px; height: 80px; border: 2px dashed rgba(10, 17, 40, 0.06); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); pointer-events: none; z-index: -1;"></div>
-    <div class="parallax-shape shape-3" style="position: absolute; top: 80%; right: 7%; width: 100px; height: 100px; border: 2px dashed rgba(10, 17, 40, 0.06); pointer-events: none; z-index: -1; transform: rotate(15deg);"></div>
+    
+    
+    
 
     <!-- Header navigation (Floating Island Navbar) -->
     <header class="floating-header">
@@ -1179,11 +1179,11 @@
                         </g>
                     </svg>
                 </a>
-                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: var(--brand-moodboard-bg, rgba(255,255,255,0.05)); border: 1px solid var(--brand-border, rgba(255,255,255,0.1)); color: var(--text-main); border-radius: 50px;">EMBERQUIT</span>
+                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px; background-color: var(--brand-moodboard-bg, rgba(255,255,255,0.05)); border: 1px solid var(--brand-border, rgba(255,255,255,0.1)); color: var(--text-main); border-radius: 6px;">EMBERQUIT</span>
             </div>
             
             <nav style="display: flex; align-items: center; gap: var(--space-md);">
-                <a href="../index.html#projects" class="back-link" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main);">← Back to Works</a>
+                <a href="../resume.html" class="font-display" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center; color: var(--text-main); text-decoration: none;">ABOUT ME</a>
             </nav>
         </div>
     </header>
@@ -1305,7 +1305,7 @@
                                     </div>
                                     <!-- Results state (initially hidden) -->
                                     <div id="quiz-result-container" style="display: none; flex-grow: 1; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 12px;">
-                                        <span class="mono brand-accent-color" style="font-size: 0.62rem; padding: 2px 8px; background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; border: 1px solid rgba(30, 99, 243, 0.2); border-radius: 50px;">DEPENDENCE REPORT</span>
+                                        <span class="mono brand-accent-color" style="font-size: 0.62rem; padding: 2px 8px; background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; border: 1px solid rgba(30, 99, 243, 0.2); border-radius: 6px;">DEPENDENCE REPORT</span>
                                         <h4 id="quiz-result-bracket" style="font-size: 0.9rem; color: var(--brand-text); margin: 0; font-family: 'Quicksand', sans-serif;">HIGH DEPENDENCE</h4>
                                         <div id="quiz-result-score" style="font-size: 2.2rem; font-family: 'Quicksand', sans-serif; color: #1E63F3; line-height: 1;">8/10</div>
                                         <p style="font-size: 0.65rem; color: var(--brand-text-sub, #2C374E); margin: 0; line-height: 1.3;">Taper plan generated below.</p>
@@ -1430,10 +1430,10 @@
                                  </div>
                                 <!-- Trigger Pills selection -->
                                 <div style="display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; max-width: 240px;">
-                                    <button class="heatmap-trigger-btn active" data-trigger="stress" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(30, 99, 243, 0.2); background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; cursor: pointer; font-family: 'Inter', sans-serif;">Stress</button>
-                                    <button class="heatmap-trigger-btn" data-trigger="coffee" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Coffee</button>
-                                    <button class="heatmap-trigger-btn" data-trigger="social" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Social</button>
-                                    <button class="heatmap-trigger-btn" data-trigger="boredom" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 50px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Boredom</button>
+                                    <button class="heatmap-trigger-btn active" data-trigger="stress" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 6px; border: 1px solid rgba(30, 99, 243, 0.2); background-color: rgba(30, 99, 243, 0.1); color: #1E63F3; cursor: pointer; font-family: 'Inter', sans-serif;">Stress</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="coffee" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 6px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Coffee</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="social" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 6px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Social</button>
+                                    <button class="heatmap-trigger-btn" data-trigger="boredom" style="padding: 3px 8px; font-size: 0.65rem; border-radius: 6px; border: 1px solid rgba(14, 22, 41, 0.15); background-color: rgba(14, 22, 41, 0.04); color: var(--brand-text-sub, #2C374E); cursor: pointer; font-family: 'Inter', sans-serif;">Boredom</button>
                                 </div>
                             </div>
                             <div class="emberquit-deck-card-text">
@@ -1827,7 +1827,7 @@
                                     <!-- Header Row -->
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                         <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.05em; font-family: 'Inter', sans-serif;">LAST 7 DAYS</span>
-                                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 50px; background-color: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; font-family: 'Inter', sans-serif;">
+                                        <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 6px; background-color: #dcfce7; color: #15803d; font-size: 10px; font-weight: 700; font-family: 'Inter', sans-serif;">
                                             <i data-lucide="trending-down" style="width: 12px; height: 12px; stroke: #15803d; stroke-width: 3;"></i> -2 vs yesterday
                                         </span>
                                     </div>
@@ -2044,11 +2044,12 @@
  
     <!-- Floating Island Footer -->
     <footer class="project-footer-island">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
-            <span class="mono" style="font-size: 0.72rem; color: var(--brand-text-sub, #2C374E); opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
-            <a href="restease.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #1E63F3); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">Next Project: Restease →</a>
-        </div>
-    </footer>
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
+        <a href="honee.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #1E63F3); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">← HONÉE</a>
+        <span class="mono" style="font-size: 0.72rem; color: var(--brand-text-sub, #2C374E); opacity: 0.8; font-family: monospace;">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
+        <a href="restease.html" class="btn-pop btn-pop-primary" style="padding: 6px 16px; font-size: 0.8rem; border-radius: 50px; background-color: var(--brand-accent, #1E63F3); color: #ffffff; margin: 0; display: inline-flex; align-items: center; height: 32px; font-family: 'Quicksand', sans-serif;">Restease →</a>
+    </div>
+</footer>
 
     <!-- GSAP & ScrollTrigger Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>

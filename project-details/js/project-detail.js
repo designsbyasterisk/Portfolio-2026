@@ -221,8 +221,7 @@ function initProjectStorytelling() {
                .to(".bento-card p, .features-list li", { color: brandText }, 0)
                .to(".bento-card h2", { borderBottomColor: brandAccent }, 0)
                .to(".gallery-card", { backgroundColor: brandCardBg, borderColor: brandBorder }, 0)
-               .to(".gallery-caption", { color: brandText }, 0)
-               .to(".parallax-shape", { borderColor: brandBorder }, 0);
+               .to(".gallery-caption", { color: brandText }, 0);
     }
 
     // ==========================================
@@ -371,42 +370,7 @@ function initProjectStorytelling() {
         });
     }
 
-    // ==========================================
-    // F. BACKGROUND SHAPES PARALLAX
-    // ==========================================
-    gsap.to(".shape-1", {
-        y: 160,
-        rotation: 180,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-1",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
-    gsap.to(".shape-2", {
-        y: -180,
-        rotation: -120,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-2",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
-    gsap.to(".shape-3", {
-        y: 200,
-        rotation: 90,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".shape-3",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2
-        }
-    });
+
 
     // ==========================================
     // G. CINEMATIC NARRATIVE CHAPTER ANIMATIONS (Emberquit Page)

@@ -47,7 +47,7 @@
 
 .timeline-marker {
     position: absolute;
-    left: -29px;
+    left: -31px;
     top: 6px;
     width: 12px;
     height: 12px;
@@ -439,9 +439,19 @@ header.floating-header .container {
     /* Print grid layout: keeps exact 2-column format as requested */
     .resume-layout-grid {
         display: grid !important;
-        grid-template-columns: 4.2fr 7.8fr !important;
-        gap: 24pt !important;
+        grid-template-columns: 4.6fr 7.4fr !important;
+        gap: 20pt !important;
         margin-bottom: 0 !important;
+    }
+
+    .bento-card {
+        overflow: visible !important;
+    }
+
+    .contact-item,
+    .contact-item a {
+        white-space: normal !important;
+        word-break: break-word !important;
     }
 
     .profile-photo-container {
@@ -540,15 +550,21 @@ header.floating-header .container {
         border: none !important;
         clip-path: none !important;
         display: inline !important;
+        white-space: nowrap !important;
     }
 
     .timeline-date {
         color: #000000 !important;
         font-size: 10pt !important;
+        white-space: nowrap !important;
     }
 
     .timeline-meta {
         margin-bottom: 1pt !important;
+    }
+
+    #certificates .timeline-role {
+        font-weight: 500 !important;
     }
 
     /* Force plain black text on all body and list elements to fix contrast */
