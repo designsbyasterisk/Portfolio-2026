@@ -514,7 +514,7 @@ a {
 .horizontal-scroll-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    width: 350vw;
+    width: 280vw;
     height: 92vh;
     min-height: 640px;
     align-items: center;
@@ -915,7 +915,7 @@ a {
     .horizontal-scroll-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    width: 350vw;
+    width: 280vw;
     height: 90vh;
 }
     .horizontal-scroll-panel {
@@ -1678,4 +1678,15 @@ header.floating-header .container {
     position: relative;
     z-index: 2;
     margin-bottom: var(--space-xl);
+}
+
+
+.hero-section {
+    padding-top: clamp(110px, 14vh, 160px);
+    padding-bottom: var(--space-xl);
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
