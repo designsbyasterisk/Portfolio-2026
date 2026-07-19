@@ -75,10 +75,10 @@
 
     <!-- Navigation Header -->
     <header class="floating-header">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; height: 50px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <a href="index.html" class="logo" style="display: inline-flex; align-items: center; width: 32px; height: 32px; justify-content: center; transform: translateY(2%);">
-                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+        <div class="container flex-between nav-container">
+            <div class="flex items-center gap-xs">
+                <a href="index.html" class="logo flex-inline-center nav-logo-link">
+                    <svg width="28" height="28" viewBox="0 0 1514 1287" fill="none" xmlns="http://www.w3.org/2000/svg" class="overflow-visible">
                         <style>
                         @keyframes kf_Frame_8_transform_0 {
                           0% {
@@ -101,17 +101,17 @@
                         </g>
                     </svg>
                 </a>
-                <span class="label-pill" style="font-size: 0.65rem; padding: 4px 10px; margin: 0; display: inline-flex; align-items: center; justify-content: center; height: 24px;">PORTFOLIO</span>
+                <span class="label-pill label-pill-subtle flex-inline-center">PORTFOLIO</span>
             </div>
             
-            <nav style="display: flex; align-items: center; gap: var(--space-md);">
-                <a href="resume.html" class="font-display" style="font-size: 0.9rem; margin: 0; display: inline-flex; align-items: center;">ABOUT ME</a>
+            <nav class="flex items-center gap-md">
+                <a href="resume.html" class="font-display nav-link flex-inline-center">ABOUT ME</a>
             </nav>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main style="padding-top: 130px; position: relative; overflow: hidden;">
+    <main class="main-content relative overflow-hidden">
         
         
         
@@ -119,19 +119,19 @@
         
         
         <!-- Hero Section -->
-        <section class="container reveal" style="min-height: calc(100vh - 160px); display: flex; flex-direction: column; justify-content: center; margin-bottom: var(--space-lg); position: relative;">
+        <section class="container reveal hero-section flex-column-center relative">
 
             <div class="bento-grid">
                 <!-- Hero text panel (Bento Card) -->
-                <div class="bento-card col-12" style="display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 80px 100px; min-height: 420px;">
-                    <h1 class="custom-entrance-h1" style="margin-bottom: var(--space-sm); position: relative; font-size: clamp(2.2rem, 4.8vw, 3.8rem);">
-                        <span id="hero-greeting" class="gsap-split-portfolio" style="color: var(--accent-text);">HI THERE!</span><br>
-                        <span class="nowrap-desktop"><span class="hero-title-main gsap-split-portfolio">I</span> <span class="hero-title-main gsap-split-portfolio">AM</span> <span class="hero-title-main gsap-split-portfolio">SHREYA</span> <span class="hero-title-main gsap-split-portfolio">KULKARNI</span></span>
+                <div class="bento-card col-12 hero-card flex-column-center text-left">
+                    <h1 class="custom-entrance-h1 hero-title relative">
+                        <span id="hero-greeting" class="hero-greeting-accent">HI THERE!</span><br>
+                        <span class="nowrap-desktop"><span class="hero-title-main">I AM SHREYA KULKARNI</span></span>
                     </h1>
-                    <p class="text-lead" style="max-width: 620px; margin-bottom: var(--space-md);">
+                    <p class="text-lead hero-description">
                         A Product Designer who applies product thinking to promote unconventional design solutions by pushing the boundaries of problem solving and articulating compelling narratives.
                     </p>
-                    <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+                    <div class="flex flex-wrap gap-sm">
                         <a href="#projects" class="btn-pop btn-pop-primary magnetic">
                             VIEW WORKS
                         </a>
@@ -141,7 +141,7 @@
             </div>
 
             <!-- Directional Navigation Arrow (Scroll Down) -->
-            <div style="display: flex; justify-content: center; margin-top: var(--space-md);">
+            <div class="flex-center mt-md">
                 <button class="scroll-indicator-arrow" aria-label="Scroll to projects" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });">
                     <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -152,9 +152,9 @@
         </section>
 
                 <!-- 01. FEATURED PROJECTS (GSAP Horizontal Scroll glide) -->
-        <section id="projects" style="margin-bottom: var(--space-xl);">
+        <section id="projects" class="projects-section">
             <div class="container">
-                <div class="showcase-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-sm);">
+                <div class="showcase-header flex-between-end flex-wrap gap-sm">
                     <div>
                         <span class="mono">SECTION 01 // FEATURED PROJECTS</span>
                     </div>
@@ -176,12 +176,12 @@
 
                 <div class="horizontal-scroll-wrapper">
                     <!-- Panel 1: Intro -->
-                    <div class="horizontal-scroll-panel" style="color: var(--bg-canvas);">
-                        <div class="pulse-badge" style="margin-bottom: var(--space-sm); background-color: var(--accent); color: var(--accent-contrast);">
+                    <div class="horizontal-scroll-panel text-canvas">
+                        <div class="pulse-badge pulse-badge-accent">
                             <span>PRODUCT &amp; SYSTEMS DESIGN</span>
                         </div>
-                        <h2 class="font-display" style="color: var(--bg-canvas); font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: var(--space-md);">Featured Projects</h2>
-                        <button class="scroll-indicator-arrow arrow-horizontal" aria-hidden="true" style="border-color: rgba(250, 246, 238, 0.2); color: var(--bg-canvas); background-color: transparent;">
+                        <h2 class="font-display featured-projects-title text-center">Featured Projects</h2>
+                        <button class="scroll-indicator-arrow arrow-horizontal scroll-arrow-light" aria-hidden="true">
                              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                  <line x1="5" y1="12" x2="19" y2="12"></line>
                                  <polyline points="12 5 19 12 12 19"></polyline>
@@ -191,7 +191,7 @@
 
                     <!-- Panel 2: Project 1 (Emberquit Mobile App) -->
                     <div class="horizontal-scroll-panel" data-project-num="01" data-project-desc="EMBERQUIT: Behavioral Coaching Companion">
-                        <a href="project-details/emberquit.html" class="horizontal-project-card bento-card card-emberquit" style="text-decoration: none;">
+                        <a href="project-details/emberquit.html" class="horizontal-project-card bento-card card-emberquit">
                             <div class="horizontal-project-media">
                                 <div class="project-thumb-container thumb-emberquit">
                                     <div class="project-thumb-bg"></div>
@@ -217,7 +217,7 @@
 
                     <!-- Panel 3: Project 2 (Restease Mobile App) -->
                     <div class="horizontal-scroll-panel" data-project-num="02" data-project-desc="RESTEASE: Disaster Response &amp; Telemetry System">
-                        <a href="project-details/restease.html" class="horizontal-project-card bento-card card-restease" style="text-decoration: none;">
+                        <a href="project-details/restease.html" class="horizontal-project-card bento-card card-restease">
                             <div class="horizontal-project-media">
                                 <div class="project-thumb-container thumb-restease">
                                     <div class="project-thumb-bg"></div>
@@ -243,7 +243,7 @@
 
                     <!-- Panel 4: Project 3 (F1 Live Telemetry) -->
                     <div class="horizontal-scroll-panel" data-project-num="03" data-project-desc="F1 DASHBOARD: Real-Time Race Analytics">
-                        <a href="project-details/f1_dashboard.html" class="horizontal-project-card bento-card card-f1" style="text-decoration: none;">
+                        <a href="project-details/f1_dashboard.html" class="horizontal-project-card bento-card card-f1">
                             <div class="horizontal-project-media">
                                 <div class="project-thumb-container thumb-f1">
                                     <div class="project-thumb-bg"></div>
@@ -269,7 +269,7 @@
 
                     <!-- Panel 5: Project 4 (HONÉE Storefront) -->
                     <div class="horizontal-scroll-panel" data-project-num="04" data-project-desc="HONÉE STOREFRONT: Luxury Organic Honey Skincare">
-                        <a href="project-details/honee.html" class="horizontal-project-card bento-card card-honee" style="text-decoration: none;">
+                        <a href="project-details/honee.html" class="horizontal-project-card bento-card card-honee">
                             <div class="horizontal-project-media">
                                 <div class="project-thumb-container thumb-honee">
                                     <div class="project-thumb-bg"></div>
@@ -298,38 +298,38 @@
 
 
         <!-- 02. WORK HISTORY -->
-        <section id="experience-summary" class="container reveal" style="margin-bottom: var(--space-xl);">
+        <section id="experience-summary" class="container reveal section-spacing-xl">
             <div class="showcase-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-sm);">
                 <div>
                     <span class="mono">SECTION 02 // WORK HISTORY</span>
                 </div>
             </div>
 
-            <div class="bento-card" style="padding: var(--space-xl) var(--space-lg); text-align: center;">
-                <p class="text-lead" style="max-width: 680px; margin: 0 auto var(--space-md) auto; line-height: 1.7; font-weight: 500;">
+            <div class="bento-card experience-card text-center">
+                <p class="text-lead experience-description">
                     As the Founding Designer at The Karmhaus Design Studio, I work at the intersection of systems thinking, interaction design, and product design. I enjoy simplifying complex problems into intuitive experiences across physical and digital touchpoints.
                 </p>
-                <div style="display: flex; justify-content: center; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-md); opacity: 0.9;">
-                    <span class="label-pill" style="font-size: 0.75rem; text-transform: none; font-weight: 600; letter-spacing: 0.03em;">The Karmhaus (Founding Designer) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; September 2025 - Present</span>
+                <div class="flex-center flex-wrap gap-sm mb-md opacity-90">
+                    <span class="label-pill label-pill-experience">The Karmhaus (Founding Designer) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; September 2025 - Present</span>
                 </div>
-                <div style="text-align: center; margin-top: var(--space-md);">
-                    <a href="resume.html" class="btn-pop btn-pop-primary magnetic" style="font-size: 1.05rem; padding: 14px 28px;">VIEW DETAILED RESUME</a>
+                <div class="text-center mt-md">
+                    <a href="resume.html" class="btn-pop btn-pop-primary btn-resume magnetic">VIEW DETAILED RESUME</a>
                 </div>
             </div>
         </section>
 
         <!-- CTA Say Hello (Bento Card) -->
-        <section class="container reveal bento-card cta-bento-card" style="padding: var(--space-xl) var(--space-lg); margin-bottom: var(--space-xl);">
+        <section class="container reveal bento-card cta-bento-card cta-section">
             <div class="cta-grid">
                 <div class="cta-content">
-                    <div class="label-pill" style="margin-bottom: var(--space-sm); background-color: var(--accent); color: var(--accent-contrast); transition: all var(--transition-slow);">LET'S CONNECT</div>
-                    <h2 class="font-display" style="margin-bottom: var(--space-xs); font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--text-main);">Have a project in mind?</h2>
-                    <p style="font-size: 1.05rem; margin-bottom: 0; color: var(--text-sub);">
+                    <div class="label-pill label-pill-accent">LET'S CONNECT</div>
+                    <h2 class="font-display cta-heading">Have a project in mind?</h2>
+                    <p class="cta-text">
                         I am currently open to consulting, contract work, and full-time Product Design roles. Let's make something playful and high-impact together.
                     </p>
                 </div>
                 <div class="cta-action">
-                    <a href="mailto:designsbyasterisk@gmail.com" class="btn-pop btn-pop-primary magnetic" style="font-size: 1.15rem; padding: 18px 36px; display: inline-flex; align-items: center; gap: 10px;">
+                    <a href="mailto:designsbyasterisk@gmail.com" class="btn-pop btn-pop-primary btn-cta flex-inline-center gap-xs magnetic">
                         SAY HELLO
                     </a>
                 </div>
@@ -339,12 +339,12 @@
     </main>
 
     <!-- Footer -->
-    <footer style="background-color: var(--bg-card); padding: var(--space-md) 0; margin-top: var(--space-xl); border-top: 1px solid rgba(10, 17, 40, 0.06);">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+    <footer class="site-footer">
+        <div class="container flex-between flex-wrap gap-md">
             <span class="mono" style="font-size: 0.75rem; color: var(--text-main);">© 2026 SHREYA KULKARNI. ALL RIGHTS RESERVED.</span>
-            <div style="display: flex; gap: var(--space-md);">
-                <a href="mailto:designsbyasterisk@gmail.com" class="mono" style="font-size: 0.75rem; color: var(--text-main);">Email</a>
-                <a href="https://linkedin.com/in/shreyakulkarni01" target="_blank" class="mono" style="font-size: 0.75rem; color: var(--text-main);">LinkedIn</a>
+            <div class="flex gap-md">
+                <a href="mailto:designsbyasterisk@gmail.com" class="mono footer-link">Email</a>
+                <a href="https://linkedin.com/in/shreyakulkarni01" target="_blank" class="mono footer-link">LinkedIn</a>
             </div>
         </div>
     </footer>
@@ -355,7 +355,7 @@
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
-    <script src="js/cursor.js"></script>
+    
 
 
 </body></html>

@@ -1,0 +1,34 @@
+/* ===========================
+   CSS ARCHITECTURE ENTRY POINT
+=========================== */
+
+@layer reset, tokens, base, layout, components, utilities;
+
+/* ===========================
+   DESIGN TOKENS
+=========================== */
+@import "base/variables.css" layer(tokens);
+
+/* ===========================
+   BASE
+=========================== */
+@import "base/reset.css" layer(reset);
+@import "base/typography.css" layer(base);
+@import "base/globals.css" layer(base);
+
+/* ===========================
+   LAYOUT
+=========================== */
+@import "layout/container.css" layer(layout);
+@import "layout/grid.css" layer(layout);
+
+/* ===========================
+   COMPONENTS
+=========================== */
+@import "components/hero.css" layer(components);
+@import "components/buttons.css" layer(components);
+@import "components/horizontal-scroll.css" layer(components);
+@import "components/cards.css" layer(components);
+@import "components/cursor.css" layer(components);
+@import "components/thumbnails.css" layer(components);
+@import "components/storytelling.css" layer(components);
