@@ -1687,3 +1687,13 @@ header.floating-header .container {
     transform: none !important;
     box-shadow: none !important;
 }
+
+/* High quality crisp rendering for thumbnail images */
+.project-thumb-container img,
+.horizontal-project-media img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
