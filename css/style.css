@@ -1697,3 +1697,9 @@ header.floating-header .container {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
+
+/* Crisp image rendering optimization */
+.project-thumb-container img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+}
