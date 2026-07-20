@@ -1679,3 +1679,11 @@ header.floating-header .container {
     z-index: 2;
     margin-bottom: var(--space-xl);
 }
+
+/* Disable hover transforms for Emberquit card */
+.card-emberquit:hover,
+.card-emberquit:hover .project-thumb-container,
+.card-emberquit:hover img {
+    transform: none !important;
+    box-shadow: none !important;
+}
