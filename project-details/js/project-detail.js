@@ -1,10 +1,3 @@
-
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
-window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-};
 /**
  * PORTFOLIO PROJECT DETAIL PAGE INTERACTIVE SCALING & STORYTELLING SCRIPT
  * Dynamically scales iframe viewports to fit CSS mockups exactly on all screen sizes,
@@ -427,7 +420,7 @@ function initProjectStorytelling() {
     let mm = gsap.matchMedia();
 
     // Desktop mode (min-width: 993px)
-    mm.add("(min-width: 769px)", () => {
+    mm.add("(min-width: 993px) and (min-aspect-ratio: 1.1/1)", () => {
         // 2. Chapter 2: Split Narrative Lock & Metric Card Zoom
         if (document.querySelector('.chapter-narrative')) {
             const narrativeTl = gsap.timeline({
