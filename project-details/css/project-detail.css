@@ -3061,21 +3061,3 @@ body.theme-brand .scroll-indicator-arrow:hover {
         transform-origin: top left;
     }
 }
-
-
-/* ==========================================================================
-   PROPORTIONAL IFRAME SCALE FALLBACKS (EXACT PERFECT FIT)
-   ========================================================================== */
-.iphone13-mockup-wrapper .phone-viewport,
-.restease-mockup-wrapper .phone-viewport {
-    overflow: hidden !important;
-}
-
-.iphone13-mockup-wrapper .phone-viewport iframe,
-.restease-mockup-wrapper .phone-viewport iframe {
-    width: 100%;
-    height: 100%;
-    border: none !important;
-    display: block;
-    transform-origin: top left;
-}
