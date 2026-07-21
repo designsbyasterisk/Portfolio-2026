@@ -859,300 +859,121 @@
 
         <!-- Chapter 5: District Control Command & Telemetry (Horizontal Gallery Pin Section) -->
         <section class="story-chapter chapter-gallery-pin" id="district-command-pin">
-            <div class="gallery-pin-header">
-                <div class="container">
-                    <span class="mono brand-accent-color">05 / SYSTEM OVERVIEW</span>
-                    <h2>How the System works</h2>
-                    <p>The RestEase App applies systems thinking to enable the Rescue Base Camp to monitor rescue teams by automatically receiving GPS coordinates from each stretcher. It also records evacuation routes, helping identify and recommend safer paths for future rescue missions based on previously traversed terrain and rescue outcomes.</p>
-                </div>
-            </div>
-            
-            <div class="gallery-horizontal-container">
-                <div class="gallery-horizontal-track">
-                    <!-- Slide 1: Evacuation Path & Elevation Telemetry -->
-                    <div class="gallery-slide-card wide-card">
-                        <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
-                            <!-- Topographic map & elevation profile custom display -->
-                            <div class="topo-widget-container">
-                                <!-- Left panel: contour tactical map -->
-                                <div class="topo-map-display">
-                                    <div class="map-grid-blueprint" style="opacity: 0.5; pointer-events: none;"></div>
-                                    
-                                    <!-- Evacuation Route (Glowing green line matching the user's path layout) -->
-                                    <svg class="topo-route-svg" viewBox="0 0 400 400">
-                                        <path class="glowing-route-path" d="M 216,232 L 216,156 L 100,64" stroke="#00e676" fill="none" stroke-width="3.5" stroke-dasharray="6,4"></path>
-                                    </svg>
-                                    
-                                    <!-- Interactive hazard circle centered around Casualty Site at the bottom -->
-                                    <div class="hazard-zone-pulse" style="left: 54%; top: 58%;"></div>
-                                    
-                                    <!-- Floating markers -->
-                                    <div class="topo-marker marker-base" style="top: 16%; left: 25%;">
-                                        <div class="marker-dot green"></div>
-                                        <div class="marker-tooltip">Base DEOC</div>
-                                    </div>
-                                    <div class="topo-marker marker-unit active" id="map-marker-unit" style="top: 19%; left: 29%;">
-                                        <div class="marker-dot orange"></div>
-                                        <div class="marker-tooltip">Rescue Unit 01</div>
-                                    </div>
-                                    <div class="topo-marker marker-casualty" style="top: 58%; left: 54%;">
-                                        <div class="marker-dot red"></div>
-                                        <div class="marker-tooltip">Casualty Site</div>
-                                    </div>
-                                </div>
+<div class="container">
+    <div class="gallery-pin-header">
+        <span class="mono brand-accent-color">05 / SYSTEM OVERVIEW</span>
+        <h2>How the System works</h2>
+        <p>The RestEase App applies systems thinking to enable the Rescue Base Camp to monitor rescue teams by automatically receiving GPS coordinates from each stretcher. It also records evacuation routes, helping identify and recommend safer paths for future rescue missions based on previously traversed terrain and rescue outcomes.</p>
+    </div>
 
-                                <!-- Right panel: elevation profile card -->
-                                <div class="elevation-profile-card">
-                                    <div class="telemetry-header" style="margin-bottom: var(--space-md);">
-                                        <span class="mono accent-blue">ROUTE PROFILE</span>
-                                    </div>
-                                    
-                                    <!-- Profile bars with X and Y Axes -->
-                                    <div class="graph-axes-wrapper" style="display: flex; flex-direction: column; gap: var(--space-xs); margin-top: var(--space-sm);">
-                                        <div class="graph-row" style="display: flex; gap: var(--space-xs); align-items: stretch; height: 180px;">
-                                            <!-- Y-Axis (Altitude Ticks) -->
-                                            <div class="y-axis-labels" style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding-right: 8px; padding-bottom: 12px; font-family: var(--font-mono); font-size: 0.62rem; color: var(--brand-text-sub); width: 42px; box-sizing: border-box;">
-                                                <span>900m</span>
-                                                <span>700m</span>
-                                                <span>500m</span>
-                                                <span>300m</span>
-                                            </div>
-                                            
-                                            <!-- Graph Content with X and Y axis borders -->
-                                            <div class="profile-bars-container" id="elevation-bars" style="flex-grow: 1; display: flex; justify-content: space-between; align-items: flex-end; padding: var(--space-xs) 12px; border-left: 2px solid var(--brand-text-sub); border-bottom: 2px solid var(--brand-text-sub); background: rgba(36, 54, 30, 0.015); border-top: none !important; border-right: none !important; box-sizing: border-box; overflow: visible; margin-bottom: 12px;">
-                                                <div class="profile-bar-column active" data-alt="890" data-slope="10" data-risk="SAFE" data-marker-x="29%" data-marker-y="19%" style="position: relative;">
-                                                    <div class="bar-fill bar-safe" style="height: 90%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT1</span>
-                                                </div>
-                                                <div class="profile-bar-column" data-alt="820" data-slope="38" data-risk="STEEP INCLINE" data-marker-x="42%" data-marker-y="30%" style="position: relative;">
-                                                    <div class="bar-fill bar-steep" style="height: 80%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT2</span>
-                                                </div>
-                                                <div class="profile-bar-column" data-alt="740" data-slope="24" data-risk="MODERATE" data-marker-x="54%" data-marker-y="39%" style="position: relative;">
-                                                    <div class="bar-fill bar-moderate" style="height: 70%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT3</span>
-                                                </div>
-                                                <div class="profile-bar-column" data-alt="690" data-slope="45" data-risk="SLIP ALERT" data-marker-x="54%" data-marker-y="45%" style="position: relative;">
-                                                    <div class="bar-fill bar-danger" style="height: 62%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT4</span>
-                                                </div>
-                                                <div class="profile-bar-column" data-alt="580" data-slope="42" data-risk="SLIP ALERT" data-marker-x="54%" data-marker-y="52%" style="position: relative;">
-                                                    <div class="bar-fill bar-danger" style="height: 50%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT5</span>
-                                                </div>
-                                                <div class="profile-bar-column" data-alt="420" data-slope="20" data-risk="MODERATE" data-marker-x="54%" data-marker-y="58%" style="position: relative;">
-                                                    <div class="bar-fill bar-moderate" style="height: 35%;"></div>
-                                                    <span class="bar-label" style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap;">WPT6</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- X-Axis (Positions Label) -->
-                                        <div class="x-axis-label" style="text-align: center; margin-left: 48px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--brand-text-sub); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; margin-top: 14px;">
-                                            GPS WAYPOINTS
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Live readout display -->
-                                    <div class="elevation-readout-display" style="margin-top: var(--space-md);">
-                                        <div class="readout-item">
-                                            <span class="readout-label">Altitude</span>
-                                            <span class="readout-val" id="readout-alt">890m</span>
-                                        </div>
-                                        <div class="readout-item">
-                                            <span class="readout-label">Incline</span>
-                                            <span class="readout-val" id="readout-slope">45°</span>
-                                        </div>
-                                        <div class="readout-item">
-                                            <span class="readout-label">Status</span>
-                                            <span class="readout-val status-badge critical" id="readout-risk">SLIP ALERT</span>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="gallery-horizontal-container">
+        <div class="gallery-horizontal-track">
+            <!-- Slide 1: Evacuation Path & Elevation Telemetry -->
+            <div class="gallery-slide-card wide-card">
+                <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                    <div class="topo-widget-container">
+                        <div class="topo-map-display">
+                            <div class="map-grid-blueprint" style="opacity: 0.5; pointer-events: none;"></div>
+                            <svg class="topo-route-svg" viewBox="0 0 400 400">
+                                <path class="glowing-route-path" d="M 216,232 L 216,156 L 100,64" stroke="#00e676" fill="none" stroke-width="3.5" stroke-dasharray="6,4"></path>
+                            </svg>
+                            <div class="hazard-zone-pulse" style="left: 54%; top: 58%;"></div>
+                            <div class="topo-marker marker-base" style="top: 16%; left: 25%;">
+                                <div class="marker-dot"></div>
+                                <span class="marker-label">Base DEOC</span>
+                            </div>
+                            <div class="topo-marker marker-unit" style="top: 36%; left: 54%;">
+                                <div class="marker-dot"></div>
+                                <span class="marker-label">Rescue Unit 01</span>
+                            </div>
+                            <div class="topo-marker marker-casualty" style="top: 58%; left: 54%;">
+                                <div class="marker-dot"></div>
+                                <span class="marker-label">Casualty Site</span>
                             </div>
                         </div>
-                    <div class="slide-info">
-                            <h3>01 / Route Mapping &amp; Elevation Profiling</h3>
-                            <p>Tracks every evacuation route as a sequence of GPS waypoints (WPTs). Each waypoint records latitude, longitude, and altitude, enabling the system to generate an elevation profile that helps Base Camp monitor terrain gradients, mission progress, and potential hazard zones.</p>
-                        </div>
-                    </div>
-                       <!-- Slide 2: Fleet Inventory System Bento -->
-                    <div class="gallery-slide-card wide-card">
-                        <style>
-                            @keyframes spinDiamond {
-                                0%   { transform: rotate(45deg); }
-                                100% { transform: rotate(405deg); }
-                            }
-                            @keyframes spinGhost {
-                                0%   { transform: rotate(-45deg); }
-                                100% { transform: rotate(-405deg); }
-                            }
-                            #nfc-bento-tile.paired .nfc-ghost {
-                                opacity: 0;
-                                transform: scale(0.8);
-                            }
-                            #nfc-bento-tile.paired .nfc-diamond {
-                                border-color: #00e676 !important;
-                                background-color: rgba(0, 230, 118, 0.08) !important;
-                                animation: none !important;
-                                transform: rotate(0deg) !important;
-                                border-radius: 12px !important;
-                                width: 56px !important;
-                                height: 56px !important;
-                            }
-                            #nfc-bento-tile.paired .nfc-phone-icon {
-                                opacity: 0;
-                                transform: scale(0.5);
-                            }
-                            #nfc-bento-tile.paired .nfc-check-icon {
-                                opacity: 1 !important;
-                                transform: scale(1) !important;
-                            }
-                            #diag-bento-tile .battery-body {
-                                border-color: #64748b;
-                            }
-                            #diag-bento-tile .battery-tip {
-                                background-color: #64748b;
-                            }
-                            #diag-bento-tile .diag-battery {
-                                background-color: #00e676;
-                            }
-                        </style>
-                        <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
-                            <div class="sector-telemetry-container" style="padding: 14px 18px; gap: 8px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
-                                <!-- Header with title -->
-                                <div class="telemetry-top-bar" style="margin-bottom: 4px; padding-bottom: 4px;">
-                                    <span class="mono accent-orange" style="font-size: 0.72rem;">CONNECTED STRETCHER INVENTORY</span>
+                        <div class="topo-profile-display">
+                            <div class="profile-title mono">ROUTE PROFILE</div>
+                            <div class="bar-chart-container">
+                                <div class="chart-y-axis">
+                                    <span>900m</span>
+                                    <span>700m</span>
+                                    <span>500m</span>
+                                    <span>300m</span>
                                 </div>
-                                
-                                <!-- Bento Grid cards representing the four system modules -->
-                                <div class="bento-telemetry-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; height: calc(100% - 32px); box-sizing: border-box; flex-grow: 1;">
-                                    <!-- Card 1: NFC Registration -->
-                                    <div class="bento-tile tile-stretchers" id="nfc-bento-tile" onclick="this.classList.toggle('paired'); const num = this.querySelector('.nfc-num'); num.textContent = this.classList.contains('paired') ? '12' : '11';" style="padding: 12px 14px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; position: relative;">
-                                        <!-- Left column: labels, stats, captions -->
-                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
-                                            <span class="tile-label">NFC Registration</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="nfc-num">11</span><span class="sub">/12 paired</span></div>
-                                            <span class="tile-caption">Unique tag links stretcher identity.</span>
-                                        </div>
-                                        
-                                        <!-- Right column: Animated Scanner -->
-                                        <div class="nfc-scanner-container" style="display: flex; align-items: center; justify-content: center; width: 68px; height: 68px; position: relative; overflow: visible; flex-shrink: 0;">
-                                            <!-- Rotating Outer Ghost Ring (Fades out when paired) -->
-                                            <div class="nfc-ghost" style="position: absolute; width: 60px; height: 60px; border-radius: 11px; border: 1.2px dashed rgba(255, 79, 0, 0.25); animation: spinGhost 8s linear infinite; box-sizing: border-box; transition: all 0.4s ease-in-out;"></div>
-                                            <!-- Rotating Dashed Diamond (Locks into Green Rounded Square when paired) -->
-                                            <div class="nfc-diamond" style="position: absolute; width: 50px; height: 50px; border-radius: 9px; border: 2px dashed var(--brand-accent); background: rgba(255, 79, 0, 0.08); animation: spinDiamond 4.5s linear infinite; box-sizing: border-box; transition: all 0.4s ease-in-out;"></div>
-                                            
-                                            <!-- Icon Containers overlaying inside central diamond -->
-                                            <div style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
-                                                <!-- Contactless Phone SVG Icon (Fades out when paired) -->
-                                                <div class="nfc-phone-icon" style="position: absolute; display: flex; align-items: center; justify-content: center; color: var(--brand-accent); transition: all 0.4s ease-in-out;">
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                                        <rect x="6" y="2" width="12" height="20" rx="2.5"></rect>
-                                                        <circle cx="12" cy="6" r="1" fill="currentColor" stroke-width="0"></circle>
-                                                        <path d="M 8 20 A 3 3 0 0 1 11 17"></path>
-                                                        <path d="M 8 20 A 6 6 0 0 1 14 14"></path>
-                                                        <path d="M 8 20 A 9 9 0 0 1 17 11"></path>
-                                                    </svg>
-                                                </div>
-                                                <!-- Green Checkmark SVG Icon (Fades in when paired) -->
-                                                <div class="nfc-check-icon" style="position: absolute; display: flex; align-items: center; justify-content: center; color: #00e676; opacity: 0; transform: scale(0.5); transition: all 0.4s ease-in-out;">
-                                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Card 2: Unit Diagnostics -->
-                                    <div class="bento-tile tile-power" id="diag-bento-tile" onclick="runDiagnostics(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
-                                        <!-- Left column: labels, stats, captions -->
-                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
-                                            <span class="tile-label">Unit Diagnostics // <span class="diag-unit-id">RE-01</span></span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;">
-                                                <span class="diag-batt-val" style="transition: color 0.3s; color: var(--brand-text);">95%</span><span class="sub diag-sub"> batt</span>
-                                            </div>
-                                            <span class="tile-caption diag-caption">Unit Battery scan.</span>
-                                        </div>
-                                        
-                                        <!-- Right column: Battery visualizer -->
-                                        <div style="display: flex; align-items: center; justify-content: center; width: 68px; flex-shrink: 0;">
-                                            <!-- Battery Icon -->
-                                            <div class="battery-icon-wrap" style="margin: 0; position: relative;">
-                                                <div class="battery-body" style="width: 48px; height: 18px; border: 1.5px solid #64748b; border-radius: 3px; padding: 1.5px; box-sizing: border-box; transition: border-color 0.4s;">
-                                                    <div class="battery-level-fill diag-battery" style="width: 95%; background-color: #00e676; height: 100%; border-radius: 1px; transition: width 0.4s, background-color 0.4s;"></div>
-                                                </div>
-                                                <div class="battery-tip" style="background-color: #64748b; transition: background-color 0.4s;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Card 3: Fleet Registry -->
-                                    <div class="bento-tile tile-satellite" id="registry-bento-tile" onclick="cycleRegistry(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
-                                        <!-- Left column: labels, stats, captions -->
-                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
-                                            <span class="tile-label">Fleet Registry</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="reg-num">RE-01</span></div>
-                                            <span class="tile-caption reg-caption">RE01 - command unit - online</span>
-                                        </div>
-                                        
-                                        <!-- Right column: Dynamic Signal Bars & Channel Tag -->
-                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 68px; flex-shrink: 0;">
-                                            <!-- Channel Tag -->
-                                            <div class="reg-chan-tag" style="font-family: var(--font-mono); font-size: 0.65rem; color: #ff4f00; background: rgba(255, 79, 0, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 79, 0, 0.15); font-weight: bold; transition: all 0.3s;">CH-16</div>
-                                            
-                                            <!-- Signal Wrapper (toggles between bars and no-signal) -->
-                                            <div class="reg-signal-wrapper" style="height: 16px; display: flex; align-items: center; justify-content: center; position: relative; width: 37px;">
-                                                <!-- Signal Bars -->
-                                                <div class="signal-bars reg-signal-bars" style="margin: 0; display: flex; gap: 3px; align-items: flex-end; height: 16px; width: 100%;">
-                                                    <div class="sig-bar bar-1 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
-                                                    <div class="sig-bar bar-2 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
-                                                    <div class="sig-bar bar-3 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
-                                                    <div class="sig-bar bar-4 active" style="transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
-                                                    <div class="sig-bar bar-5 active" style="background-color: #00e676; transition: height 0.3s, background-color 0.3s; width: 5px; border-radius: 1px;"></div>
-                                                </div>
-                                                <!-- Red diagonal strike line overlay -->
-                                                <svg class="reg-no-signal-slash" width="37" height="16" viewBox="0 0 37 16" fill="none" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; display: none; transition: all 0.3s;">
-                                                    <line x1="2" y1="14" x2="35" y2="2" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"></line>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Card 4: Maintenance Log -->
-                                    <div class="bento-tile tile-troops" id="maintenance-bento-tile" onclick="cycleMaintenance(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
-                                        <!-- Left column: labels, stats, captions -->
-                                        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
-                                            <span class="tile-label">Maintenance Log</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="maint-num">0</span><span class="sub maint-sub"> pending</span></div>
-                                            <span class="tile-caption maint-caption">Logs inspection and repair history.</span>
-                                        </div>
-                                        
-                                        <!-- Right column: Dynamic Visualizer container -->
-                                        <div class="maint-visual-container" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; width: 135px; flex-shrink: 0; text-align: right;">
-                                            <div class="maint-cert-badge" style="font-family: var(--font-mono); font-size: 0.65rem; color: #00e676; background: rgba(0, 230, 118, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 230, 118, 0.15); font-weight: bold; transition: all 0.3s;">VERIFIED</div>
-                                            <!-- Dot Checklist Matrix -->
-                                            <div class="personnel-dot-matrix maint-dot-matrix" style="margin: 0; display: flex; gap: 4px;">
-                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
-                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
-                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
-                                                <div class="troop-dot active maint-dot" style="background-color: #00e676; transition: background-color 0.3s, transform 0.3s;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="chart-bars-wrap">
+                                    <div class="chart-bar-item"><div class="bar-fill bar-1"></div></div>
+                                    <div class="chart-bar-item"><div class="bar-fill bar-2"></div></div>
+                                    <div class="chart-bar-item"><div class="bar-fill bar-3"></div></div>
+                                    <div class="chart-bar-item"><div class="bar-fill bar-4"></div></div>
+                                    <div class="chart-bar-item"><div class="bar-fill bar-5"></div></div>
+                                    <div class="chart-bar-item"><div class="bar-fill bar-6"></div></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="slide-info">
-                            <h3>02 / Fleet Inventory System</h3>
-                            <p>Every RestEase stretcher is assigned a unique NFC-linked digital identity. The system tracks equipment health, communication status, assigned personnel, radio channels, and maintenance history, enabling Base Camp to monitor fleet readiness and deploy assets efficiently during rescue operations.</p>
+                            <div class="chart-x-labels mono">
+                                <span>WPT1</span><span>WPT2</span><span>WPT3</span><span>WPT4</span><span>WPT5</span><span>WPT6</span>
+                            </div>
+                            <div class="chart-x-caption mono">GPS WAYPOINTS</div>
+                            <div class="profile-telemetry-row">
+                                <div class="telem-stat"><span class="telem-lbl mono">ALTITUDE</span><span class="telem-val">890m</span></div>
+                                <div class="telem-stat"><span class="telem-lbl mono">INCLINE</span><span class="telem-val">45°</span></div>
+                                <div class="telem-stat"><span class="telem-lbl mono">STATUS</span><span class="telem-val status-alert">SLIP ALERT</span></div>
+                            </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="slide-info">
+                    <h3>01 / Route Mapping &amp; Elevation Profiling</h3>
+                    <p>Tracks every evacuation route as a sequence of GPS waypoints (WPTs). Each waypoint records latitude, longitude, and altitude, enabling the system to generate an elevation profile that helps Base Camp monitor terrain gradients, mission progress, and potential hazard zones.</p>
                 </div>
             </div>
-        </section>
+
+            <!-- Slide 2: Fleet Inventory System -->
+            <div class="gallery-slide-card wide-card">
+                <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                    <div class="fleet-bento-grid">
+                        <div class="bento-tile bento-nfc">
+                            <div class="tile-header mono">NFC REGISTRATION</div>
+                            <div class="tile-body">
+                                <div class="nfc-pairing-status"><span class="paired-num">11</span><span class="total-num">/12 paired</span></div>
+                                <div class="nfc-tag-icon"><i></i></div>
+                            </div>
+                            <div class="tile-footer">Unique tag links stretcher identity.</div>
+                        </div>
+                        <div class="bento-tile bento-diag">
+                            <div class="tile-header mono">UNIT DIAGNOSTICS // RE-01</div>
+                            <div class="tile-body">
+                                <div class="battery-readout"><span class="batt-pct">95%</span><span class="batt-lbl">batt</span></div>
+                                <div class="battery-indicator-bar"><div class="battery-fill"></div></div>
+                            </div>
+                            <div class="tile-footer">Unit Battery scan.</div>
+                        </div>
+                        <div class="bento-tile bento-registry">
+                            <div class="tile-header mono">FLEET REGISTRY</div>
+                            <div class="tile-body">
+                                <div class="registry-code">RE-01</div>
+                                <div class="channel-badge mono">CH-16</div>
+                            </div>
+                            <div class="tile-footer">RE01 - command unit - online</div>
+                        </div>
+                        <div class="bento-tile bento-maint">
+                            <div class="tile-header mono">MAINTENANCE LOG</div>
+                            <div class="tile-body">
+                                <div class="maint-status"><span class="maint-count">0</span><span class="maint-lbl">pending</span></div>
+                                <div class="maint-verified-badge mono">VERIFIED</div>
+                            </div>
+                            <div class="tile-footer">Logs inspection and repair history.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-info">
+                    <h3>02 / Fleet Inventory System</h3>
+                    <p>Every RestEase stretcher is assigned a unique NFC-linked digital identity. The system tracks equipment health, communication status, assigned personnel, radio channels, and maintenance history, enabling Base Camp to monitor fleet readiness and deploy assets efficiently during rescue operations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
 
 
         <!-- Chapter 5: The Simulator Mockup Reveal (Mockup Pin Section) -->
