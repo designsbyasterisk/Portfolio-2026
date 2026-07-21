@@ -331,6 +331,189 @@
                 gap: var(--space-md) !important;
             }
         }
+        /* Temp Version - Section 05 Side-by-Side Cards Overrides */
+        .chapter-gallery-pin-temp {
+            height: auto !important;
+            min-height: auto !important;
+            padding: var(--space-xl) 0 !important;
+            overflow: visible !important;
+            display: block !important;
+            position: relative;
+            z-index: 5;
+        }
+        .chapter-gallery-pin-temp .gallery-horizontal-container {
+            width: 100% !important;
+            overflow: visible !important;
+            display: block !important;
+            height: auto !important;
+        }
+        .chapter-gallery-pin-temp .gallery-horizontal-track {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: var(--space-xl) !important;
+            transform: none !important;
+            width: 95% !important;
+            max-width: 1750px !important;
+            margin: 0 auto !important;
+            padding: 0 var(--space-md) !important;
+            align-items: stretch !important;
+            box-sizing: border-box !important;
+        }
+        @media (max-width: 1024px) {
+            .chapter-gallery-pin-temp .gallery-horizontal-track {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        .chapter-gallery-pin-temp .gallery-slide-card,
+        .chapter-gallery-pin-temp .gallery-slide-card.wide-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 100% !important;
+            flex-shrink: 1 !important;
+            transform: none !important;
+            opacity: 1 !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+        }
+        .chapter-gallery-pin-temp .slide-image-wrapper,
+        .chapter-gallery-pin-temp .slide-image-wrapper.wide-wrapper {
+            height: 390px !important;
+            min-height: 390px !important;
+            max-height: 390px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+        }
+        .chapter-gallery-pin-temp .topo-widget-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            border-radius: var(--radius-md) !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+        }
+        .chapter-gallery-pin-temp .topo-map-display {
+            position: relative !important;
+            height: 100% !important;
+            width: 100% !important;
+            min-height: 100% !important;
+            background-image: url('img/landslide_isometric.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-color: #ffffff !important;
+            display: block !important;
+            border-right: 1px solid var(--brand-border) !important;
+        }
+        .chapter-gallery-pin-temp .elevation-profile-card {
+            padding: 16px 18px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            height: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .chapter-gallery-pin-temp .telemetry-header {
+            margin-bottom: 8px !important;
+        }
+        .chapter-gallery-pin-temp .graph-axes-wrapper {
+            margin-top: 6px !important;
+        }
+        .chapter-gallery-pin-temp .graph-row {
+            height: 165px !important;
+        }
+        .chapter-gallery-pin-temp .elevation-readout-display {
+            margin-top: 12px !important;
+        }
+        .chapter-gallery-pin-temp .readout-item {
+            padding: 6px 10px !important;
+        }
+        .chapter-gallery-pin-temp .sector-telemetry-container {
+            flex: 1 1 auto !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            box-sizing: border-box !important;
+            padding: 16px 18px !important;
+        }
+        .chapter-gallery-pin-temp .bento-telemetry-grid {
+            flex: 1 1 auto !important;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: repeat(2, 1fr) !important;
+            gap: 10px !important;
+            height: calc(100% - 28px) !important;
+        }
+        .chapter-gallery-pin-temp .bento-tile {
+            height: 100% !important;
+            padding: 12px 14px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: stretch !important;
+            box-sizing: border-box !important;
+        }
+        .chapter-gallery-pin-temp .tile-numeric {
+            font-size: 1.5rem !important;
+            margin: 3px 0 !important;
+        }
+        .chapter-gallery-pin-temp .tile-label {
+            font-size: 0.75rem !important;
+        }
+        .chapter-gallery-pin-temp .tile-caption {
+            font-size: 0.72rem !important;
+            line-height: 1.3 !important;
+        }
+        .chapter-gallery-pin-temp .nfc-scanner-container {
+            width: 52px !important;
+            height: 52px !important;
+        }
+        .chapter-gallery-pin-temp .nfc-ghost {
+            width: 44px !important;
+            height: 44px !important;
+        }
+        .chapter-gallery-pin-temp .nfc-diamond {
+            width: 36px !important;
+            height: 36px !important;
+        }
+        .chapter-gallery-pin-temp .slide-info {
+            padding-top: 10px !important;
+        }
+        .chapter-gallery-pin-temp .slide-info h3 {
+            font-size: 1.1rem !important;
+            margin-bottom: 4px !important;
+        }
+        .chapter-gallery-pin-temp .slide-info p {
+            font-size: 0.82rem !important;
+            line-height: 1.45 !important;
+        }
+        .chapter-gallery-pin-temp .slide-image-wrapper img {
+            transform: none !important;
+            scale: 1 !important;
+        }
+        
+        .chapter-mockup-pin-temp {
+            height: auto !important;
+            min-height: auto !important;
+            padding: var(--space-xl) 0 !important;
+            position: relative !important;
+            display: block !important;
+        }
+        .chapter-mockup-pin-temp .iphone13-mockup-wrapper {
+            transform: none !important;
+            scale: 1 !important;
+            margin: 0 auto !important;
+        }
+        .chapter-mockup-pin-temp .mockup-reveal-viewport-container {
+            transform: none !important;
+        }
 
         /* Set Chapter 5 to exactly 1 viewport height on desktop and scale cards dynamically */
         @media (min-width: 993px) {
@@ -852,11 +1035,11 @@
         </section>
 
         <!-- Chapter 5: District Control Command & Telemetry (Horizontal Gallery Pin Section) -->
-        <section class="story-chapter chapter-gallery-pin" id="district-command-pin">
+        <section class="story-chapter chapter-gallery-pin-temp" id="district-command-pin">
             <div class="gallery-pin-header">
                 <div class="container">
-                    <span class="mono brand-accent-color">05 / SYSTEM OVERVIEW</span>
-                    <h2>How the System works</h2>
+                    <span class="mono brand-accent-color">06 / SYSTEM OVERVIEW</span>
+                    <h2>How the System works (Temporary Edition)</h2>
                     <p>The RestEase App applies systems thinking to enable the Rescue Base Camp to monitor rescue teams by automatically receiving GPS coordinates from each stretcher. It also records evacuation routes, helping identify and recommend safer paths for future rescue missions based on previously traversed terrain and rescue outcomes.</p>
                 </div>
             </div>
@@ -942,7 +1125,7 @@
                                         </div>
                                         
                                         <!-- X-Axis (Positions Label) -->
-                                        <div class="x-axis-label" style="text-align: center; margin-left: 48px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--brand-text-sub); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; margin-top: 14px;">
+                                        <div class="x-axis-label" style="text-align: center; margin-left: 42px; font-family: var(--font-mono); font-size: 0.65rem; color: var(--brand-text-sub); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-top: 28px;">
                                             GPS WAYPOINTS
                                         </div>
                                     </div>
@@ -1013,25 +1196,25 @@
                             }
                         </style>
                         <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
-                            <div class="sector-telemetry-container" style="padding: 14px 18px; gap: 8px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+                            <div class="sector-telemetry-container" style="padding: 16px 20px; gap: 10px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
                                 <!-- Header with title -->
-                                <div class="telemetry-top-bar" style="margin-bottom: 4px; padding-bottom: 4px;">
-                                    <span class="mono accent-orange" style="font-size: 0.72rem;">CONNECTED STRETCHER INVENTORY</span>
+                                <div class="telemetry-top-bar" style="margin-bottom: 2px; padding-bottom: 2px; flex-shrink: 0;">
+                                    <span class="mono accent-orange" style="font-size: 0.72rem; letter-spacing: 1px;">CONNECTED STRETCHER INVENTORY</span>
                                 </div>
                                 
-                                <!-- Bento Grid cards representing the four system modules -->
-                                <div class="bento-telemetry-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; height: calc(100% - 32px); box-sizing: border-box; flex-grow: 1;">
+                                <!-- Bento Grid cards representing the four system modules (Full Height Fill) -->
+                                <div class="bento-telemetry-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 12px; width: 100%; height: calc(100% - 28px); box-sizing: border-box; flex-grow: 1;">
                                     <!-- Card 1: NFC Registration -->
-                                    <div class="bento-tile tile-stretchers" id="nfc-bento-tile" onclick="this.classList.toggle('paired'); const num = this.querySelector('.nfc-num'); num.textContent = this.classList.contains('paired') ? '12' : '11';" style="padding: 12px 14px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; position: relative;">
+                                    <div class="bento-tile tile-stretchers" id="nfc-bento-tile" onclick="this.classList.toggle('paired'); const num = this.querySelector('.nfc-num'); num.textContent = this.classList.contains('paired') ? '12' : '11';" style="padding: 18px 20px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; gap: 12px; cursor: pointer; position: relative; height: 100%;">
                                         <!-- Left column: labels, stats, captions -->
                                         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
                                             <span class="tile-label">NFC Registration</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="nfc-num">11</span><span class="sub">/12 paired</span></div>
+                                            <div class="tile-numeric" style="margin: 6px 0;"><span class="nfc-num">11</span><span class="sub">/12 paired</span></div>
                                             <span class="tile-caption">Unique tag links stretcher identity.</span>
                                         </div>
                                         
                                         <!-- Right column: Animated Scanner -->
-                                        <div class="nfc-scanner-container" style="display: flex; align-items: center; justify-content: center; width: 68px; height: 68px; position: relative; overflow: visible; flex-shrink: 0;">
+                                        <div class="nfc-scanner-container" style="display: flex; align-items: center; justify-content: center; width: 68px; height: 68px; position: relative; overflow: visible; flex-shrink: 0; align-self: center;">
                                             <!-- Rotating Outer Ghost Ring (Fades out when paired) -->
                                             <div class="nfc-ghost" style="position: absolute; width: 60px; height: 60px; border-radius: 11px; border: 1.2px dashed rgba(255, 79, 0, 0.25); animation: spinGhost 8s linear infinite; box-sizing: border-box; transition: all 0.4s ease-in-out;"></div>
                                             <!-- Rotating Dashed Diamond (Locks into Green Rounded Square when paired) -->
@@ -1060,18 +1243,18 @@
                                     </div>
                                     
                                     <!-- Card 2: Unit Diagnostics -->
-                                    <div class="bento-tile tile-power" id="diag-bento-tile" onclick="runDiagnostics(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                    <div class="bento-tile tile-power" id="diag-bento-tile" onclick="runDiagnostics(this)" style="padding: 18px 20px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; gap: 12px; height: 100%;">
                                         <!-- Left column: labels, stats, captions -->
                                         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
                                             <span class="tile-label">Unit Diagnostics // <span class="diag-unit-id">RE-01</span></span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;">
+                                            <div class="tile-numeric" style="margin: 6px 0;">
                                                 <span class="diag-batt-val" style="transition: color 0.3s; color: var(--brand-text);">95%</span><span class="sub diag-sub"> batt</span>
                                             </div>
                                             <span class="tile-caption diag-caption">Unit Battery scan.</span>
                                         </div>
                                         
                                         <!-- Right column: Battery visualizer -->
-                                        <div style="display: flex; align-items: center; justify-content: center; width: 68px; flex-shrink: 0;">
+                                        <div style="display: flex; align-items: center; justify-content: center; width: 68px; flex-shrink: 0; align-self: center;">
                                             <!-- Battery Icon -->
                                             <div class="battery-icon-wrap" style="margin: 0; position: relative;">
                                                 <div class="battery-body" style="width: 48px; height: 18px; border: 1.5px solid #64748b; border-radius: 3px; padding: 1.5px; box-sizing: border-box; transition: border-color 0.4s;">
@@ -1083,16 +1266,16 @@
                                     </div>
                                     
                                     <!-- Card 3: Fleet Registry -->
-                                    <div class="bento-tile tile-satellite" id="registry-bento-tile" onclick="cycleRegistry(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                    <div class="bento-tile tile-satellite" id="registry-bento-tile" onclick="cycleRegistry(this)" style="padding: 18px 20px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; gap: 12px; height: 100%;">
                                         <!-- Left column: labels, stats, captions -->
                                         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
                                             <span class="tile-label">Fleet Registry</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="reg-num">RE-01</span></div>
+                                            <div class="tile-numeric" style="margin: 6px 0;"><span class="reg-num">RE-01</span></div>
                                             <span class="tile-caption reg-caption">RE01 - command unit - online</span>
                                         </div>
                                         
                                         <!-- Right column: Dynamic Signal Bars & Channel Tag -->
-                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 68px; flex-shrink: 0;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 68px; flex-shrink: 0; align-self: center;">
                                             <!-- Channel Tag -->
                                             <div class="reg-chan-tag" style="font-family: var(--font-mono); font-size: 0.65rem; color: #ff4f00; background: rgba(255, 79, 0, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 79, 0, 0.15); font-weight: bold; transition: all 0.3s;">CH-16</div>
                                             
@@ -1115,16 +1298,16 @@
                                     </div>
                                     
                                     <!-- Card 4: Maintenance Log -->
-                                    <div class="bento-tile tile-troops" id="maintenance-bento-tile" onclick="cycleMaintenance(this)" style="padding: 12px 14px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px;">
+                                    <div class="bento-tile tile-troops" id="maintenance-bento-tile" onclick="cycleMaintenance(this)" style="padding: 18px 20px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; gap: 12px; height: 100%;">
                                         <!-- Left column: labels, stats, captions -->
                                         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex-grow: 1;">
                                             <span class="tile-label">Maintenance Log</span>
-                                            <div class="tile-numeric" style="margin: 4px 0 8px 0;"><span class="maint-num">0</span><span class="sub maint-sub"> pending</span></div>
+                                            <div class="tile-numeric" style="margin: 6px 0;"><span class="maint-num">0</span><span class="sub maint-sub"> pending</span></div>
                                             <span class="tile-caption maint-caption">Logs inspection and repair history.</span>
                                         </div>
                                         
                                         <!-- Right column: Dynamic Visualizer container -->
-                                        <div class="maint-visual-container" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; width: 135px; flex-shrink: 0; text-align: right;">
+                                        <div class="maint-visual-container" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; width: 135px; flex-shrink: 0; text-align: right; align-self: center;">
                                             <div class="maint-cert-badge" style="font-family: var(--font-mono); font-size: 0.65rem; color: #00e676; background: rgba(0, 230, 118, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 230, 118, 0.15); font-weight: bold; transition: all 0.3s;">VERIFIED</div>
                                             <!-- Dot Checklist Matrix -->
                                             <div class="personnel-dot-matrix maint-dot-matrix" style="margin: 0; display: flex; gap: 4px;">
@@ -1153,7 +1336,7 @@
         <section class="story-chapter chapter-mockup-pin">
             <div class="container mockup-reveal-grid">
                 <div class="mockup-reveal-info">
-                    <span class="mono brand-accent-color">05 / INTERACTIVE PROTOTYPE</span>
+                    <span class="mono brand-accent-color">07 / INTERACTIVE PROTOTYPE</span>
                     <h2>District Control Operations</h2>
                     <p>
                         Interact with the live, working rescue telemetry dashboard. Check the GPS satellites, respond to SOS alerts, and simulate off-grid connection drops.
@@ -1350,36 +1533,31 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // ==========================================
-            // Section 4: Rescuer Stretcher Engineering Feature Cards Scroll-Linked Slide-In
-            // ==========================================
+        function initCardInteractivity() {
             if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
 
-                window.addEventListener('load', () => {
-                    gsap.fromTo('.stretcher-callout-item-interactive',
-                        { opacity: 0, x: 50 },
-                        {
-                            opacity: 1,
-                            x: 0,
-                            stagger: 0.25,
-                            duration: 0.7,
-                            ease: "power2.out",
-                            scrollTrigger: {
-                                trigger: '.stretcher-callouts-list',
-                                start: "top 80%",
-                                toggleActions: "play none none none"
-                            }
+                gsap.fromTo('.stretcher-callout-item-interactive',
+                    { opacity: 0, x: 50 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        stagger: 0.25,
+                        duration: 0.7,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: '.stretcher-callouts-list',
+                            start: "top 80%",
+                            toggleActions: "play none none none"
                         }
-                    );
-                });
+                    }
+                );
             }
+
             // 1. Precipitation vs. Landslide Susceptibility Chart (Chart.js)
-            // ==========================================
             const rainCtx = document.getElementById('rain-risk-chart');
             let rainChart;
-            if (rainCtx) {
+            if (rainCtx && typeof Chart !== 'undefined') {
                 rainChart = new Chart(rainCtx, {
                     type: 'bar',
                     data: {
@@ -1387,7 +1565,7 @@
                         datasets: [
                             {
                                 label: 'Rainfall (mm)',
-                                data: [0, 0, 0, 0, 0, 0, 0, 0], // Start at 0 for scroll animation
+                                data: [0, 0, 0, 0, 0, 0, 0, 0],
                                 backgroundColor: 'rgba(36, 54, 30, 0.15)',
                                 borderColor: '#24361e',
                                 borderWidth: 1.5,
@@ -1396,7 +1574,7 @@
                             },
                             {
                                 label: 'Landslide Risk (%)',
-                                data: [0, 0, 0, 0, 0, 0, 0, 0], // Start at 0 for scroll animation
+                                data: [0, 0, 0, 0, 0, 0, 0, 0],
                                 type: 'line',
                                 borderColor: '#ff4f00',
                                 borderWidth: 3,
@@ -1410,7 +1588,7 @@
                             },
                             {
                                 label: 'Safety Limit',
-                                data: Array(8).fill(0), // Start at 0 for scroll animation
+                                data: Array(8).fill(0),
                                 type: 'line',
                                 borderColor: 'rgba(255, 79, 0, 0.8)',
                                 borderWidth: 1.5,
@@ -1426,9 +1604,7 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            },
+                            legend: { display: false },
                             tooltip: {
                                 backgroundColor: '#0f172a',
                                 titleFont: { family: "'Clash Display', sans-serif", size: 12 },
@@ -1439,122 +1615,111 @@
                         },
                         scales: {
                             x: {
-                                grid: {
-                                    color: 'rgba(15,23,42,0.04)'
-                                },
-                                ticks: {
-                                    color: '#475569',
-                                    font: { family: "'Montserrat', sans-serif", size: 10 }
-                                }
+                                grid: { color: 'rgba(15,23,42,0.04)' },
+                                ticks: { color: '#475569', font: { family: "'Montserrat', sans-serif", size: 10 } }
                             },
                             yRain: {
                                 type: 'linear',
                                 position: 'left',
-                                grid: {
-                                    color: 'rgba(15,23,42,0.06)'
-                                },
-                                ticks: {
-                                    color: '#24361e',
-                                    font: { family: "'Montserrat', sans-serif", size: 9 },
-                                    callback: function(value) { return value + 'mm'; }
-                                }
+                                grid: { color: 'rgba(15,23,42,0.06)' },
+                                ticks: { color: '#24361e', font: { family: "'Montserrat', sans-serif", size: 9 }, callback: function(v) { return v + 'mm'; } }
                             },
                             yRisk: {
                                 type: 'linear',
                                 position: 'right',
-                                grid: {
-                                    drawOnChartArea: false
-                                },
-                                ticks: {
-                                    color: '#c63d00',
-                                    font: { family: "'Montserrat', sans-serif", size: 9 },
-                                    callback: function(value) { return value + '%'; }
-                                }
+                                grid: { drawOnChartArea: false },
+                                ticks: { color: '#c63d00', font: { family: "'Montserrat', sans-serif", size: 9 }, callback: function(v) { return v + '%'; } }
                             }
                         }
                     }
                 });
             }
 
-            // ==========================================
-            // 2. Interactive Workflow Nodes Hover/Click Bindings
-            // ==========================================
+            // 2. Workflow Nodes
             const nodes = document.querySelectorAll('.workflow-node');
             nodes.forEach(node => {
-                node.addEventListener('mouseenter', () => {
+                const handleNode = () => {
                     nodes.forEach(n => n.classList.remove('active'));
                     node.classList.add('active');
-                });
-                node.addEventListener('click', () => {
-                    nodes.forEach(n => n.classList.remove('active'));
-                    node.classList.add('active');
-                });
+                };
+                node.addEventListener('mouseenter', handleNode);
+                node.addEventListener('click', handleNode);
             });
 
-            // ==========================================
-            // 3. Elevation Profile Graph Hover Interactions
-            // ==========================================
+            // 3. Elevation Profile Bars & Map Marker Interactivity
             const elevBars = document.querySelectorAll('.profile-bar-column');
             const readoutAlt = document.getElementById('readout-alt');
             const readoutSlope = document.getElementById('readout-slope');
             const readoutRisk = document.getElementById('readout-risk');
             const mapMarker = document.getElementById('map-marker-unit');
 
-            elevBars.forEach(bar => {
-                const handleHover = () => {
-                    elevBars.forEach(b => b.classList.remove('active'));
-                    bar.classList.add('active');
+            function activateBar(bar) {
+                if (!bar) return;
+                elevBars.forEach(b => b.classList.remove('active'));
+                bar.classList.add('active');
 
-                    // Read custom data attributes
-                    const alt = bar.getAttribute('data-alt');
-                    const slope = bar.getAttribute('data-slope');
-                    const risk = bar.getAttribute('data-risk');
-                    const markerX = bar.getAttribute('data-marker-x');
-                    const markerY = bar.getAttribute('data-marker-y');
+                const alt = bar.getAttribute('data-alt');
+                const slope = bar.getAttribute('data-slope');
+                const risk = bar.getAttribute('data-risk');
+                const markerX = bar.getAttribute('data-marker-x');
+                const markerY = bar.getAttribute('data-marker-y');
 
-                    // Update UI readouts
-                    if (readoutAlt) readoutAlt.textContent = alt + 'm';
-                    if (readoutSlope) readoutSlope.textContent = slope + '°';
-                    if (readoutRisk) {
-                        readoutRisk.textContent = risk;
-                        readoutRisk.className = 'readout-val status-badge';
-                        if (risk.includes('ALERT')) {
-                            readoutRisk.classList.add('critical');
-                        } else if (risk.includes('STEEP')) {
-                            readoutRisk.classList.add('high');
-                        } else if (risk.includes('MODERATE')) {
-                            readoutRisk.classList.add('moderate');
-                        } else {
-                            readoutRisk.classList.add('safe');
-                        }
+                if (readoutAlt && alt) readoutAlt.textContent = alt + 'm';
+                if (readoutSlope && slope) readoutSlope.textContent = slope + '°';
+                if (readoutRisk && risk) {
+                    readoutRisk.textContent = risk;
+                    readoutRisk.className = 'readout-val status-badge';
+                    if (risk.includes('ALERT')) {
+                        readoutRisk.classList.add('critical');
+                    } else if (risk.includes('STEEP')) {
+                        readoutRisk.classList.add('high');
+                    } else if (risk.includes('MODERATE')) {
+                        readoutRisk.classList.add('moderate');
+                    } else {
+                        readoutRisk.classList.add('safe');
                     }
+                }
 
-                    // Move map marker unit
-                    if (mapMarker && markerX && markerY) {
+                if (mapMarker && markerX && markerY) {
+                    if (typeof gsap !== 'undefined') {
                         gsap.to(mapMarker, {
                             left: markerX,
                             top: markerY,
                             duration: 0.35,
                             ease: "power2.out"
                         });
+                    } else {
+                        mapMarker.style.left = markerX;
+                        mapMarker.style.top = markerY;
                     }
-                };
+                }
+            }
 
-                bar.addEventListener('mouseenter', handleHover);
-                bar.addEventListener('click', handleHover);
+            elevBars.forEach(bar => {
+                bar.addEventListener('mouseenter', () => activateBar(bar));
+                bar.addEventListener('click', () => activateBar(bar));
             });
 
-            // ==========================================
-            // 4. Fleet Inventory System (Static Infographic Bento)
-            // ==========================================
+            // Topo map markers
+            const topoMarkers = document.querySelectorAll('.topo-marker');
+            topoMarkers.forEach((marker, index) => {
+                marker.addEventListener('click', () => {
+                    const targetBar = elevBars[index] || elevBars[0];
+                    activateBar(targetBar);
+                });
+            });
 
-            // ==========================================
-            // 5. Scroll-linked triggers using GSAP ScrollTrigger
-            // ==========================================
-            window.addEventListener('load', () => {
-                if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+            // 4. Stretcher callouts
+            const callouts = document.querySelectorAll('.stretcher-callout-item-interactive');
+            callouts.forEach(item => {
+                item.addEventListener('click', () => {
+                    callouts.forEach(c => c.classList.remove('active-callout'));
+                    item.classList.add('active-callout');
+                });
+            });
 
-                // Vertical scroll trigger for Chapter 2 Rainfall vs Landslide Risk Chart
+            // 5. GSAP ScrollTriggers
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 if (rainCtx && rainChart) {
                     let rainChartLoaded = false;
                     ScrollTrigger.create({
@@ -1566,15 +1731,11 @@
                             rainChart.data.datasets[0].data = [15, 32, 54, 82, 115, 140, 195, 270];
                             rainChart.data.datasets[1].data = [12, 18, 28, 42, 68, 85, 96, 99];
                             rainChart.data.datasets[2].data = Array(8).fill(120);
-                            rainChart.update({
-                                duration: 1800,
-                                easing: 'easeOutQuart'
-                            });
+                            rainChart.update({ duration: 1800, easing: 'easeOutQuart' });
                         }
                     });
                 }
 
-                // Section 3: Field Operations (Stagger workflow nodes fade-in inside Card 3)
                 const deckTrack = document.querySelector('.chapter-deck-pin');
                 if (deckTrack) {
                     gsap.fromTo(deckTrack.querySelectorAll('.workflow-node'),
@@ -1594,20 +1755,15 @@
                     );
                 }
 
-                // Section 4: District Command (Animate elevation profile bar heights and bento grid load)
                 const cmdTrack = document.querySelector('#district-command-pin');
-                const cmdTween = cmdTrack ? cmdTrack.horizontalTween : null;
-                
-                if (cmdTrack && cmdTween) {
+                if (cmdTrack) {
                     const elevationCard = cmdTrack.querySelector('.elevation-profile-card');
                     const bentoGrid = cmdTrack.querySelector('.sector-telemetry-container');
 
-                    // Slide 1 entry: grow elevation profile bars
                     if (elevationCard) {
                         ScrollTrigger.create({
                             trigger: elevationCard,
-                            containerAnimation: cmdTween,
-                            start: "left 75%",
+                            start: "top 80%",
                             onEnter: () => {
                                 const bars = elevationCard.querySelectorAll('.profile-bar-column .bar-fill');
                                 bars.forEach(bar => {
@@ -1617,18 +1773,12 @@
                                                           col.getAttribute('data-alt') === '740' ? '70%' :
                                                           col.getAttribute('data-alt') === '690' ? '62%' :
                                                           col.getAttribute('data-alt') === '580' ? '50%' : '35%';
-                                    gsap.to(bar, {
-                                        height: heightPercent,
-                                        duration: 1,
-                                        ease: "power2.out",
-                                        delay: 0.1
-                                    });
+                                    gsap.to(bar, { height: heightPercent, duration: 1, ease: "power2.out", delay: 0.1 });
                                 });
                             }
                         });
                     }
 
-                    // Slide 2 entry: stagger bento tiles entry
                     if (bentoGrid) {
                         gsap.fromTo(bentoGrid.querySelectorAll('.bento-tile'),
                             { scale: 0.9, opacity: 0, y: 20 },
@@ -1641,17 +1791,21 @@
                                 stagger: 0.08,
                                 scrollTrigger: {
                                     trigger: bentoGrid,
-                                    containerAnimation: cmdTween,
-                                    start: "left 75%",
+                                    start: "top 80%",
                                     toggleActions: "play none none none"
                                 }
                             }
                         );
                     }
                 }
-            });
-        });
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCardInteractivity);
+        } else {
+            initCardInteractivity();
+        }
     </script>
-
-
+<script>window.isTempPage = true;</script>
 </body></html>
