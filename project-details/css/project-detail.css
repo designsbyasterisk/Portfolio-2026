@@ -3532,3 +3532,116 @@ body.theme-brand .scroll-indicator-arrow:hover {
         height: 240px !important;
     }
 }
+/* ==========================================================================
+   EXACT REPLICATED SECTION 05 (REFERENCE IMAGE MATCH)
+   ========================================================================== */
+
+.sec05-exact-section {
+    width: 100% !important;
+    padding: 90px 0 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+}
+
+.sec05-exact-container {
+    width: 100% !important;
+    max-width: 1260px !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+    box-sizing: border-box !important;
+}
+
+.sec05-exact-header {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin-bottom: 36px !important;
+    text-align: left !important;
+}
+
+.sec05-exact-header h2 {
+    font-size: clamp(2.0rem, 4vw, 2.6rem) !important;
+    font-weight: 700 !important;
+    margin-top: 6px !important;
+    margin-bottom: 12px !important;
+    color: var(--brand-text, #1a202c) !important;
+    line-height: 1.2 !important;
+}
+
+.sec05-exact-header p {
+    font-size: 1.0rem !important;
+    line-height: 1.6 !important;
+    color: var(--brand-text-sub, #4a5568) !important;
+    margin: 0 !important;
+}
+
+.sec05-exact-cards-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    align-items: stretch !important;
+}
+
+.sec05-exact-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.sec05-exact-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08) !important;
+}
+
+.sec05-card-media-wrap {
+    width: 100% !important;
+    height: 330px !important;
+    background: #fbfbfa !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    margin-bottom: 20px !important;
+    position: relative !important;
+}
+
+.sec05-card-info {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.sec05-card-info h3 {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    margin: 0 0 8px 0 !important;
+    color: var(--brand-text, #1a202c) !important;
+}
+
+.sec05-card-info p {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    color: var(--brand-text-sub, #4a5568) !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 992px) {
+    .sec05-exact-cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+    
+    .sec05-card-media-wrap {
+        height: 260px !important;
+    }
+}
