@@ -2822,8 +2822,8 @@ body.theme-brand .scroll-indicator-arrow:hover {
     .iphone13-mockup-wrapper.zoomed-mockup, 
     .restease-mockup-wrapper,
     .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
-        width: 400px !important;
-        height: 638px !important; /* Scale down proportionally (280 * 1.595) */
+        width: 280px !important;
+        height: 447px !important; /* Scale down proportionally (280 * 1.595) */
     }
     .iphone13-mockup-wrapper .phone-viewport,
     .restease-mockup-wrapper .phone-viewport {
@@ -2847,8 +2847,8 @@ body.theme-brand .scroll-indicator-arrow:hover {
     .iphone13-mockup-wrapper.zoomed-mockup,
     .restease-mockup-wrapper,
     .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
-        width: 400px !important;
-        height: 638px !important;
+        width: 350px !important;
+        height: 558px !important;
     }
     .iphone13-mockup-wrapper .phone-viewport,
     .restease-mockup-wrapper .phone-viewport {
@@ -2881,8 +2881,8 @@ body.theme-brand .scroll-indicator-arrow:hover {
     .iphone13-mockup-wrapper.zoomed-mockup,
     .restease-mockup-wrapper,
     .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
-        width: 400px !important;
-        height: 638px !important;
+        width: 320px !important;
+        height: 510px !important;
         margin: 0 auto;
     }
     .iphone13-mockup-wrapper .phone-viewport,
@@ -2973,37 +2973,5 @@ body.theme-brand .scroll-indicator-arrow:hover {
     .narrative-grid {
         grid-template-columns: 1fr !important;
         gap: var(--space-md) !important;
-    }
-}
-
-
-/* ==========================================================================
-   PERMANENT FULL-SIZE PHONE PROTOTYPE MOCKUP (400px x 638px ACROSS ALL VIEWPORTS)
-   ========================================================================== */
-
-.iphone13-mockup-wrapper.zoomed-mockup,
-.restease-mockup-wrapper,
-.iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
-    width: 400px !important;
-    height: 638px !important;
-    max-width: none !important;
-}
-
-.iphone13-mockup-wrapper .phone-viewport,
-.restease-mockup-wrapper .phone-viewport {
-    border-radius: 26px !important;
-}
-
-.iphone13-mockup-wrapper .phone-viewport iframe,
-.restease-mockup-wrapper .phone-viewport iframe {
-    border-radius: 26px !important;
-}
-
-@media (max-width: 450px) {
-    .iphone13-mockup-wrapper.zoomed-mockup,
-    .restease-mockup-wrapper,
-    .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
-        width: 400px !important;
-        height: 638px !important;
     }
 }
