@@ -3026,3 +3026,52 @@ body.theme-brand .scroll-indicator-arrow:hover {
     border: none !important;
     display: block !important;
 }
+
+/* ==========================================================================
+   PERFECT TABLET MOCKUP & APP VIEWPORT FIT (768px - 1023px)
+   ========================================================================== */
+
+/* Remove any conflicting old 58% viewport width overrides */
+.iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed .phone-viewport {
+    left: 5.5% !important;
+    top: 2.0% !important;
+    width: 89.0% !important;
+    height: 96.0% !important;
+    border-radius: 24px !important;
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+    .iphone13-mockup-wrapper.zoomed-mockup,
+    .restease-mockup-wrapper {
+        width: 320px !important;
+        height: 510px !important;
+        margin: 0 auto !important;
+    }
+
+    .iphone13-mockup-wrapper.zoomed-mockup .phone-viewport {
+        top: 2.2% !important;
+        left: 4.8% !important;
+        width: 90.4% !important;
+        height: 95.6% !important;
+        border-radius: 24px !important;
+        overflow: hidden !important;
+    }
+
+    .restease-mockup-wrapper .phone-viewport {
+        top: 2.0% !important;
+        left: 5.5% !important;
+        width: 89.0% !important;
+        height: 96.0% !important;
+        border-radius: 24px !important;
+        overflow: hidden !important;
+    }
+
+    .iphone13-mockup-wrapper .phone-viewport iframe,
+    .restease-mockup-wrapper .phone-viewport iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        display: block !important;
+        transform: none !important;
+    }
+}
