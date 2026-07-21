@@ -785,3 +785,36 @@ function initProjectStorytelling() {
         }
     }
 }
+
+
+// ==========================================================================
+// PROPORTIONAL IFRAME SCALE SYNCHRONIZER
+// ==========================================================================
+function syncPrototypeIframeScale() {
+    document.querySelectorAll('.iphone13-mockup-wrapper, .restease-mockup-wrapper').forEach(wrapper => {
+        const currentWidth = wrapper.getBoundingClientRect().width;
+        if (!currentWidth || currentWidth === 0) return;
+        const scaleRatio = currentWidth / 400; // 400px base width
+        const iframe = wrapper.querySelector('iframe');
+        if (iframe) {
+            if (scaleRatio < 0.999) {
+                const inversePct = (100 / scaleRatio).toFixed(3);
+                iframe.style.width = inversePct + '%';
+                iframe.style.height = inversePct + '%';
+                iframe.style.transform = 'scale(' + scaleRatio.toFixed(4) + ')';
+                iframe.style.transformOrigin = 'top left';
+            } else {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+            }
+        }
+    });
+}
+
+window.addEventListener('resize', syncPrototypeIframeScale);
+window.addEventListener('load', syncPrototypeIframeScale);
+document.addEventListener('DOMContentLoaded', syncPrototypeIframeScale);
+if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.addEventListener('refresh', syncPrototypeIframeScale);
+}
