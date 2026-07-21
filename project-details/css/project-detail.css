@@ -3216,3 +3216,38 @@ body.theme-brand .scroll-indicator-arrow:hover {
     font-size: 0.85rem !important;
     line-height: 1.45 !important;
 }
+/* ==========================================================================
+   EXACT PHONE SCREEN CONTAINMENT FOR RESTEASE MOCKUP (21% left, 10.2% top, 58% width, 78.6% height)
+   ========================================================================== */
+
+/* Restease mockup frame containment */
+.iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed .phone-viewport,
+.restease-mockup-wrapper .phone-viewport {
+    left: 21.0% !important;
+    top: 10.2% !important;
+    width: 58.0% !important;
+    height: 78.6% !important;
+    border-radius: 36px !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+}
+
+/* Emberquit transparent frame containment */
+.iphone13-mockup-wrapper.zoomed-mockup:not(.restease-zoomed) .phone-viewport {
+    left: 4.8% !important;
+    top: 2.2% !important;
+    width: 90.4% !important;
+    height: 95.6% !important;
+    border-radius: 28px !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+}
+
+.iphone13-mockup-wrapper .phone-viewport iframe,
+.restease-mockup-wrapper .phone-viewport iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: block !important;
+    transform: none !important;
+}
