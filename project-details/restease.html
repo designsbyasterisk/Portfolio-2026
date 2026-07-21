@@ -858,117 +858,118 @@
         </section>
 
         <!-- Chapter 5: District Control Command & Telemetry (Horizontal Gallery Pin Section) -->
-        <section class="story-chapter sec05-exact-section" id="district-command-pin">
-    <div class="sec05-exact-container">
-        <!-- Header -->
-        <div class="sec05-exact-header">
+        <section class="story-chapter chapter-gallery-pin" id="district-command-pin">
+    <div class="container" style="max-width: 1720px; margin: 0 auto; padding: 0 32px;">
+        <div class="gallery-pin-header">
             <span class="mono brand-accent-color">05 / SYSTEM OVERVIEW</span>
             <h2>How the System works</h2>
             <p>The RestEase App applies systems thinking to enable the Rescue Base Camp to monitor rescue teams by automatically receiving GPS coordinates from each stretcher. It also records evacuation routes, helping identify and recommend safer paths for future rescue missions based on previously traversed terrain and rescue outcomes.</p>
         </div>
 
-        <!-- 2 Side-by-Side Cards Grid -->
-        <div class="sec05-exact-cards-grid">
-            <!-- Card 01: Route Mapping & Elevation Profiling -->
-            <div class="sec05-exact-card">
-                <div class="sec05-card-media-wrap">
-                    <div class="topo-widget-container">
-                        <div class="topo-map-display">
-                            <div class="map-grid-blueprint" style="opacity: 0.5; pointer-events: none;"></div>
-                            <svg class="topo-route-svg" viewBox="0 0 400 400">
-                                <path class="glowing-route-path" d="M 216,232 L 216,156 L 100,64" stroke="#00e676" fill="none" stroke-width="3.5" stroke-dasharray="6,4"></path>
-                            </svg>
-                            <div class="hazard-zone-pulse" style="left: 54%; top: 58%;"></div>
-                            <div class="topo-marker marker-base" style="top: 16%; left: 25%;">
-                                <div class="marker-dot"></div>
-                                <span class="marker-label">Base DEOC</span>
-                            </div>
-                            <div class="topo-marker marker-unit" style="top: 36%; left: 54%;">
-                                <div class="marker-dot"></div>
-                                <span class="marker-label">Rescue Unit 01</span>
-                            </div>
-                            <div class="topo-marker marker-casualty" style="top: 58%; left: 54%;">
-                                <div class="marker-dot"></div>
-                                <span class="marker-label">Casualty Site</span>
-                            </div>
-                        </div>
-                        <div class="topo-profile-display">
-                            <div class="profile-title mono">ROUTE PROFILE</div>
-                            <div class="bar-chart-container">
-                                <div class="chart-y-axis">
-                                    <span>900m</span>
-                                    <span>700m</span>
-                                    <span>500m</span>
-                                    <span>300m</span>
+        <div class="gallery-horizontal-container">
+            <div class="gallery-horizontal-track">
+                <!-- Slide 1: Evacuation Path & Elevation Telemetry -->
+                <div class="gallery-slide-card wide-card">
+                    <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                        <div class="topo-widget-container">
+                            <div class="topo-map-display">
+                                <div class="map-grid-blueprint" style="opacity: 0.5; pointer-events: none;"></div>
+                                <svg class="topo-route-svg" viewBox="0 0 400 400">
+                                    <path class="glowing-route-path" d="M 216,232 L 216,156 L 100,64" stroke="#00e676" fill="none" stroke-width="3.5" stroke-dasharray="6,4"></path>
+                                </svg>
+                                <div class="hazard-zone-pulse" style="left: 54%; top: 58%;"></div>
+                                <div class="topo-marker marker-base" style="top: 16%; left: 25%;">
+                                    <div class="marker-dot"></div>
+                                    <span class="marker-label">Base DEOC</span>
                                 </div>
-                                <div class="chart-bars-wrap">
-                                    <div class="chart-bar-item"><div class="bar-fill bar-1"></div></div>
-                                    <div class="chart-bar-item"><div class="bar-fill bar-2"></div></div>
-                                    <div class="chart-bar-item"><div class="bar-fill bar-3"></div></div>
-                                    <div class="chart-bar-item"><div class="bar-fill bar-4"></div></div>
-                                    <div class="chart-bar-item"><div class="bar-fill bar-5"></div></div>
-                                    <div class="chart-bar-item"><div class="bar-fill bar-6"></div></div>
+                                <div class="topo-marker marker-unit" style="top: 36%; left: 54%;">
+                                    <div class="marker-dot"></div>
+                                    <span class="marker-label">Rescue Unit 01</span>
+                                </div>
+                                <div class="topo-marker marker-casualty" style="top: 58%; left: 54%;">
+                                    <div class="marker-dot"></div>
+                                    <span class="marker-label">Casualty Site</span>
                                 </div>
                             </div>
-                            <div class="chart-x-labels mono">
-                                <span>WPT1</span><span>WPT2</span><span>WPT3</span><span>WPT4</span><span>WPT5</span><span>WPT6</span>
-                            </div>
-                            <div class="chart-x-caption mono">GPS WAYPOINTS</div>
-                            <div class="profile-telemetry-row">
-                                <div class="telem-stat"><span class="telem-lbl mono">ALTITUDE</span><span class="telem-val">890m</span></div>
-                                <div class="telem-stat"><span class="telem-lbl mono">INCLINE</span><span class="telem-val">10°</span></div>
-                                <div class="telem-stat"><span class="telem-lbl mono">STATUS</span><span class="telem-val status-safe" style="background: #d1fae5; color: #047857; padding: 4px 12px; border-radius: 12px; font-weight: 700; font-size: 0.75rem;">SAFE</span></div>
+                            <div class="topo-profile-display">
+                                <div class="profile-title mono">ROUTE PROFILE</div>
+                                <div class="bar-chart-container">
+                                    <div class="chart-y-axis">
+                                        <span>900m</span>
+                                        <span>700m</span>
+                                        <span>500m</span>
+                                        <span>300m</span>
+                                    </div>
+                                    <div class="chart-bars-wrap">
+                                        <div class="chart-bar-item"><div class="bar-fill bar-1"></div></div>
+                                        <div class="chart-bar-item"><div class="bar-fill bar-2"></div></div>
+                                        <div class="chart-bar-item"><div class="bar-fill bar-3"></div></div>
+                                        <div class="chart-bar-item"><div class="bar-fill bar-4"></div></div>
+                                        <div class="chart-bar-item"><div class="bar-fill bar-5"></div></div>
+                                        <div class="chart-bar-item"><div class="bar-fill bar-6"></div></div>
+                                    </div>
+                                </div>
+                                <div class="chart-x-labels mono">
+                                    <span>WPT1</span><span>WPT2</span><span>WPT3</span><span>WPT4</span><span>WPT5</span><span>WPT6</span>
+                                </div>
+                                <div class="chart-x-caption mono">GPS WAYPOINTS</div>
+                                <div class="profile-telemetry-row">
+                                    <div class="telem-stat"><span class="telem-lbl mono">ALTITUDE</span><span class="telem-val">890m</span></div>
+                                    <div class="telem-stat"><span class="telem-lbl mono">INCLINE</span><span class="telem-val">10°</span></div>
+                                    <div class="telem-stat"><span class="telem-lbl mono">STATUS</span><span class="telem-val status-safe" style="background: #d1fae5; color: #047857; padding: 4px 12px; border-radius: 12px; font-weight: 700; font-size: 0.75rem;">SAFE</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="slide-info">
+                        <h3>01 / Route Mapping &amp; Elevation Profiling</h3>
+                        <p>Tracks every evacuation route as a sequence of GPS waypoints (WPTs). Each waypoint records latitude, longitude, and altitude, enabling the system to generate an elevation profile that helps Base Camp monitor terrain gradients, mission progress, and potential hazard zones.</p>
+                    </div>
                 </div>
-                <div class="sec05-card-info">
-                    <h3>01 / Route Mapping &amp; Elevation Profiling</h3>
-                    <p>Tracks every evacuation route as a sequence of GPS waypoints (WPTs). Each waypoint records latitude, longitude, and altitude, enabling the system to generate an elevation profile that helps Base Camp monitor terrain gradients, mission progress, and potential hazard zones.</p>
-                </div>
-            </div>
 
-            <!-- Card 02: Fleet Inventory System -->
-            <div class="sec05-exact-card">
-                <div class="sec05-card-media-wrap">
-                    <div class="fleet-bento-grid">
-                        <div class="bento-tile bento-nfc">
-                            <div class="tile-header mono">NFC REGISTRATION</div>
-                            <div class="tile-body">
-                                <div class="nfc-pairing-status"><span class="paired-num">11</span><span class="total-num">/12 paired</span></div>
-                                <div class="nfc-tag-icon"><i></i></div>
+                <!-- Slide 2: Fleet Inventory System -->
+                <div class="gallery-slide-card wide-card">
+                    <div class="slide-image-wrapper wide-wrapper" style="position: relative;">
+                        <div class="fleet-bento-grid">
+                            <div class="bento-tile bento-nfc">
+                                <div class="tile-header mono">NFC REGISTRATION</div>
+                                <div class="tile-body">
+                                    <div class="nfc-pairing-status"><span class="paired-num">11</span><span class="total-num">/12 paired</span></div>
+                                    <div class="nfc-tag-icon"><i></i></div>
+                                </div>
+                                <div class="tile-footer">Unique tag links stretcher identity.</div>
                             </div>
-                            <div class="tile-footer">Unique tag links stretcher identity.</div>
-                        </div>
-                        <div class="bento-tile bento-diag">
-                            <div class="tile-header mono">UNIT DIAGNOSTICS // RE-01</div>
-                            <div class="tile-body">
-                                <div class="battery-readout"><span class="batt-pct">95%</span><span class="batt-lbl">batt</span></div>
-                                <div class="battery-indicator-bar"><div class="battery-fill"></div></div>
+                            <div class="tile-header mono bento-diag-head" style="display:none;">UNIT DIAGNOSTICS // RE-01</div>
+                            <div class="bento-tile bento-diag">
+                                <div class="tile-header mono">UNIT DIAGNOSTICS // RE-01</div>
+                                <div class="tile-body">
+                                    <div class="battery-readout"><span class="batt-pct">95%</span><span class="batt-lbl">batt</span></div>
+                                    <div class="battery-indicator-bar"><div class="battery-fill"></div></div>
+                                </div>
+                                <div class="tile-footer">Unit Battery scan.</div>
                             </div>
-                            <div class="tile-footer">Unit Battery scan.</div>
-                        </div>
-                        <div class="bento-tile bento-registry">
-                            <div class="tile-header mono">FLEET REGISTRY</div>
-                            <div class="tile-body">
-                                <div class="registry-code">RE-01</div>
-                                <div class="channel-badge mono">CH-16</div>
+                            <div class="bento-tile bento-registry">
+                                <div class="tile-header mono">FLEET REGISTRY</div>
+                                <div class="tile-body">
+                                    <div class="registry-code">RE-01</div>
+                                    <div class="channel-badge mono">CH-16</div>
+                                </div>
+                                <div class="tile-footer">RE01 - command unit - online</div>
                             </div>
-                            <div class="tile-footer">RE01 - command unit - online</div>
-                        </div>
-                        <div class="bento-tile bento-maint">
-                            <div class="tile-header mono">MAINTENANCE LOG</div>
-                            <div class="tile-body">
-                                <div class="maint-status"><span class="maint-count">0</span><span class="maint-lbl">pending</span></div>
-                                <div class="maint-verified-badge mono">VERIFIED</div>
+                            <div class="bento-tile bento-maint">
+                                <div class="tile-header mono">MAINTENANCE LOG</div>
+                                <div class="tile-body">
+                                    <div class="maint-status"><span class="maint-count">0</span><span class="maint-lbl">pending</span></div>
+                                    <div class="maint-verified-badge mono">VERIFIED</div>
+                                </div>
+                                <div class="tile-footer">Logs inspection and repair history.</div>
                             </div>
-                            <div class="tile-footer">Logs inspection and repair history.</div>
                         </div>
                     </div>
-                </div>
-                <div class="sec05-card-info">
-                    <h3>02 / Fleet Inventory System</h3>
-                    <p>Every RestEase stretcher is assigned a unique NFC-linked digital identity. The system tracks equipment health, communication status, assigned personnel, radio channels, and maintenance history, enabling Base Camp to monitor fleet readiness and deploy assets efficiently during rescue operations.</p>
+                    <div class="slide-info">
+                        <h3>02 / Fleet Inventory System</h3>
+                        <p>Every RestEase stretcher is assigned a unique NFC-linked digital identity. The system tracks equipment health, communication status, assigned personnel, radio channels, and maintenance history, enabling Base Camp to monitor fleet readiness and deploy assets efficiently during rescue operations.</p>
+                    </div>
                 </div>
             </div>
         </div>
