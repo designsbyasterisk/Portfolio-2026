@@ -3251,3 +3251,104 @@ body.theme-brand .scroll-indicator-arrow:hover {
     display: block !important;
     transform: none !important;
 }
+/* ==========================================================================
+   100% FLUID RESPONSIVE GALLERY CARDS (SECTION 05) - ZERO CUTOFF
+   ========================================================================== */
+
+.chapter-gallery-pin {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    padding-top: clamp(8px, 1.5vh, 20px) !important;
+    padding-bottom: clamp(8px, 1.5vh, 20px) !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+}
+
+.gallery-pin-header {
+    margin-bottom: clamp(4px, 1vh, 12px) !important;
+    flex-shrink: 0 !important;
+}
+
+.gallery-pin-header h2 {
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+    font-size: clamp(1.2rem, 2.8vw, 1.7rem) !important;
+}
+
+.gallery-pin-header p {
+    max-width: 760px !important;
+    font-size: clamp(0.78rem, 1.4vw, 0.88rem) !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
+}
+
+.gallery-horizontal-container {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    max-height: calc(100vh - 140px) !important;
+}
+
+/* Fluid responsive card widths and image heights */
+.gallery-slide-card.wide-card {
+    width: clamp(340px, 48vw, 660px) !important;
+    box-sizing: border-box !important;
+}
+
+.gallery-slide-card {
+    width: clamp(280px, 36vw, 460px) !important;
+    box-sizing: border-box !important;
+}
+
+.slide-image-wrapper.wide-wrapper,
+.slide-image-wrapper {
+    height: clamp(160px, 25vh, 280px) !important;
+    box-sizing: border-box !important;
+}
+
+.slide-info {
+    padding: clamp(8px, 1.2vh, 14px) clamp(10px, 1.5vw, 16px) !important;
+    box-sizing: border-box !important;
+}
+
+.slide-info h3 {
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem) !important;
+    margin-bottom: 3px !important;
+}
+
+.slide-info p {
+    font-size: clamp(0.75rem, 1.2vw, 0.84rem) !important;
+    line-height: 1.35 !important;
+}
+
+/* Specific scaling for laptops & smaller viewport heights (< 860px) */
+@media (max-height: 860px) {
+    .slide-image-wrapper.wide-wrapper,
+    .slide-image-wrapper {
+        height: clamp(140px, 22vh, 220px) !important;
+    }
+    .gallery-pin-header p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@media (max-height: 720px) {
+    .slide-image-wrapper.wide-wrapper,
+    .slide-image-wrapper {
+        height: clamp(120px, 18vh, 180px) !important;
+    }
+    .slide-info p {
+        font-size: 0.72rem !important;
+        line-height: 1.25 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
