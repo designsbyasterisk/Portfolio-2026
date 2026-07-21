@@ -2901,3 +2901,77 @@ body.theme-brand .scroll-indicator-arrow:hover {
         height: 520px !important;
     }
 }
+
+
+/* ==========================================================================
+   PORTRAIT MODE & VERTICAL ASPECT-RATIO FIXES (Tablets & Vertical Screens)
+   ========================================================================== */
+
+@media (orientation: portrait), (max-aspect-ratio: 1.1/1), (max-width: 1023px) {
+    .story-chapter,
+    .chapter-hero,
+    .chapter-hero-bg,
+    .chapter-narrative,
+    .chapter-deck-pin,
+    .chapter-gallery-pin,
+    .chapter-mockup-pin {
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+        padding: var(--space-xl) 0 !important;
+    }
+
+    /* Stacked deck cards flow naturally vertically without clutter */
+    .stacked-deck-wrapper {
+        height: auto !important;
+        max-width: 100% !important;
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: var(--space-lg) !important;
+        margin-top: var(--space-lg) !important;
+    }
+
+    .stacked-deck-wrapper .deck-card {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        height: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* Mockup reveal section layout in portrait mode */
+    .mockup-reveal-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-xl) !important;
+    }
+
+    .mockup-reveal-info {
+        text-align: center;
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .mockup-reveal-info .cta-row {
+        justify-content: center;
+    }
+
+    .mockup-reveal-viewport-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: var(--space-md);
+    }
+
+    /* Clinical cessation reality cards flow */
+    .case-study-bento-grid,
+    .narrative-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-md) !important;
+    }
+}

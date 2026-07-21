@@ -420,7 +420,7 @@ function initProjectStorytelling() {
     let mm = gsap.matchMedia();
 
     // Desktop mode (min-width: 993px)
-    mm.add("(min-width: 993px)", () => {
+    mm.add("(min-width: 993px) and (min-aspect-ratio: 1.1/1)", () => {
         // 2. Chapter 2: Split Narrative Lock & Metric Card Zoom
         if (document.querySelector('.chapter-narrative')) {
             const narrativeTl = gsap.timeline({
