@@ -3015,49 +3015,14 @@ body.theme-brand .scroll-indicator-arrow:hover {
     }
 }
 
-
 /* ==========================================================================
-   PROPORTIONAL IFRAME SCALE FALLBACKS (+12% BOOSTED FILL)
+   ORIGINAL PROTOTYPE IFRAME SIZING (100% UNMODIFIED)
    ========================================================================== */
-.iphone13-mockup-wrapper .phone-viewport,
-.restease-mockup-wrapper .phone-viewport {
-    overflow: hidden !important;
-}
-
 .iphone13-mockup-wrapper .phone-viewport iframe,
 .restease-mockup-wrapper .phone-viewport iframe {
-    width: 89.285%;
-    height: 89.285%;
-    transform: scale(1.12);
-    transform-origin: top left;
-}
-
-@media (max-width: 1440px) and (min-width: 1024px) {
-    .iphone13-mockup-wrapper.zoomed-mockup .phone-viewport iframe,
-    .restease-mockup-wrapper .phone-viewport iframe {
-        width: 102.04%;
-        height: 102.04%;
-        transform: scale(0.98);
-        transform-origin: top left;
-    }
-}
-
-@media (max-width: 1023px) and (min-width: 768px) {
-    .iphone13-mockup-wrapper.zoomed-mockup .phone-viewport iframe,
-    .restease-mockup-wrapper .phone-viewport iframe {
-        width: 111.607%;
-        height: 111.607%;
-        transform: scale(0.896);
-        transform-origin: top left;
-    }
-}
-
-@media (max-width: 767px) {
-    .iphone13-mockup-wrapper.zoomed-mockup .phone-viewport iframe,
-    .restease-mockup-wrapper .phone-viewport iframe {
-        width: 119.047%;
-        height: 119.047%;
-        transform: scale(0.84);
-        transform-origin: top left;
-    }
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    border: none !important;
+    display: block !important;
 }
