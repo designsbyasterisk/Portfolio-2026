@@ -3150,3 +3150,69 @@ body.theme-brand .scroll-indicator-arrow:hover {
         height: 290px !important;
     }
 }
+/* ==========================================================================
+   SECTION 05 (SYSTEM OVERVIEW) PERFECT CARD RESIZING & ZERO CUTOFF
+   ========================================================================== */
+
+.chapter-gallery-pin {
+    height: 100vh !important;
+    padding-top: clamp(12px, 2vh, 24px) !important;
+    padding-bottom: clamp(12px, 2vh, 24px) !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+}
+
+.gallery-pin-header {
+    margin-bottom: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+.gallery-pin-header h2 {
+    margin-top: 2px !important;
+    margin-bottom: 4px !important;
+    font-size: clamp(1.4rem, 3.5vw, 1.8rem) !important;
+}
+
+.gallery-pin-header p {
+    max-width: 780px !important;
+    font-size: clamp(0.82rem, 1.8vw, 0.9rem) !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0 !important;
+}
+
+.gallery-horizontal-container {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Card sizing to fit cleanly within pinned viewport height */
+.gallery-slide-card.wide-card {
+    width: clamp(540px, 55vw, 680px) !important;
+}
+
+.gallery-slide-card {
+    width: clamp(380px, 40vw, 480px) !important;
+}
+
+.slide-image-wrapper.wide-wrapper,
+.slide-image-wrapper {
+    height: clamp(230px, 30vh, 290px) !important;
+}
+
+.slide-info {
+    padding: 12px 18px !important;
+}
+
+.slide-info h3 {
+    font-size: 1.05rem !important;
+    margin-bottom: 4px !important;
+}
+
+.slide-info p {
+    font-size: 0.85rem !important;
+    line-height: 1.45 !important;
+}
