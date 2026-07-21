@@ -30,38 +30,7 @@ function resizeIframes() {
     });
 
     // 2. Handle Mobile Phone Viewports
-    const phoneContainers = document.querySelectorAll('.phone-viewport');
-    phoneContainers.forEach(container => {
-        const iframe = container.querySelector('iframe');
-        if (!iframe) return;
-        
-        // If it is a zoomed iframe, bypass scaling to render at native crispness
-        if (iframe.classList.contains('zoomed-iframe')) {
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.transform = 'none';
-            iframe.style.border = 'none';
-            return;
-        }
-        
-        const containerWidth = container.offsetWidth;
-        if (containerWidth === 0) return;
-        
-        const targetWidth = 375; // Mobile virtual design width (iPhone standard)
-        const containerHeight = container.offsetHeight;
-        let targetHeight = 812; // Mobile virtual design height (iPhone standard)
-        if (containerHeight > 0) {
-            targetHeight = Math.round(targetWidth * (containerHeight / containerWidth));
-        }
-        const scale = containerWidth / targetWidth;
-        
-        // Apply scaling styles
-        iframe.style.width = `${targetWidth}px`;
-        iframe.style.height = `${targetHeight}px`;
-        iframe.style.transform = `scale(${scale})`;
-        iframe.style.transformOrigin = 'top left';
-        iframe.style.border = 'none';
-    });
+    syncPrototypeIframeScale();
 
     // 3. Handle iPad Viewports
     const ipadViewports = document.querySelectorAll('.ipad-viewport');
