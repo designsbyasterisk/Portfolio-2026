@@ -167,24 +167,29 @@ function initProjectStorytelling() {
 } // END initProjectStorytelling
 
 // ==========================================================================
-// PROPORTIONAL IFRAME SCALE SYNCHRONIZER (BOOSTED +12% SCALE)
+// PROPORTIONAL IFRAME SCALE SYNCHRONIZER (EXACT 1-TO-1 PERFECT FIT)
 // ==========================================================================
 function syncPrototypeIframeScale() {
     document.querySelectorAll('.iphone13-mockup-wrapper, .restease-mockup-wrapper').forEach(wrapper => {
         const currentWidth = wrapper.getBoundingClientRect().width;
         if (!currentWidth || currentWidth === 0) return;
         
-        // Base scale ratio boosted by 12% for optimal phone display fill
-        const baseScale = currentWidth / 400;
-        const scaleRatio = baseScale * 1.12; 
+        // Exact 1-to-1 scale ratio matching 400px base phone frame
+        const scaleRatio = currentWidth / 400;
         
         const iframe = wrapper.querySelector('iframe');
         if (iframe) {
-            const inversePct = (100 / scaleRatio).toFixed(3);
-            iframe.style.width = inversePct + '%';
-            iframe.style.height = inversePct + '%';
-            iframe.style.transform = 'scale(' + scaleRatio.toFixed(4) + ')';
-            iframe.style.transformOrigin = 'top left';
+            if (Math.abs(scaleRatio - 1) > 0.005) {
+                const inversePct = (100 / scaleRatio).toFixed(3);
+                iframe.style.width = inversePct + '%';
+                iframe.style.height = inversePct + '%';
+                iframe.style.transform = 'scale(' + scaleRatio.toFixed(4) + ')';
+                iframe.style.transformOrigin = 'top left';
+            } else {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.transform = 'none';
+            }
         }
     });
 }
