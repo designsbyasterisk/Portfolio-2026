@@ -1,3 +1,10 @@
+
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+};
 /**
  * PORTFOLIO PROJECT DETAIL PAGE INTERACTIVE SCALING & STORYTELLING SCRIPT
  * Dynamically scales iframe viewports to fit CSS mockups exactly on all screen sizes,
