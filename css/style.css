@@ -1703,3 +1703,11 @@ header.floating-header .container {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: high-quality;
 }
+
+/* Disable hover transforms for Restease card */
+.card-restease:hover,
+.card-restease:hover .project-thumb-container,
+.card-restease:hover img {
+    transform: none !important;
+    box-shadow: none !important;
+}
