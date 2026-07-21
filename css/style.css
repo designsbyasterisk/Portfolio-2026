@@ -1722,3 +1722,36 @@ header.floating-header .container {
     transform: none !important;
     box-shadow: none !important;
 }
+
+
+/* ==========================================================================
+   LAPTOP, MONITOR & TABLET RESPONSIVE FLUID RULES
+   ========================================================================== */
+
+/* Monitor & Ultra-wide Centering (>1440px) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Standard Laptops (1280px - 1440px) */
+@media (max-width: 1440px) and (min-width: 1024px) {
+    .horizontal-project-card {
+        width: 100%;
+        max-width: 540px;
+        box-sizing: border-box;
+    }
+}
+
+/* Small Laptops & Tablets (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .horizontal-project-card {
+        width: 100%;
+        max-width: 500px;
+        padding: var(--space-md);
+        gap: var(--space-md);
+    }
+}

@@ -2836,3 +2836,68 @@ body.theme-brand .scroll-indicator-arrow:hover {
 
 
 
+
+
+/* ==========================================================================
+   CASE STUDY LAPTOP, MONITOR & TABLET RESPONSIVE RULES
+   ========================================================================== */
+
+/* Standard Laptops (1200px - 1440px) */
+@media (max-width: 1440px) and (min-width: 1024px) {
+    .iphone13-mockup-wrapper.zoomed-mockup,
+    .restease-mockup-wrapper,
+    .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
+        width: 350px !important;
+        height: 558px !important;
+    }
+    .iphone13-mockup-wrapper .phone-viewport,
+    .restease-mockup-wrapper .phone-viewport {
+        border-radius: 22px !important;
+    }
+    .gallery-slide-card {
+        width: min(90vw, 560px) !important;
+    }
+    .gallery-slide-card.wide-card {
+        width: min(92vw, 760px) !important;
+    }
+    .stacked-deck-wrapper {
+        width: 100% !important;
+        max-width: 640px !important;
+    }
+}
+
+/* Small Laptops & Tablets (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .mockup-reveal-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--space-lg) !important;
+    }
+    .mockup-reveal-viewport-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .iphone13-mockup-wrapper.zoomed-mockup,
+    .restease-mockup-wrapper,
+    .iphone13-mockup-wrapper.zoomed-mockup.restease-zoomed {
+        width: 320px !important;
+        height: 510px !important;
+        margin: 0 auto;
+    }
+    .iphone13-mockup-wrapper .phone-viewport,
+    .restease-mockup-wrapper .phone-viewport {
+        border-radius: 20px !important;
+    }
+    .gallery-slide-card {
+        width: min(92vw, 500px) !important;
+    }
+    .gallery-slide-card.wide-card {
+        width: min(94vw, 680px) !important;
+    }
+    .stacked-deck-wrapper {
+        width: 100% !important;
+        max-width: 580px !important;
+        height: 520px !important;
+    }
+}
