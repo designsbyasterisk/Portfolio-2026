@@ -1711,3 +1711,14 @@ header.floating-header .container {
     transform: none !important;
     box-shadow: none !important;
 }
+
+/* Disable hover transforms for F1 and Honee cards */
+.card-f1:hover,
+.card-f1:hover .project-thumb-container,
+.card-f1:hover img,
+.card-honee:hover,
+.card-honee:hover .project-thumb-container,
+.card-honee:hover img {
+    transform: none !important;
+    box-shadow: none !important;
+}
