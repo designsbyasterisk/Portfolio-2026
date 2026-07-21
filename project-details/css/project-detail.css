@@ -3106,3 +3106,47 @@ body.theme-brand .scroll-indicator-arrow:hover {
         width: min(88vw, 500px) !important;
     }
 }
+/* ==========================================================================
+   SECTION 05 (SYSTEM OVERVIEW / GALLERY PIN) HEIGHT & CUTOFF FIX
+   ========================================================================== */
+
+.chapter-gallery-pin {
+    min-height: max(100vh, 840px) !important;
+    padding-top: var(--space-md) !important;
+    padding-bottom: var(--space-md) !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.gallery-pin-header {
+    margin-bottom: var(--space-md) !important;
+    flex-shrink: 0 !important;
+}
+
+.gallery-pin-header p {
+    max-width: 840px !important;
+    margin-bottom: 0 !important;
+}
+
+.gallery-horizontal-container {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Adjust image wrapper height on standard laptops and vertical displays to prevent clipping */
+@media (max-height: 920px) {
+    .slide-image-wrapper.wide-wrapper,
+    .slide-image-wrapper {
+        height: 330px !important;
+    }
+}
+
+@media (max-height: 800px) {
+    .slide-image-wrapper.wide-wrapper,
+    .slide-image-wrapper {
+        height: 290px !important;
+    }
+}
