@@ -3075,3 +3075,34 @@ body.theme-brand .scroll-indicator-arrow:hover {
         transform: none !important;
     }
 }
+/* ==========================================================================
+   FLUID CARDS FOR SECTION 05 SYSTEM OVERVIEW (PREVENT HORIZONTAL CLIPPING)
+   ========================================================================== */
+.gallery-slide-card.wide-card {
+    width: min(85vw, 760px) !important;
+    max-width: calc(100vw - 64px) !important;
+    box-sizing: border-box !important;
+}
+
+.gallery-slide-card {
+    width: min(85vw, 560px) !important;
+    max-width: calc(100vw - 64px) !important;
+    box-sizing: border-box !important;
+}
+
+.slide-image-wrapper.wide-wrapper,
+.topo-widget-container,
+.fleet-bento-grid {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+@media (max-width: 1280px) {
+    .gallery-slide-card.wide-card {
+        width: min(88vw, 680px) !important;
+    }
+    .gallery-slide-card {
+        width: min(88vw, 500px) !important;
+    }
+}
